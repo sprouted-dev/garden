@@ -1,59 +1,68 @@
-# Garden Monorepo
+# Weather System - Context-Aware Development
 
-A spec-driven development workspace with automatic context preservation powered by the Weather System.
+Automatically track your development progress and eliminate context loss. Never lose your place again.
 
-## Weather Context Preservation
+🌐 **[Try Weather System at sprouted.dev](https://sprouted.dev)** - Install in 30 seconds  
+📖 **[Complete Documentation](https://sprouted.dev)** - Getting started guides and examples
 
-The Weather System automatically tracks your development progress and provides instant context restoration:
+## What is the Weather System?
 
-```bash
-# One-time setup
-sprout weather --install-hooks
-
-# Check your current development context
-sprout weather
-
-# Get AI-friendly context for Claude
-sprout weather --for-ai
-```
-
-**See [Weather Usage Guide](docs/WEATHER_USAGE.md) for complete documentation.**
-
-## Structure
-
-```
-garden/
-├── apps/           # Applications (React, Next.js, Expo, Go, Rust, etc.)
-├── libs/           # Shared libraries and packages
-├── tools/          # Development tools and utilities
-├── docs/           # Documentation system
-│   ├── vision/     # Long-term vision documents
-│   ├── specs/      # Detailed specifications
-│   ├── tasks/      # Implementation tasks
-│   ├── phases/     # Development phases
-│   └── workflows/  # Development workflows
-└── templates/      # Document templates
-```
-
-## Development Process
-
-1. **Brainstorm/Plan** → Create vision document
-2. **Spec** → Define detailed requirements
-3. **Tests** → Write acceptance criteria
-4. **Tasks** → Break down implementation
-5. **Implementation** → Execute with AI assistance
+The Weather System automatically preserves your development context - what you're working on, recent progress, and where you're headed next. Like meteorology tracks atmospheric conditions, Weather tracks your development "atmosphere" and makes it instantly shareable with AI assistants.
 
 ## Quick Start
 
-1. **Setup Weather System**: `sprout weather --install-hooks` (enables automatic context tracking)
-2. **Check Your Context**: `sprout weather` (see current focus and progress)
-3. **Create Documents**: Use templates from `/templates/` following Vision → Spec → Tasks → Implementation
-4. **AI Collaboration**: Use `sprout weather --for-ai` to share context with AI assistants
-5. **Reference**: See `/docs/workflows/agentic-development.md` for detailed AI collaboration guidelines
+Install and try Weather System in any Git repository:
 
-## Documentation Guidelines
+```bash
+# Install Weather System (macOS, Linux, Windows)
+curl -fsSL https://sprouted.dev/install.sh | sh
 
-- All projects should have corresponding vision and spec documents
-- Maintain traceability across all document types
-- Use the time-based hierarchy to track progress
-- Keep documentation up-to-date with implementation
+# Enable automatic context tracking
+sprout weather --install-hooks
+
+# See your current development context
+sprout weather
+
+# Get AI-friendly context for assistants like Claude
+sprout weather --for-ai
+```
+
+**🔥 Works in any Git repository** - no special structure required!
+
+**See complete documentation and examples at [sprouted.dev](https://sprouted.dev)**
+
+## Key Features
+
+✨ **Automatic Context Tracking** - Monitors git activity and development patterns  
+🤖 **AI Assistant Onboarding** - Complete project understanding in seconds  
+🌡️ **Development Weather** - Visual progress tracking with temperature and conditions  
+⚡ **Flow State Preservation** - Never lose your place across sessions  
+🔄 **Team Handoffs** - Share rich context instantly  
+🔒 **Privacy First** - All data stored locally by default  
+
+## How It Works
+
+Weather System understands your development context by analyzing:
+- Git commit patterns and branch activity
+- File modification patterns and focus areas  
+- Development momentum and project health
+- Architectural decisions and progress indicators
+
+This creates a rich, shareable context that AI assistants can understand immediately - no lengthy explanations needed.
+
+## For Contributors
+
+This repository contains the Weather System source code and follows a spec-driven development process.
+
+### Repository Structure
+- `libs/weather/` - Core Weather System library (Go)
+- `apps/sprout-cli/` - Command-line interface 
+- `docs/` - Specifications and development documentation
+- `templates/` - Document templates for spec-driven development
+
+### Contributing
+1. Check out our [Contributing Guide](CONTRIBUTING.md)
+2. Browse [open issues](https://github.com/sprouted-dev/garden/issues) 
+3. Join discussions in [GitHub Discussions](https://github.com/sprouted-dev/garden/discussions)
+
+**🌱 Built by developers, for developers - with the community at heart.**
