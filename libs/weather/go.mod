@@ -1,5 +1,3 @@
-module github.com/sprouted-dev/garden/libs/weather
+module sprouted.dev/weather
 
 go 1.21
-
-require ()

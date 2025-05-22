@@ -2,9 +2,18 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Multi-Repository Context
+
+**Important:** This is the `garden/` repository within the larger Sprouted ecosystem. The parent directory `/Users/nutmeg/sprouted/` contains:
+- `garden/` - This Weather System repository (will be public)
+- `sprouted-website/` - Website repository 
+- `docs/` - Private business documentation
+
+For ecosystem-wide work, launch Claude Code from the parent directory.
+
 ## Repository Structure
 
-This is a spec-driven development monorepo called "Garden" with the following architecture:
+This is a spec-driven development repository called "Garden" containing the Weather System with the following architecture:
 
 - `apps/` - Applications (React, Next.js, Expo, Go, Rust, etc.)
 - `libs/` - Shared libraries and packages

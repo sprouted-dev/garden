@@ -1,7 +1,7 @@
-module github.com/sprouted-dev/garden/apps/sprout-cli
+module sprouted.dev/sprout-cli
 
 go 1.21
 
-require github.com/sprouted-dev/garden/libs/weather v0.0.0
+require sprouted.dev/weather v0.0.0
 
-replace github.com/sprouted-dev/garden/libs/weather => ../../libs/weather
+replace sprouted.dev/weather => ../../libs/weather

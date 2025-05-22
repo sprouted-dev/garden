@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprouted - Weather-Powered Development</title>
+    <meta name="description" content="The Weather System for developers. Automatically preserve context, eliminate flow state loss, and enable seamless AI assistant collaboration.">
+    
+    <!-- Go module import configuration -->
+    <meta name="go-import" content="sprouted.dev/weather git https://github.com/sprouted-dev/garden">
+    <meta name="go-import" content="sprouted.dev/sprout-cli git https://github.com/sprouted-dev/garden">
+    <meta name="go-source" content="sprouted.dev/weather https://github.com/sprouted-dev/garden https://github.com/sprouted-dev/garden/tree/main/libs/weather{/dir} https://github.com/sprouted-dev/garden/blob/main/libs/weather{/dir}/{file}#L{line}">
+    <meta name="go-source" content="sprouted.dev/sprout-cli https://github.com/sprouted-dev/garden https://github.com/sprouted-dev/garden/tree/main/apps/sprout-cli{/dir} https://github.com/sprouted-dev/garden/blob/main/apps/sprout-cli{/dir}/{file}#L{line}">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        // Sprouted color system
+                        sprouted: '#82B366',
+                        'weather-sunny': '#FFD54F',
+                        'weather-rainy': '#64B5F6', 
+                        'weather-stormy': '#5C6BC0',
+                        'weather-drought': '#EF5350',
+                        'nature-daylight': '#F8FAFC',
+                        'nature-night': '#1E293B',
+                        'nature-mist': '#64748B',
+                        'nature-fog': '#CBD5E1',
+                        'nature-twilight': '#334155'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom sprouted theme CSS variables */
+        :root {
+            --color-primary: #82B366;
+            --color-secondary: #66BB6A;
+            --color-accent: #60A5FA;
+            --color-success: #FFD54F;
+            --color-info: #64B5F6;
+            --color-warning: #5C6BC0;
+            --color-error: #EF5350;
+            --color-background: #F8FAFC;
+            --color-surface: #FFFFFF;
+            --color-border: #CBD5E1;
+            --color-text-primary: #1E293B;
+            --color-text-secondary: #64748B;
+        }
+        
+        .dark {
+            --color-primary: #82B366;
+            --color-secondary: #43A047;
+            --color-accent: #60A5FA;
+            --color-success: #FFD54F;
+            --color-info: #64B5F6;
+            --color-warning: #7C4DFF;
+            --color-error: #FF5252;
+            --color-background: #1E293B;
+            --color-surface: #334155;
+            --color-border: #475569;
+            --color-text-primary: #F8FAFC;
+            --color-text-secondary: #CBD5E1;
+        }
+        
+        .sprouted-btn {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .sprouted-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .sprouted-card {
+            background-color: var(--color-surface);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--color-border);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .sprouted-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .weather-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .weather-sunny { background-color: var(--color-success); color: #1E293B; }
+        .weather-rainy { background-color: var(--color-info); color: white; }
+        .weather-stormy { background-color: var(--color-warning); color: white; }
+        .weather-drought { background-color: var(--color-error); color: white; }
+        
+        /* Animated gradient background */
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--color-background) 0%, #E0F2F1 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, var(--color-background) 0%, #263238 100%);
+        }
+        
+        /* Code syntax highlighting */
+        .code-block {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+        
+        /* Rotating headlines animation */
+        .rotating-text {
+            opacity: 0;
+            animation: fadeInOut 4s infinite;
+        }
+        
+        .rotating-text:nth-child(1) { animation-delay: 0s; }
+        .rotating-text:nth-child(2) { animation-delay: 4s; }
+        .rotating-text:nth-child(3) { animation-delay: 8s; }
+        .rotating-text:nth-child(4) { animation-delay: 12s; }
+        
+        @keyframes fadeInOut {
+            0%, 20% { opacity: 1; }
+            25%, 95% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body style="background-color: var(--color-background); color: var(--color-text-primary);" class="transition-colors duration-300">
+    <!-- Header -->
+    <header class="relative z-10">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="text-3xl">🌱</div>
+                <span class="text-2xl font-bold" style="color: var(--color-primary);">Sprouted</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="#install" class="hover:opacity-70 transition-opacity" style="color: var(--color-text-secondary);">Install</a>
+                <a href="#docs" class="hover:opacity-70 transition-opacity" style="color: var(--color-text-secondary);">Docs</a>
+                <a href="#packages" class="hover:opacity-70 transition-opacity" style="color: var(--color-text-secondary);">Go Packages</a>
+                <a href="https://github.com/sprouted-dev/garden" class="hover:opacity-70 transition-opacity" style="color: var(--color-text-secondary);">GitHub</a>
+                <button id="theme-toggle" class="p-2 rounded-lg" style="background-color: var(--color-surface); border: 1px solid var(--color-border);">
+                    <span class="dark:hidden">🌙</span>
+                    <span class="hidden dark:inline">☀️</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg py-20">
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-8">
+                <h1 class="text-6xl font-bold mb-6">
+                    The <span style="color: var(--color-primary);">Weather System</span><br>
+                    for Developers
+                </h1>
+                <div class="text-2xl mb-8 relative h-8" style="color: var(--color-text-secondary);">
+                    <div class="absolute inset-0 rotating-text">Context-Aware Development</div>
+                    <div class="absolute inset-0 rotating-text">No Context Loss</div>
+                    <div class="absolute inset-0 rotating-text">Weather-Powered Workflows</div>
+                    <div class="absolute inset-0 rotating-text">Intelligently Preserved</div>
+                </div>
+                <p class="text-xl max-w-3xl mx-auto mb-12" style="color: var(--color-text-secondary);">
+                    Automatically preserve development context, eliminate flow state destruction, 
+                    and enable seamless AI assistant collaboration. Your development weather, 
+                    intelligently tracked.
+                </p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <a href="#install" class="sprouted-btn">
+                    <span>⚡</span> Quick Install
+                </a>
+                <a href="https://github.com/sprouted-dev/garden" class="sprouted-btn" style="background-color: var(--color-surface); color: var(--color-text-primary); border: 2px solid var(--color-primary);">
+                    <span>⭐</span> Star on GitHub
+                </a>
+            </div>
+            
+            <!-- Current Weather Demo -->
+            <div class="sprouted-card max-w-2xl mx-auto p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">🌦️ Current Development Weather</h3>
+                    <div class="weather-badge weather-sunny">
+                        <span>☀️</span> Sunny
+                    </div>
+                </div>
+                <div class="text-left space-y-2" style="color: var(--color-text-secondary);">
+                    <div><strong>🎯 Focus:</strong> Weather System development (95% confidence)</div>
+                    <div><strong>📈 Progress:</strong> AI onboarding enhancement complete</div>
+                    <div><strong>🌡️ Temperature:</strong> 95°F | High momentum</div>
+                    <div><strong>⚡ Next:</strong> Open source release preparation</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                Why Developers Love <span style="color: var(--color-primary);">Weather</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Context Preservation -->
+                <div class="sprouted-card p-8">
+                    <div class="text-4xl mb-4">🧠</div>
+                    <h3 class="text-xl font-bold mb-4">Automatic Context</h3>
+                    <p style="color: var(--color-text-secondary);">
+                        Never lose track of where you left off. Weather automatically monitors git activity 
+                        and preserves your development context across sessions.
+                    </p>
+                </div>
+                
+                <!-- AI Assistant Onboarding -->
+                <div class="sprouted-card p-8">
+                    <div class="text-4xl mb-4">🤖</div>
+                    <h3 class="text-xl font-bold mb-4">AI Onboarding</h3>
+                    <p style="color: var(--color-text-secondary);">
+                        Revolutionary AI assistant onboarding. New AI assistants get complete project 
+                        understanding instantly - methodology, architecture, and current focus.
+                    </p>
+                </div>
+                
+                <!-- Weather Intelligence -->
+                <div class="sprouted-card p-8">
+                    <div class="text-4xl mb-4">🌦️</div>
+                    <h3 class="text-xl font-bold mb-4">Weather Intelligence</h3>
+                    <p style="color: var(--color-text-secondary);">
+                        Your development conditions at a glance. Temperature, weather conditions, 
+                        and pressure indicators give you instant project health awareness.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="install" class="py-20 gradient-bg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16">Get Started in Seconds</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Quick Install -->
+                    <div class="sprouted-card p-8">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span>⚡</span> Quick Install
+                        </h3>
+                        <div class="code-block mb-4">
+curl -fsSL https://sprouted.dev/install.sh | sh
+                        </div>
+                        <p style="color: var(--color-text-secondary);">
+                            One command installs Sprout CLI with automatic platform detection.
+                        </p>
+                    </div>
+                    
+                    <!-- Go Install -->
+                    <div class="sprouted-card p-8">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span>🐹</span> Go Install
+                        </h3>
+                        <div class="code-block mb-4">
+go install sprouted.dev/sprout-cli@latest
+                        </div>
+                        <p style="color: var(--color-text-secondary);">
+                            Install directly with Go. Clean module paths, no GitHub clutter.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- First Steps -->
+                <div class="sprouted-card p-8 mt-8">
+                    <h3 class="text-xl font-bold mb-4">🌱 First Steps</h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="code-block">
+<span style="color: var(--color-text-secondary);"># Check weather</span>
+sprout weather
+                        </div>
+                        <div class="code-block">
+<span style="color: var(--color-text-secondary);"># AI context</span>
+sprout weather --for-ai
+                        </div>
+                        <div class="code-block">
+<span style="color: var(--color-text-secondary);"># Full onboarding</span>
+sprout weather --onboard-ai
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Go Packages Section -->
+    <section id="packages" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                Clean Go Packages
+            </h2>
+            
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                <!-- Weather Package -->
+                <div class="sprouted-card p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-2xl">🌦️</span>
+                        <h3 class="text-xl font-bold">sprouted.dev/weather</h3>
+                    </div>
+                    <p class="mb-4" style="color: var(--color-text-secondary);">
+                        Core weather system library. Context preservation, git monitoring, 
+                        and intelligent inference for your applications.
+                    </p>
+                    <div class="code-block mb-4">
+go get sprouted.dev/weather
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="https://pkg.go.dev/sprouted.dev/weather" class="text-sm hover:opacity-70" style="color: var(--color-primary);">Documentation</a>
+                        <a href="https://github.com/sprouted-dev/garden/tree/main/libs/weather" class="text-sm hover:opacity-70" style="color: var(--color-primary);">Source</a>
+                    </div>
+                </div>
+                
+                <!-- CLI Package -->
+                <div class="sprouted-card p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-2xl">🌿</span>
+                        <h3 class="text-xl font-bold">sprouted.dev/sprout-cli</h3>
+                    </div>
+                    <p class="mb-4" style="color: var(--color-text-secondary);">
+                        Command-line interface for the Weather System. Ready-to-use tool 
+                        for weather context and AI assistant integration.
+                    </p>
+                    <div class="code-block mb-4">
+go get sprouted.dev/sprout-cli
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="https://pkg.go.dev/sprouted.dev/sprout-cli" class="text-sm hover:opacity-70" style="color: var(--color-primary);">Documentation</a>
+                        <a href="https://github.com/sprouted-dev/garden/tree/main/apps/sprout-cli" class="text-sm hover:opacity-70" style="color: var(--color-primary);">Source</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weather Station Teaser -->
+    <section class="py-20 gradient-bg">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8">
+                Coming Soon: <span style="color: var(--color-primary);">Weather Station</span>
+            </h2>
+            <p class="text-xl max-w-3xl mx-auto mb-12" style="color: var(--color-text-secondary);">
+                The premium Weather experience for teams and enterprises. Cloud sync, 
+                advanced analytics, team collaboration, and enterprise integrations.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
+                <div class="p-6">
+                    <div class="text-3xl mb-3">☁️</div>
+                    <h3 class="font-bold mb-2">Cloud Sync</h3>
+                    <p class="text-sm" style="color: var(--color-text-secondary);">Context across all devices</p>
+                </div>
+                <div class="p-6">
+                    <div class="text-3xl mb-3">👥</div>
+                    <h3 class="font-bold mb-2">Team Features</h3>
+                    <p class="text-sm" style="color: var(--color-text-secondary);">Shared context & handoffs</p>
+                </div>
+                <div class="p-6">
+                    <div class="text-3xl mb-3">📊</div>
+                    <h3 class="font-bold mb-2">Analytics</h3>
+                    <p class="text-sm" style="color: var(--color-text-secondary);">Project health insights</p>
+                </div>
+            </div>
+            
+            <div class="sprouted-card max-w-md mx-auto p-6">
+                <h3 class="font-bold mb-4">Get Early Access</h3>
+                <div class="flex gap-2">
+                    <input type="email" placeholder="your@email.com" class="flex-1 px-3 py-2 rounded border" style="background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-primary);">
+                    <button class="sprouted-btn">Notify Me</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12" style="background-color: var(--color-surface); border-top: 1px solid var(--color-border);">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center gap-3 mb-4 md:mb-0">
+                    <div class="text-2xl">🌱</div>
+                    <span class="text-xl font-bold" style="color: var(--color-primary);">Sprouted</span>
+                </div>
+                
+                <div class="flex gap-6">
+                    <a href="https://github.com/sprouted-dev/garden" class="hover:opacity-70" style="color: var(--color-text-secondary);">GitHub</a>
+                    <a href="#docs" class="hover:opacity-70" style="color: var(--color-text-secondary);">Documentation</a>
+                    <a href="mailto:hello@sprouted.dev" class="hover:opacity-70" style="color: var(--color-text-secondary);">Contact</a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 pt-8" style="border-top: 1px solid var(--color-border); color: var(--color-text-secondary);">
+                <p>&copy; 2024 Sprouted. Open source with ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        // Check for saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.classList.add(savedTheme);
+        
+        // Handle Go module requests
+        if (window.location.search.includes('go-get=1')) {
+            // This page serves go-import meta tags for Go toolchain
+            console.log('Go module request detected');
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

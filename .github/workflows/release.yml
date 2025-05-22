@@ -1,0 +1,101 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to release'
+        required: true
+        default: 'v0.1.0'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.21'
+
+    - name: Cache Go modules
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
+    - name: Run tests
+      run: make test
+
+    - name: Run linting
+      run: |
+        go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+        make lint
+
+    - name: Build release binaries
+      run: make release
+
+    - name: Create release notes
+      id: release_notes
+      run: |
+        echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+        echo "## 🌱 Sprouted Garden Release ${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "### Weather System Features" >> $GITHUB_OUTPUT
+        echo "- ⚡ Automatic context preservation" >> $GITHUB_OUTPUT
+        echo "- 🤖 AI assistant onboarding" >> $GITHUB_OUTPUT
+        echo "- 📊 Development progress tracking" >> $GITHUB_OUTPUT
+        echo "- 🔄 Git activity monitoring" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "### Installation" >> $GITHUB_OUTPUT
+        echo "\`\`\`bash" >> $GITHUB_OUTPUT
+        echo "# Quick install" >> $GITHUB_OUTPUT
+        echo "curl -fsSL https://sprouted.dev/install.sh | sh" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "# Or with Go" >> $GITHUB_OUTPUT
+        echo "go install sprouted.dev/sprout-cli@latest" >> $GITHUB_OUTPUT
+        echo "\`\`\`" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "### Quick Start" >> $GITHUB_OUTPUT
+        echo "\`\`\`bash" >> $GITHUB_OUTPUT
+        echo "sprout weather                    # Show current context" >> $GITHUB_OUTPUT
+        echo "sprout weather --for-ai           # AI-friendly context" >> $GITHUB_OUTPUT
+        echo "sprout weather --onboard-ai       # Full AI onboarding" >> $GITHUB_OUTPUT
+        echo "\`\`\`" >> $GITHUB_OUTPUT
+        echo "" >> $GITHUB_OUTPUT
+        echo "🌐 **Website**: https://sprouted.dev" >> $GITHUB_OUTPUT
+        echo "📚 **Documentation**: https://sprouted.dev/docs" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          apps/sprout-cli/dist/sprout-*
+          apps/sprout-cli/dist/checksums.txt
+        body: ${{ steps.release_notes.outputs.RELEASE_NOTES }}
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update go.mod version tag
+      if: github.event_name == 'push'
+      run: |
+        # This helps with go install sprouted.dev/sprout-cli@latest
+        echo "Version tag ${GITHUB_REF#refs/tags/} created for Go module"

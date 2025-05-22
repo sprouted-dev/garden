@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sprouted-dev/garden/libs/weather"
+	"sprouted.dev/weather"
 )
 
 func main() {
