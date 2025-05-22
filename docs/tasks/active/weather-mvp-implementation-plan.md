@@ -109,6 +109,32 @@ This document breaks down the Weather Automatic Intelligence MVP into specific, 
 
 ---
 
+#### Task 2.1.1: AI Assistant Onboarding Enhancement
+**Priority**: Critical  
+**Estimated Effort**: 3-4 days
+
+**Description**: Enhance weather context to provide comprehensive AI assistant onboarding with methodology, vision, and architectural context.
+
+**Subtasks**:
+- [ ] Design Enhanced Weather Context Schema with onboarding sections
+- [ ] Implement Document Intelligence to scan and summarize docs/ hierarchy  
+- [ ] Add Methodology Awareness to weather context output
+- [ ] Create comprehensive AI onboarding command (`sprout weather --onboard-ai`)
+- [ ] Update existing weather functions to generate richer context
+- [ ] Add architectural pattern detection and context preservation
+
+**Dependencies**: Task 2.1 (Inference Engine)
+
+**Definition of Done**:
+- [ ] Enhanced context schema includes development methodology, project vision, active specs/tasks
+- [ ] Document intelligence automatically scans docs/ hierarchy for context
+- [ ] `sprout weather --onboard-ai` provides comprehensive briefing for new AI assistants
+- [ ] Context includes architectural decisions, coding patterns, and conventions
+- [ ] AI assistants can understand project methodology and big picture from weather context
+- [ ] Performance: <500ms for enhanced context generation
+
+---
+
 #### Task 2.2: Weather Condition Mapping
 **Priority**: Medium
 **Estimated Effort**: 2-3 days
@@ -264,16 +290,17 @@ This document breaks down the Weather Automatic Intelligence MVP into specific, 
 **Week 2 (Basic Intelligence)**:
 3. Task 1.3: Basic Weather CLI Commands
 4. Task 2.1: Smart Context Inference Engine
+5. Task 2.1.1: AI Assistant Onboarding Enhancement
 
 **Week 3 (Advanced Features)**:
-5. Task 2.2: Weather Condition Mapping
-6. Task 2.3: Session Boundary Detection
+6. Task 2.2: Weather Condition Mapping
+7. Task 2.3: Session Boundary Detection
 
 **Week 4 (Polish & Launch)**:
-7. Task 3.1: Garden Integration
-8. Task 3.2: Error Handling & Recovery
-9. Task 3.3: Performance Optimization
-10. Task 3.4: Testing & Validation
+8. Task 3.1: Garden Integration
+9. Task 3.2: Error Handling & Recovery
+10. Task 3.3: Performance Optimization
+11. Task 3.4: Testing & Validation
 
 ## Success Milestones
 

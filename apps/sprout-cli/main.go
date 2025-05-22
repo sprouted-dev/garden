@@ -33,6 +33,7 @@ func showUsage() {
 	fmt.Println("Usage:")
 	fmt.Println("  sprout weather                Show current weather context")
 	fmt.Println("  sprout weather --for-ai       Show AI-friendly JSON context")
+	fmt.Println("  sprout weather --onboard-ai   Show comprehensive AI assistant onboarding context")
 	fmt.Println("  sprout weather --raw          Show raw weather context JSON")
 	fmt.Println("  sprout weather recent         Show recent progress summary")
 	fmt.Println()
@@ -86,6 +87,8 @@ func handleWeatherCommand(args []string) {
 	switch args[0] {
 	case "--for-ai":
 		showAIContext(context)
+	case "--onboard-ai":
+		showAIOnboardingContext(context)
 	case "--raw":
 		showRawContext(context)
 	case "recent":
@@ -185,6 +188,18 @@ func showAIContext(context *weather.WeatherContext) {
 	}
 	
 	fmt.Println("AI-Friendly Weather Context:")
+	fmt.Println(string(jsonData))
+}
+
+func showAIOnboardingContext(context *weather.WeatherContext) {
+	onboardingContext := context.ToAIOnboardingContext()
+	jsonData, err := json.MarshalIndent(onboardingContext, "", "  ")
+	if err != nil {
+		fmt.Printf("Error formatting AI onboarding context: %v\n", err)
+		return
+	}
+	
+	fmt.Println("Comprehensive AI Assistant Onboarding Context:")
 	fmt.Println(string(jsonData))
 }
 

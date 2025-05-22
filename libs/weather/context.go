@@ -27,6 +27,9 @@ type WeatherContext struct {
 
 	// Git Integration
 	Git GitContext `json:"git"`
+
+	// AI Assistant Onboarding Context
+	Onboarding OnboardingContext `json:"onboarding"`
 }
 
 // FocusArea represents what the developer is currently working on
@@ -90,6 +93,94 @@ const (
 	WeatherFoggy        WeatherCondition = "foggy"         // Unclear direction or exploration phase
 )
 
+// OnboardingContext provides comprehensive context for AI assistant onboarding
+type OnboardingContext struct {
+	// Development Methodology
+	Methodology  DevelopmentMethodology `json:"methodology"`
+	
+	// Project Vision and Mission
+	Vision       ProjectVision          `json:"vision"`
+	
+	// Active Work Context
+	ActiveWork   ActiveWorkContext      `json:"activeWork"`
+	
+	// Architectural Context
+	Architecture ArchitecturalContext   `json:"architecture"`
+	
+	// Quick Start Guidance
+	QuickStart   QuickStartGuide        `json:"quickStart"`
+	
+	// Last Updated
+	LastScanned  time.Time              `json:"lastScanned"`
+}
+
+// DevelopmentMethodology describes how work is done in this project
+type DevelopmentMethodology struct {
+	ProcessName     string   `json:"processName"`     // e.g., "spec-driven development"
+	Hierarchy       []string `json:"hierarchy"`       // e.g., ["Vision", "Specs", "Tasks", "Implementation"]
+	RequiredDocs    []string `json:"requiredDocs"`    // Documentation requirements
+	Templates       []string `json:"templates"`       // Available templates
+	Principles      []string `json:"principles"`      // Key development principles
+	WorkflowGuide   string   `json:"workflowGuide"`   // Path to workflow documentation
+}
+
+// ProjectVision captures the high-level project context
+type ProjectVision struct {
+	Name        string `json:"name"`        // Project name
+	Mission     string `json:"mission"`     // Core mission statement  
+	Problem     string `json:"problem"`     // Problem being solved
+	Solution    string `json:"solution"`    // High-level solution approach
+	CoreSystem  string `json:"coreSystem"`  // Central system/component
+	Ecosystem   string `json:"ecosystem"`   // Broader ecosystem context
+}
+
+// ActiveWorkContext describes current active work
+type ActiveWorkContext struct {
+	CurrentPhase    string              `json:"currentPhase"`    // e.g., "Weather MVP Phase 1"
+	Timeline        string              `json:"timeline"`        // e.g., "Week 2 of 4-week timeline"
+	ActiveSpecs     []DocumentSummary   `json:"activeSpecs"`     // Current specs being worked on
+	ActiveTasks     []DocumentSummary   `json:"activeTasks"`     // Current tasks in progress
+	Priority        string              `json:"priority"`        // Current priority focus
+	ImplementationContext string        `json:"implementationContext"` // Where in the implementation process
+}
+
+// ArchitecturalContext captures key architectural decisions and patterns
+type ArchitecturalContext struct {
+	Language        string            `json:"language"`        // Primary language (Go, TypeScript, etc.)
+	Architecture    string            `json:"architecture"`    // e.g., "monorepo", "microservices"
+	KeyPatterns     []string          `json:"keyPatterns"`     // Important patterns being used
+	Conventions     []string          `json:"conventions"`     // Coding conventions and standards
+	KeyDecisions    []ArchDecision    `json:"keyDecisions"`    // Important architectural decisions
+	DirectoryStructure map[string]string `json:"directoryStructure"` // Key directories and their purposes
+}
+
+// ArchDecision represents an architectural decision
+type ArchDecision struct {
+	Decision    string    `json:"decision"`    // What was decided
+	Rationale   string    `json:"rationale"`   // Why it was decided
+	Impact      string    `json:"impact"`      // Impact on development
+	Timestamp   time.Time `json:"timestamp"`   // When decision was made
+}
+
+// QuickStartGuide provides essential getting-started information
+type QuickStartGuide struct {
+	EssentialDocs   []string `json:"essentialDocs"`   // Must-read documents
+	KeyCommands     []string `json:"keyCommands"`     // Important CLI commands
+	FirstSteps      []string `json:"firstSteps"`      // Recommended first actions
+	CommonPatterns  []string `json:"commonPatterns"`  // Frequently used patterns
+	AvoidPatterns   []string `json:"avoidPatterns"`   // Patterns to avoid
+}
+
+// DocumentSummary provides a summary of an important document
+type DocumentSummary struct {
+	Path        string    `json:"path"`        // File path
+	Title       string    `json:"title"`       // Document title
+	Type        string    `json:"type"`        // vision, spec, task, etc.
+	Summary     string    `json:"summary"`     // Brief content summary
+	Status      string    `json:"status"`      // current status if applicable
+	LastUpdated time.Time `json:"lastUpdated"` // Last modification time
+}
+
 // ContextManager handles weather context persistence and operations
 type ContextManager struct {
 	gardenPath string
@@ -136,6 +227,19 @@ func (cm *ContextManager) LoadContext() (*WeatherContext, error) {
 			return nil, fmt.Errorf("failed to recreate context after corruption: %w", err)
 		}
 		return &newContext, nil
+	}
+	
+	// Refresh onboarding context if it's empty or stale (older than 1 hour)
+	if context.Onboarding.LastScanned.IsZero() || time.Since(context.Onboarding.LastScanned) > time.Hour {
+		if err := cm.updateOnboardingContext(&context); err != nil {
+			// Log error but continue with existing context
+			fmt.Printf("Warning: failed to update onboarding context: %v\n", err)
+		} else {
+			// Save updated context with new onboarding data
+			if err := cm.SaveContext(&context); err != nil {
+				fmt.Printf("Warning: failed to save updated onboarding context: %v\n", err)
+			}
+		}
 	}
 	
 	return &context, nil
@@ -197,7 +301,7 @@ func (cm *ContextManager) UpdateContext(updater func(*WeatherContext)) error {
 func (cm *ContextManager) createDefaultContext() WeatherContext {
 	now := time.Now()
 	
-	return WeatherContext{
+	context := WeatherContext{
 		Updated:    now,
 		SessionID:  generateSessionID(),
 		GardenPath: cm.gardenPath,
@@ -240,6 +344,11 @@ func (cm *ContextManager) createDefaultContext() WeatherContext {
 			RecentBranches:     []string{"main"},
 		},
 	}
+	
+	// Populate onboarding context
+	cm.updateOnboardingContext(&context)
+	
+	return context
 }
 
 // generateSessionID creates a unique session identifier
@@ -306,4 +415,88 @@ func (wc *WeatherContext) ToAIContext() map[string]interface{} {
 			"last_updated": wc.Updated.Format(time.RFC3339),
 		},
 	}
+}
+
+// ToAIOnboardingContext converts the weather context to comprehensive AI assistant onboarding format
+func (wc *WeatherContext) ToAIOnboardingContext() map[string]interface{} {
+	// Start with basic AI context
+	context := wc.ToAIContext()
+	
+	// Add comprehensive onboarding information
+	context["development_methodology"] = map[string]interface{}{
+		"process_name":     wc.Onboarding.Methodology.ProcessName,
+		"hierarchy":        wc.Onboarding.Methodology.Hierarchy,
+		"required_docs":    wc.Onboarding.Methodology.RequiredDocs,
+		"templates":        wc.Onboarding.Methodology.Templates,
+		"principles":       wc.Onboarding.Methodology.Principles,
+		"workflow_guide":   wc.Onboarding.Methodology.WorkflowGuide,
+	}
+	
+	context["project_vision"] = map[string]interface{}{
+		"name":         wc.Onboarding.Vision.Name,
+		"mission":      wc.Onboarding.Vision.Mission,
+		"problem":      wc.Onboarding.Vision.Problem,
+		"solution":     wc.Onboarding.Vision.Solution,
+		"core_system":  wc.Onboarding.Vision.CoreSystem,
+		"ecosystem":    wc.Onboarding.Vision.Ecosystem,
+	}
+	
+	context["active_work"] = map[string]interface{}{
+		"current_phase":           wc.Onboarding.ActiveWork.CurrentPhase,
+		"timeline":               wc.Onboarding.ActiveWork.Timeline,
+		"active_specs":           wc.Onboarding.ActiveWork.ActiveSpecs,
+		"active_tasks":           wc.Onboarding.ActiveWork.ActiveTasks,
+		"priority":               wc.Onboarding.ActiveWork.Priority,
+		"implementation_context": wc.Onboarding.ActiveWork.ImplementationContext,
+	}
+	
+	context["architectural_context"] = map[string]interface{}{
+		"language":             wc.Onboarding.Architecture.Language,
+		"architecture":         wc.Onboarding.Architecture.Architecture,
+		"key_patterns":         wc.Onboarding.Architecture.KeyPatterns,
+		"conventions":          wc.Onboarding.Architecture.Conventions,
+		"key_decisions":        wc.Onboarding.Architecture.KeyDecisions,
+		"directory_structure":  wc.Onboarding.Architecture.DirectoryStructure,
+	}
+	
+	context["onboarding_essentials"] = map[string]interface{}{
+		"essential_docs":   wc.Onboarding.QuickStart.EssentialDocs,
+		"key_commands":     wc.Onboarding.QuickStart.KeyCommands,
+		"first_steps":      wc.Onboarding.QuickStart.FirstSteps,
+		"common_patterns":  wc.Onboarding.QuickStart.CommonPatterns,
+		"avoid_patterns":   wc.Onboarding.QuickStart.AvoidPatterns,
+		"last_scanned":     wc.Onboarding.LastScanned.Format(time.RFC3339),
+	}
+	
+	return context
+}
+
+// updateOnboardingContext refreshes the onboarding context by scanning documentation
+func (cm *ContextManager) updateOnboardingContext(context *WeatherContext) error {
+	docIntel := NewDocumentIntelligence(cm.gardenPath)
+	
+	onboarding, err := docIntel.ScanDocumentation()
+	if err != nil {
+		// If scanning fails, use minimal default onboarding context
+		context.Onboarding = OnboardingContext{
+			LastScanned: time.Now(),
+			Methodology: DevelopmentMethodology{
+				ProcessName: "spec-driven development", 
+				Hierarchy:   []string{"Vision", "Specs", "Tasks", "Implementation"},
+				Principles:  []string{"documentation-driven", "traceability"},
+			},
+			Vision: ProjectVision{
+				Name:       "Garden Ecosystem",
+				CoreSystem: "Weather System",
+			},
+			Architecture: ArchitecturalContext{
+				Language:     "Go",
+				Architecture: "monorepo",
+			},
+		}
+		return nil
+	}
+	
+	context.Onboarding = *onboarding
+	return nil
 }
