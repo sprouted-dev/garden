@@ -532,3 +532,97 @@ func (di *DocumentIntelligence) generateFirstSteps(onboarding *OnboardingContext
 	
 	return steps
 }
+
+// Documentation gap detection methods
+
+// DocumentationGaps represents detected gaps in documentation
+type DocumentationGaps struct {
+	MissingDecisions        []DocumentationNeed      `json:"missing_decisions"`
+	UncapturedLessons       []DocumentationNeed      `json:"uncaptured_lessons"`
+	ProcessGaps             []DocumentationNeed      `json:"process_gaps"`
+	ContextGaps             []DocumentationNeed      `json:"context_gaps"`
+	RecentActivities        []ActivitySuggestion     `json:"recent_activities"`
+	ConversationalKnowledge []ConversationCapture   `json:"conversational_knowledge"`
+}
+
+// DocumentationNeed represents a detected documentation gap
+type DocumentationNeed struct {
+	Type              string   `json:"type"`           // "decision", "lesson", "process", "context"
+	Title             string   `json:"title"`          // "Security vulnerability handling decision"
+	Description       string   `json:"description"`    // "Decision made about 18 dependency vulnerabilities"
+	SuggestedLocation string   `json:"suggested_location"` // "farm-docs/decisions/"
+	Confidence        float64  `json:"confidence"`     // 0-1 confidence in suggestion
+	DetectedFrom      []string `json:"detected_from"`  // ["commit messages", "discussion patterns"]
+}
+
+// ActivitySuggestion represents recent activity that might need documentation
+type ActivitySuggestion struct {
+	Activity         string `json:"activity"`       // "installation crisis resolution"
+	Timeframe        string `json:"timeframe"`      // "last 2 hours"
+	ShouldDocument   bool   `json:"should_document"`
+	SuggestedDocType string `json:"suggested_doc_type"` // "lesson", "decision", "process"
+	Reasoning        string `json:"reasoning"`      // "Major fix that others should learn from"
+}
+
+// DetectDocumentationGaps analyzes weather context for missing documentation
+func (w *Weather) DetectDocumentationGaps() DocumentationGaps {
+	gaps := DocumentationGaps{}
+	
+	// Use DocumentIntelligence for scanning
+	di := NewDocumentIntelligence(w.RepoPath)
+	
+	// Load existing documentation to avoid duplicate suggestions
+	existingDocs := di.scanExistingDocumentation()
+	
+	// Detect missing decisions from commits
+	gaps.MissingDecisions = w.detectMissingDecisions(existingDocs)
+	
+	// Detect uncaptured lessons from crisis patterns
+	gaps.UncapturedLessons = w.detectLessonsLearned(existingDocs)
+	
+	// Detect process gaps from workflow patterns  
+	gaps.ProcessGaps = w.detectProcessGaps(existingDocs)
+	
+	// Analyze recent activities for documentation needs
+	gaps.RecentActivities = w.suggestRecentActivityDocumentation()
+	
+	// Load conversational knowledge if available
+	gaps.ConversationalKnowledge = w.loadConversationalCaptures()
+	
+	return gaps
+}
+
+// scanExistingDocumentation finds what's already documented
+func (di *DocumentIntelligence) scanExistingDocumentation() map[string]bool {
+	docs := make(map[string]bool)
+	
+	// Look for documentation in common locations
+	docPaths := []string{
+		filepath.Join(di.gardenPath, "docs"),
+		filepath.Join(di.gardenPath, "..", "docs"), // Farm level
+		filepath.Join(di.gardenPath, "documentation"),
+	}
+	
+	for _, path := range docPaths {
+		filepath.Walk(path, func(file string, info os.FileInfo, err error) error {
+			if err != nil || info.IsDir() {
+				return nil
+			}
+			if strings.HasSuffix(file, ".md") {
+				// Extract title from file
+				content, _ := os.ReadFile(file)
+				lines := strings.Split(string(content), "\n")
+				for _, line := range lines {
+					if strings.HasPrefix(line, "# ") {
+						title := strings.TrimPrefix(line, "# ")
+						docs[strings.ToLower(title)] = true
+						break
+					}
+				}
+			}
+			return nil
+		})
+	}
+	
+	return docs
+}

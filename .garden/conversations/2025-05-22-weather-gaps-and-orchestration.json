@@ -1,0 +1,58 @@
+{
+  "timestamp": "2025-05-22T17:15:00Z",
+  "session_id": "weather-gaps-orchestration-discovery",
+  "participants": {
+    "human": "nutmeg",
+    "ai": "Claude (Opus)"
+  },
+  "conversation_type": "architectural_discovery",
+  "context": "Reviewing Sprouted ecosystem and discovering Weather System gaps",
+  
+  "key_insights": [
+    "CLI is distributed but dormant without Weather System activation",
+    "Farm root invisibility requires orchestration layer, not just git hooks",
+    "Multiple AI assistants rediscovering same architectural constraints",
+    "Three knowledge layers: Git (visible), Documentation (semi-visible), Conversational (invisible)",
+    "Most valuable insights happen in conversations that never become commits",
+    "Weather System experiencing the very problem it's designed to solve"
+  ],
+  
+  "critical_moments": [
+    {
+      "moment": "Farm invisibility recognition",
+      "human_input": "make sure you remember the current issue with the Farm level invisibility",
+      "ai_response": "Git hooks in individual gardens can't see or coordinate across the farm boundary",
+      "outcome": "Identified need for orchestration layer"
+    },
+    {
+      "moment": "Meta-realization about context loss",
+      "human_input": "the previous assistant had the same issue. This is reinforcement of the weather gap",
+      "ai_response": "This perfectly illustrates why the Weather System is so crucial",
+      "outcome": "Validated the Weather System's core value proposition"
+    }
+  ],
+  
+  "decisions_implied": [
+    "Need Farm-level orchestration before garden-level features",
+    "Event-driven architecture is required, not optional",
+    "Must capture conversational insights from day one"
+  ],
+  
+  "action_items_generated": [
+    "Design Farm-level orchestration layer",
+    "Create architectural discovery documentation category",
+    "Implement conversational capture mechanism",
+    "Build event emission system"
+  ],
+  
+  "should_persist": true,
+  "preservation_reason": "Demonstrates the exact problem Weather System solves and validates architectural decisions",
+  
+  "related_files": [
+    "/docs/discoveries/farm-invisibility-orchestration-need.md",
+    "/templates/architectural-discovery-template.md",
+    "/docs/specs/enhanced-ai-onboarding.md"
+  ],
+  
+  "tags": ["weather-system", "farm-orchestration", "context-preservation", "meta-example", "architectural-discovery"]
+}

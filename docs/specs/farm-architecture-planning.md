@@ -34,6 +34,7 @@ Transform the current single-repository Weather System into a distributed, event
 2. **No Git Dependency**: Farm weather works without requiring git hooks at workspace level
 3. **Distributed Resilience**: Farm can rebuild state from garden weather files
 4. **Incremental Enhancement**: Extends existing garden weather without breaking changes
+5. **Developer Workflow Integration**: Farm context must be discoverable from individual repository workflows
 
 ### Event-Based Communication
 
@@ -188,10 +189,78 @@ sprout garden weather --include-farm       # Garden weather + farm context
 sprout garden sync-to-farm                 # Push garden changes to farm
 ```
 
+## Critical Design Challenge: Farm Root Visibility
+
+### Problem: Developer Workflow Disconnect
+**Issue Identified**: Farm root directories are not git repositories, making them invisible to standard developer workflows.
+
+**Current Challenge**:
+```
+/sprouted/                    # Farm root - invisible to IDE workflow
+├── docs/                     # Private decisions, discussions - hard to access
+├── garden/                   # Dev opens THIS in IDE ✓
+└── sprouted-website/         # Dev opens THIS separately ✓
+```
+
+**Developer Impact**:
+- IDEs naturally open individual repositories (`garden/`, `sprouted-website/`)
+- Farm-level context (decisions, discussions, cross-repo planning) lives outside daily workflow
+- Important context gets "buried" at a level developers rarely see
+- Extra cognitive cycles required to access farm-level information
+
+### Solution: Farm Context Surfacing
+
+#### Enhanced Documentation Architecture
+```
+/sprouted/
+├── farm-docs/                # Clear farm-level documentation
+│   ├── decisions/           # Technical decisions (security vulns, tech choices)
+│   ├── discussions/         # Cross-repo planning sessions  
+│   ├── lessons/            # What we learned (like launch prep insights)
+│   └── strategy/           # Business docs (private)
+├── garden/                  # Main repo with enhanced farm awareness
+└── sprouted-website/        # Website repo with farm context links
+```
+
+#### Smart Farm Context Discovery
+From within any garden, the Weather System should surface relevant farm context:
+
+```bash
+# From within garden/ directory
+sprout weather --farm-context
+> 🌱 Garden: weather-system (garden/)
+> 🚜 Farm: sprouted (/path/to/sprouted)
+> 📋 Recent farm decisions: 
+>   - Security vulnerabilities: Address post-launch (../farm-docs/decisions/security-vulns.md)
+>   - Launch strategy: Sequential rollout planned (../farm-docs/decisions/launch-timeline.md)
+> 🗣️  Active discussions:
+>   - Enhanced AI onboarding implementation
+>   - Farm architecture UX challenges
+```
+
+#### Garden-Level Integration
+Each garden should maintain awareness of its farm context:
+
+```bash
+# Garden commands with farm awareness
+sprout weather --onboard-ai        # Includes farm-level decisions and context
+sprout weather --deployment-status # Knows about farm-wide deployment patterns
+sprout garden farm-sync            # Pull latest farm context into garden briefing
+```
+
+### Implementation Requirements
+
+1. **Farm Discovery**: Gardens must auto-detect their parent farm
+2. **Context Bridging**: Farm-level docs must be accessible from garden workflows
+3. **Smart Filtering**: Respect privacy boundaries (exclude private strategy docs when appropriate)
+4. **Workflow Integration**: Farm context appears in normal garden weather commands
+5. **Documentation Organization**: Clear folder structure for different types of farm-level information
+
 ## Implementation Phases
 
 ### Phase 1: Foundation (Week 1-2)
 - [ ] Farm directory structure and configuration
+- [ ] Enhanced documentation architecture (`farm-docs/` structure)
 - [ ] Basic event emission from gardens
 - [ ] Farm weather aggregation (polling-based)
 - [ ] `sprout farm init` and `sprout farm weather` commands
