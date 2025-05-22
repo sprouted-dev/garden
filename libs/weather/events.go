@@ -69,8 +69,8 @@ func (e *EventEmitter) Emit(eventType EventType, payload map[string]interface{},
 		Payload:          payload,
 		CorrelationHints: hints,
 		Context: EventContext{
-			Branch:      e.weather.CurrentBranch,
-			WeatherTemp: float64(e.weather.Context.Weather.Temperature),
+			Branch:      "", // TODO: get from git
+			WeatherTemp: 0, // Default for now
 		},
 	}
 	

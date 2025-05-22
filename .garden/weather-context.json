@@ -1,5 +1,5 @@
 {
-  "updated": "2025-05-22T16:56:36.336187-04:00",
+  "updated": "2025-05-22T18:05:40.12232-04:00",
   "sessionId": "session_1747877545",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
@@ -149,6 +149,7 @@
       ],
       "requiredDocs": null,
       "templates": [
+        "architectural-discovery-template.md",
         "phase-template.md",
         "spec-template.md",
         "task-template.md",
@@ -188,6 +189,14 @@
           "summary": "**Related to**: [Weather Automatic Intelligence MVP](/docs/specs/weather-automatic-intelligence-mvp.md) **Implementation of**: [Sprouted Ecosystem Consolidation Plan](/Users/nutmeg/sprouted/docs/busin...",
           "status": "active",
           "lastUpdated": "2025-05-22T04:41:45.806335745-04:00"
+        },
+        {
+          "path": "docs/specs/farm-orchestration-layer.md",
+          "title": "Spec: Farm Orchestration Layer",
+          "type": "spec",
+          "summary": "Related to: [Weather Context Preservation Vision](../vision/weather-context-preservation.md) Addresses: [Farm Invisibility Discovery](../../../docs/discoveries/farm-invisibility-orchestration-need.md)...",
+          "status": "planned",
+          "lastUpdated": "2025-05-22T17:15:59.45482048-04:00"
         },
         {
           "path": "docs/specs/open-source-launch-lessons.md",
@@ -276,6 +285,6 @@
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-22T16:56:36.33336-04:00"
+    "lastScanned": "2025-05-22T18:05:40.120103-04:00"
   }
 }

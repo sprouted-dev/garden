@@ -422,6 +422,7 @@ func handleFarmCommand(args []string) {
 }
 
 func handleFarmProcess(farmPath string) {
+	fmt.Printf("Processing events in farm: %s\n", farmPath)
 	orchestrator := weather.NewFarmOrchestrator(farmPath)
 	if err := orchestrator.ProcessEvents(); err != nil {
 		fmt.Printf("Error processing events: %v\n", err)

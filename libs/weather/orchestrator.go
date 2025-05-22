@@ -3,7 +3,6 @@ package weather
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
@@ -65,7 +64,7 @@ func (o *FarmOrchestrator) ProcessEvents() error {
 	os.MkdirAll(processedDir, 0755)
 	
 	// Read pending events
-	files, err := ioutil.ReadDir(pendingDir)
+	files, err := os.ReadDir(pendingDir)
 	if err != nil {
 		if os.IsNotExist(err) {
 			return nil // No events to process
@@ -74,19 +73,22 @@ func (o *FarmOrchestrator) ProcessEvents() error {
 	}
 	
 	var events []Event
+	fmt.Printf("Found %d files in pending directory\n", len(files))
 	for _, file := range files {
 		if !strings.HasSuffix(file.Name(), ".json") {
 			continue
 		}
+		fmt.Printf("Processing event file: %s\n", file.Name())
 		
 		eventPath := filepath.Join(pendingDir, file.Name())
-		data, err := ioutil.ReadFile(eventPath)
+		data, err := os.ReadFile(eventPath)
 		if err != nil {
 			continue
 		}
 		
 		var event Event
 		if err := json.Unmarshal(data, &event); err != nil {
+			fmt.Printf("Error unmarshaling event %s: %v\n", file.Name(), err)
 			continue
 		}
 		
@@ -106,11 +108,13 @@ func (o *FarmOrchestrator) ProcessEvents() error {
 	}
 	
 	// Correlate events
+	fmt.Printf("Processing %d events\n", len(events))
 	if len(events) > 0 {
 		correlations := o.correlateEvents(events)
 		farmWeather := o.synthesizeFarmWeather(events, correlations)
 		
 		// Save farm weather
+		fmt.Printf("Saving farm weather to %s\n", o.FarmPath)
 		return o.saveFarmWeather(farmWeather)
 	}
 	
@@ -242,7 +246,7 @@ func (o *FarmOrchestrator) saveFarmWeather(weather FarmWeather) error {
 		return err
 	}
 	
-	if err := ioutil.WriteFile(currentPath, data, 0644); err != nil {
+	if err := os.WriteFile(currentPath, data, 0644); err != nil {
 		return err
 	}
 	
@@ -251,7 +255,7 @@ func (o *FarmOrchestrator) saveFarmWeather(weather FarmWeather) error {
 	os.MkdirAll(historyDir, 0755)
 	
 	snapshotPath := filepath.Join(historyDir, fmt.Sprintf("%d.json", time.Now().Unix()))
-	return ioutil.WriteFile(snapshotPath, data, 0644)
+	return os.WriteFile(snapshotPath, data, 0644)
 }
 
 // copyGardens creates a copy of garden info map

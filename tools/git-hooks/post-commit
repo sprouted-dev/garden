@@ -8,7 +8,8 @@ GARDEN_NAME=$(basename "$GARDEN_ROOT")
 
 # Get commit information
 COMMIT_HASH=$(git rev-parse HEAD)
-COMMIT_MSG=$(git log -1 --pretty=%B)
+# Escape commit message for JSON (replace newlines with \n, quotes with \")
+COMMIT_MSG=$(git log -1 --pretty=%B | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/"/\\"/g')
 FILES_CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD | wc -l)
 BRANCH=$(git branch --show-current)
 
