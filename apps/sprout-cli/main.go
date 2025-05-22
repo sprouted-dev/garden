@@ -47,6 +47,29 @@ func handleWeatherCommand(args []string) {
 		return
 	}
 
+	// Handle git monitoring commands first
+	if len(args) > 0 {
+		switch args[0] {
+		case "--update-from-commit":
+			if len(args) < 2 {
+				fmt.Println("Error: --update-from-commit requires commit hash")
+				return
+			}
+			handleUpdateFromCommit(gardenPath, args[1])
+			return
+		case "--update-from-branch-change":
+			if len(args) < 4 {
+				fmt.Println("Error: --update-from-branch-change requires prevHead newHead branchFlag")
+				return
+			}
+			handleUpdateFromBranchChange(gardenPath, args[1], args[2], args[3])
+			return
+		case "--install-hooks":
+			handleInstallHooks(gardenPath)
+			return
+		}
+	}
+
 	cm := weather.NewContextManager(gardenPath)
 	context, err := cm.LoadContext()
 	if err != nil {
@@ -222,4 +245,39 @@ func getWeatherEmoji(condition weather.WeatherCondition) string {
 	default:
 		return "🌤️ " + strings.Title(string(condition))
 	}
+}
+
+// Git monitoring handlers
+
+func handleUpdateFromCommit(gardenPath, commitHash string) {
+	gm := weather.NewGitMonitor(gardenPath)
+	if err := gm.UpdateFromCommit(commitHash); err != nil {
+		fmt.Printf("Error updating weather from commit: %v\n", err)
+		return
+	}
+	// Display first 8 characters if hash is long enough, otherwise show full hash
+	displayHash := commitHash
+	if len(commitHash) > 8 {
+		displayHash = commitHash[:8]
+	}
+	fmt.Printf("🌦️ Weather updated from commit %s\n", displayHash)
+}
+
+func handleUpdateFromBranchChange(gardenPath, prevHead, newHead, branchFlag string) {
+	gm := weather.NewGitMonitor(gardenPath)
+	if err := gm.UpdateFromBranchChange(prevHead, newHead, branchFlag); err != nil {
+		fmt.Printf("Error updating weather from branch change: %v\n", err)
+		return
+	}
+	fmt.Println("🌦️ Weather updated from branch change")
+}
+
+func handleInstallHooks(gardenPath string) {
+	gm := weather.NewGitMonitor(gardenPath)
+	if err := gm.InstallGitHooks(); err != nil {
+		fmt.Printf("Error installing git hooks: %v\n", err)
+		return
+	}
+	fmt.Println("✅ Git hooks installed successfully")
+	fmt.Println("Weather will now update automatically on commits and branch changes!")
 }
