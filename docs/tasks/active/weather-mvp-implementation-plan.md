@@ -109,29 +109,47 @@ This document breaks down the Weather Automatic Intelligence MVP into specific, 
 
 ---
 
-#### Task 2.1.1: AI Assistant Onboarding Enhancement
+#### Task 2.1.1: Enhanced AI Onboarding System
 **Priority**: Critical  
-**Estimated Effort**: 3-4 days
+**Estimated Effort**: 2-3 weeks (can be parallel with other MVP features)
 
-**Description**: Enhance weather context to provide comprehensive AI assistant onboarding with methodology, vision, and architectural context.
+**Description**: Implement comprehensive AI onboarding system that automatically discovers, parses, and synthesizes all project documentation for instant AI assistant briefings.
 
 **Subtasks**:
-- [ ] Design Enhanced Weather Context Schema with onboarding sections
-- [ ] Implement Document Intelligence to scan and summarize docs/ hierarchy  
-- [ ] Add Methodology Awareness to weather context output
-- [ ] Create comprehensive AI onboarding command (`sprout weather --onboard-ai`)
-- [ ] Update existing weather functions to generate richer context
-- [ ] Add architectural pattern detection and context preservation
+- [ ] **Documentation Discovery Engine** (3-4 days)
+  - [ ] Auto-discover all markdown files in project hierarchy
+  - [ ] Categorize documentation by type (vision, specs, tasks, architecture)
+  - [ ] Multi-repository support for farm scenarios
+  - [ ] Privacy boundary detection for sensitive docs
+- [ ] **Documentation Parser and Synthesizer** (5-7 days)
+  - [ ] Extract project vision and goals from documentation
+  - [ ] Parse architectural decisions and constraints
+  - [ ] Identify methodology and conventions
+  - [ ] Generate structured project summaries
+- [ ] **Enhanced Command Interface** (2-3 days)
+  - [ ] Extend `sprout weather --onboard-ai` with documentation synthesis
+  - [ ] Add `sprout weather --docs-brief` for docs-only analysis
+  - [ ] Add `sprout weather --comprehensive` for full briefing
+  - [ ] Maintain backward compatibility
+- [ ] **Integration and Optimization** (3-4 days)
+  - [ ] Combine documentation insights with current weather context
+  - [ ] Performance optimization for large documentation sets
+  - [ ] Testing and validation
 
 **Dependencies**: Task 2.1 (Inference Engine)
 
 **Definition of Done**:
-- [ ] Enhanced context schema includes development methodology, project vision, active specs/tasks
-- [ ] Document intelligence automatically scans docs/ hierarchy for context
-- [ ] `sprout weather --onboard-ai` provides comprehensive briefing for new AI assistants
-- [ ] Context includes architectural decisions, coding patterns, and conventions
-- [ ] AI assistants can understand project methodology and big picture from weather context
-- [ ] Performance: <500ms for enhanced context generation
+- [ ] All documentation files automatically discovered and categorized
+- [ ] Comprehensive AI briefing generated in <5 seconds
+- [ ] New AI assistants get complete project understanding without manual steps
+- [ ] Enhanced commands integrate seamlessly with existing weather interface
+- [ ] 95% of architectural decisions captured in briefings
+- [ ] Performance requirements met for typical projects (100+ docs)
+- [ ] Privacy boundaries respected for sensitive documentation
+
+**Related Documents**: 
+- Spec: [Enhanced AI Onboarding System](../../specs/enhanced-ai-onboarding.md)
+- Task: [Enhanced AI Onboarding Implementation](enhanced-ai-onboarding-implementation.md)
 
 ---
 
