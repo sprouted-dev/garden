@@ -1,6 +1,23 @@
 # Garden Monorepo
 
-A spec-driven development workspace for apps, libraries, and tools.
+A spec-driven development workspace with automatic context preservation powered by the Weather System.
+
+## Weather Context Preservation
+
+The Weather System automatically tracks your development progress and provides instant context restoration:
+
+```bash
+# One-time setup
+sprout weather --install-hooks
+
+# Check your current development context
+sprout weather
+
+# Get AI-friendly context for Claude
+sprout weather --for-ai
+```
+
+**See [Weather Usage Guide](docs/WEATHER_USAGE.md) for complete documentation.**
 
 ## Structure
 
@@ -28,9 +45,11 @@ garden/
 
 ## Quick Start
 
-1. Use templates from `/templates/` to create new documents
-2. Follow the hierarchy: Vision → Spec → Tasks → Implementation
-3. Reference `/docs/workflows/agentic-development.md` for AI collaboration guidelines
+1. **Setup Weather System**: `sprout weather --install-hooks` (enables automatic context tracking)
+2. **Check Your Context**: `sprout weather` (see current focus and progress)
+3. **Create Documents**: Use templates from `/templates/` following Vision → Spec → Tasks → Implementation
+4. **AI Collaboration**: Use `sprout weather --for-ai` to share context with AI assistants
+5. **Reference**: See `/docs/workflows/agentic-development.md` for detailed AI collaboration guidelines
 
 ## Documentation Guidelines
 
