@@ -1,17 +1,44 @@
 {
-  "updated": "2025-05-21T21:47:09.118345-04:00",
+  "updated": "2025-05-21T21:49:16.192392-04:00",
   "sessionId": "session_1747877545",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
   "currentFocus": {
-    "area": "documentation",
+    "area": "apps development",
     "confidence": 0.85,
-    "lastActive": "2025-05-21T21:47:09.118336-04:00",
-    "inferredFrom": "recent commit to documentation"
+    "lastActive": "2025-05-21T21:49:16.192383-04:00",
+    "inferredFrom": "recent commit to apps"
   },
   "recentProgress": {
-    "summary": "Working on documentation system",
+    "summary": "Working on apps system",
     "commits": [
+      {
+        "hash": "6a79404d14484e97ecd6916f1d5103ac09165e40",
+        "message": "feat: fix git hooks to use correct sprout binary path",
+        "smartSummary": "",
+        "timestamp": "2025-05-21T21:49:16-04:00",
+        "filesChanged": [
+          "apps/sprout-cli/sprout",
+          "libs/weather/git.go"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
+      {
+        "hash": "3668f65d6daf23a2f6eac761d89198684d68bd3c",
+        "message": "Complete Git Activity Monitoring System",
+        "smartSummary": "",
+        "timestamp": "2025-05-21T21:48:00-04:00",
+        "filesChanged": [
+          ".garden/weather-context.json",
+          "apps/sprout-cli/main.go",
+          "apps/sprout-cli/sprout",
+          "libs/weather/git.go",
+          "libs/weather/git_test.go"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
       {
         "hash": "712f7acd97b434f76a3d41a2e459547d8e0f168f",
         "message": "Implement Weather Context Preservation MVP",
@@ -56,8 +83,8 @@
         "author": "Megan Sharon"
       }
     ],
-    "timespan": "last 2 commits",
-    "momentum": 25
+    "timespan": "last 4 commits",
+    "momentum": 75
   },
   "nextSteps": {
     "suggestions": [
@@ -65,43 +92,30 @@
       "Update documentation",
       "Consider refactoring for better maintainability"
     ],
-    "priority": 62,
-    "basedOn": "current focus on documentation"
+    "priority": 87,
+    "basedOn": "current focus on apps development"
   },
   "weather": {
-    "temperature": 45,
+    "temperature": 95,
     "condition": "partly-cloudy",
     "pressure": 30,
-    "lastUpdate": "2025-05-21T21:47:09.118336-04:00"
+    "lastUpdate": "2025-05-21T21:49:16.192385-04:00"
   },
   "git": {
     "currentBranch": "main",
     "lastCommit": {
-      "hash": "712f7acd97b434f76a3d41a2e459547d8e0f168f",
-      "message": "Implement Weather Context Preservation MVP",
-      "smartSummary": "Implement Weather Context Preservation MVP",
-      "timestamp": "2025-05-21T21:32:56-04:00",
+      "hash": "6a79404d14484e97ecd6916f1d5103ac09165e40",
+      "message": "feat: fix git hooks to use correct sprout binary path",
+      "smartSummary": "Added fix git hooks to use correct sprout binary path",
+      "timestamp": "2025-05-21T21:49:16-04:00",
       "filesChanged": [
-        ".garden/weather-context.json",
-        "CLAUDE.md",
-        "apps/sprout-cli/go.mod",
-        "apps/sprout-cli/main.go",
         "apps/sprout-cli/sprout",
-        "docs/Context Summary for Next Assistant.md",
-        "docs/specs/weather-automatic-intelligence-mvp.md",
-        "docs/tasks/active/weather-core-data-model.md",
-        "docs/tasks/active/weather-git-monitoring.md",
-        "docs/tasks/active/weather-mvp-implementation-plan.md",
-        "docs/vision/sprouted-ecosystem-consolidation.md",
-        "docs/vision/weather-context-preservation.md",
-        "libs/weather/context.go",
-        "libs/weather/context_test.go",
-        "libs/weather/go.mod"
+        "libs/weather/git.go"
       ],
-      "inferredScope": "documentation",
-      "author": "Megan Sharon"
+      "inferredScope": "apps",
+      "author": "Test User"
     },
-    "uncommittedChanges": true,
+    "uncommittedChanges": false,
     "recentBranches": [
       "main"
     ]
