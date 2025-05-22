@@ -1,17 +1,71 @@
 {
-  "updated": "2025-05-22T01:56:43.95245-04:00",
+  "updated": "2025-05-22T03:07:52.478063-04:00",
   "sessionId": "session_1747877545",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
   "currentFocus": {
-    "area": "libs development",
+    "area": "documentation",
     "confidence": 0.85,
-    "lastActive": "2025-05-21T23:07:56.575035-04:00",
-    "inferredFrom": "recent commit to libs"
+    "lastActive": "2025-05-22T03:07:52.478048-04:00",
+    "inferredFrom": "recent commit to documentation"
   },
   "recentProgress": {
-    "summary": "Working on libs system",
+    "summary": "Working on documentation system",
     "commits": [
+      {
+        "hash": "e2c6a7ab3422a5e490ce42ae83cf66c77ee0e54b",
+        "message": "docs: capture critical insights and decisions from open source launch",
+        "smartSummary": "",
+        "timestamp": "2025-05-22T03:07:52-04:00",
+        "filesChanged": [
+          "docs/specs/open-source-launch-lessons.md"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
+      {
+        "hash": "9cda0fefd4c4878ff179d942799bffb89aa2f2c2",
+        "message": "feat: add MIT license for open source release",
+        "smartSummary": "",
+        "timestamp": "2025-05-22T02:57:50-04:00",
+        "filesChanged": [
+          "LICENSE"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
+      {
+        "hash": "7d30cba79c6b9d4f5f44a2cc015b1825e07090fa",
+        "message": "feat: prepare for open source launch with release automation",
+        "smartSummary": "",
+        "timestamp": "2025-05-22T02:55:51-04:00",
+        "filesChanged": [
+          ".garden/weather-context.json",
+          ".github/workflows/ci.yml",
+          ".github/workflows/release.yml",
+          "CLAUDE.md",
+          "Makefile",
+          "apps/sprout-cli/Makefile",
+          "apps/sprout-cli/go.mod",
+          "apps/sprout-cli/main.go",
+          "apps/sprout-cli/sprout",
+          "docs/Context Summary for Next Assistant.md",
+          "docs/go-import-template.html",
+          "docs/specs/farm-architecture-planning.md",
+          "docs/sprouted.dev-config.md",
+          "docs/vision/sprouted-ecosystem-consolidation.md",
+          "install.sh",
+          "libs/weather/go.mod",
+          "verify-modules.sh",
+          "website/deploy-guide.md",
+          "website/index.html",
+          "website/install.sh",
+          "website/package.json",
+          "website/vercel.json"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
       {
         "hash": "1e66728e530ed5c69a3835e8041c6378dbb3a0fe",
         "message": "feat: implement AI Assistant Onboarding Enhancement for Weather System",
@@ -41,48 +95,10 @@
         ],
         "inferredScope": "",
         "author": "Test User"
-      },
-      {
-        "hash": "1161b42bf0a1cfcbfe9ebab29e755f3b0a24c036",
-        "message": "docs: update weather context with latest activity",
-        "smartSummary": "",
-        "timestamp": "2025-05-21T21:54:19-04:00",
-        "filesChanged": [
-          ".garden/weather-context.json"
-        ],
-        "inferredScope": "",
-        "author": "Test User"
-      },
-      {
-        "hash": "6a79404d14484e97ecd6916f1d5103ac09165e40",
-        "message": "feat: fix git hooks to use correct sprout binary path",
-        "smartSummary": "",
-        "timestamp": "2025-05-21T21:49:16-04:00",
-        "filesChanged": [
-          "apps/sprout-cli/sprout",
-          "libs/weather/git.go"
-        ],
-        "inferredScope": "",
-        "author": "Test User"
-      },
-      {
-        "hash": "3668f65d6daf23a2f6eac761d89198684d68bd3c",
-        "message": "Complete Git Activity Monitoring System",
-        "smartSummary": "",
-        "timestamp": "2025-05-21T21:48:00-04:00",
-        "filesChanged": [
-          ".garden/weather-context.json",
-          "apps/sprout-cli/main.go",
-          "apps/sprout-cli/sprout",
-          "libs/weather/git.go",
-          "libs/weather/git_test.go"
-        ],
-        "inferredScope": "",
-        "author": "Test User"
       }
     ],
     "timespan": "last 5 commits",
-    "momentum": 100
+    "momentum": 75
   },
   "nextSteps": {
     "suggestions": [
@@ -90,32 +106,26 @@
       "Update documentation",
       "Consider refactoring for better maintainability"
     ],
-    "priority": 90,
-    "basedOn": "current focus on libs development"
+    "priority": 87,
+    "basedOn": "current focus on documentation"
   },
   "weather": {
     "temperature": 95,
     "condition": "sunny",
     "pressure": 30,
-    "lastUpdate": "2025-05-21T23:07:56.575038-04:00"
+    "lastUpdate": "2025-05-22T03:07:52.478051-04:00"
   },
   "git": {
     "currentBranch": "main",
     "lastCommit": {
-      "hash": "1e66728e530ed5c69a3835e8041c6378dbb3a0fe",
-      "message": "feat: implement AI Assistant Onboarding Enhancement for Weather System",
-      "smartSummary": "Added implement AI Assistant Onboarding Enhancement for Weather System",
-      "timestamp": "2025-05-21T23:07:55-04:00",
+      "hash": "e2c6a7ab3422a5e490ce42ae83cf66c77ee0e54b",
+      "message": "docs: capture critical insights and decisions from open source launch",
+      "smartSummary": "Updated documentation for capture critical insights and decisions from open source launch",
+      "timestamp": "2025-05-22T03:07:52-04:00",
       "filesChanged": [
-        "apps/sprout-cli/main.go",
-        "docs/tasks/active/weather-mvp-implementation-plan.md",
-        "libs/weather/config.go",
-        "libs/weather/context.go",
-        "libs/weather/docs_intelligence.go",
-        "libs/weather/inference.go",
-        "libs/weather/interfaces.go"
+        "docs/specs/open-source-launch-lessons.md"
       ],
-      "inferredScope": "libs",
+      "inferredScope": "documentation",
       "author": "Test User"
     },
     "uncommittedChanges": true,
@@ -159,6 +169,14 @@
       "currentPhase": "Weather MVP Phase 1",
       "timeline": "Active development",
       "activeSpecs": [
+        {
+          "path": "docs/specs/farm-architecture-planning.md",
+          "title": "Spec: Farm Architecture Planning",
+          "type": "spec",
+          "summary": "**Related to**: [Weather Automatic Intelligence MVP](/docs/specs/weather-automatic-intelligence-mvp.md) **Implementation of**: [Sprouted Ecosystem Consolidation Plan](/Users/nutmeg/sprouted/docs/busin...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-22T02:44:54.235541879-04:00"
+        },
         {
           "path": "docs/specs/weather-automatic-intelligence-mvp.md",
           "title": "Spec: Weather Automatic Intelligence MVP",
@@ -230,6 +248,6 @@
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-22T01:56:43.950287-04:00"
+    "lastScanned": "2025-05-22T02:57:50.870313-04:00"
   }
 }
