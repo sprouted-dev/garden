@@ -39,22 +39,25 @@ func (gm *GitMonitor) InstallGitHooks() error {
 		return fmt.Errorf("failed to create hooks directory: %w", err)
 	}
 	
+	// Get the path to the current sprout binary
+	sproutPath := filepath.Join(gm.gardenPath, "apps", "sprout-cli", "sprout")
+	
 	// Install post-commit hook
 	postCommitHook := filepath.Join(gitHooksDir, "post-commit")
-	postCommitScript := `#!/bin/sh
+	postCommitScript := fmt.Sprintf(`#!/bin/sh
 # Weather context update after commit
-sprout weather --update-from-commit HEAD 2>/dev/null || true
-`
+%s weather --update-from-commit HEAD 2>/dev/null || true
+`, sproutPath)
 	if err := os.WriteFile(postCommitHook, []byte(postCommitScript), 0755); err != nil {
 		return fmt.Errorf("failed to create post-commit hook: %w", err)
 	}
 	
 	// Install post-checkout hook for branch changes
 	postCheckoutHook := filepath.Join(gitHooksDir, "post-checkout")
-	postCheckoutScript := `#!/bin/sh
+	postCheckoutScript := fmt.Sprintf(`#!/bin/sh
 # Weather context update after branch change
-sprout weather --update-from-branch-change "$1" "$2" "$3" 2>/dev/null || true
-`
+%s weather --update-from-branch-change "$1" "$2" "$3" 2>/dev/null || true
+`, sproutPath)
 	if err := os.WriteFile(postCheckoutHook, []byte(postCheckoutScript), 0755); err != nil {
 		return fmt.Errorf("failed to create post-checkout hook: %w", err)
 	}
