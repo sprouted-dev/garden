@@ -151,7 +151,7 @@ func (w *Weather) detectProcessGaps(existingDocs map[string]bool) []Documentatio
 	// Look for repeated activities that might need process docs
 	for activity, count := range activityCounts {
 		if count >= 3 { // Repeated 3+ times suggests a process
-			title := fmt.Sprintf("%s Process", strings.Title(activity))
+			title := fmt.Sprintf("%s Process", capitalize(activity))
 			
 			if !existingDocs[strings.ToLower(title)] {
 				needs = append(needs, DocumentationNeed{
@@ -237,6 +237,14 @@ func (w *Weather) loadConversationalCaptures() []ConversationCapture {
 
 // Helper functions
 
+// capitalize replaces the deprecated strings.Title
+func capitalize(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return strings.ToUpper(s[:1]) + s[1:]
+}
+
 func extractDecisionTitle(message string) string {
 	// Extract key decision from commit message
 	message = strings.ToLower(message)
@@ -244,21 +252,21 @@ func extractDecisionTitle(message string) string {
 	if idx := strings.Index(message, "decided to "); idx >= 0 {
 		rest := message[idx+11:]
 		if endIdx := strings.IndexAny(rest, ".,;"); endIdx > 0 {
-			return strings.Title(rest[:endIdx]) + " decision"
+			return capitalize(rest[:endIdx]) + " decision"
 		}
 	}
 	
 	if idx := strings.Index(message, "chose "); idx >= 0 {
 		rest := message[idx+6:]
 		if endIdx := strings.IndexAny(rest, ".,;"); endIdx > 0 {
-			return strings.Title(rest[:endIdx]) + " choice"
+			return capitalize(rest[:endIdx]) + " choice"
 		}
 	}
 	
 	// Fallback: use first part of message
 	parts := strings.Fields(message)
 	if len(parts) > 3 {
-		return strings.Title(strings.Join(parts[:3], " ")) + " decision"
+		return capitalize(strings.Join(parts[:3], " ")) + " decision"
 	}
 	
 	return "Undocumented decision"
@@ -272,7 +280,7 @@ func extractCrisisTitle(message string) string {
 	
 	for _, crisisType := range crisisTypes {
 		if strings.Contains(message, crisisType) {
-			return strings.Title(crisisType) + " issue"
+			return capitalize(crisisType) + " issue"
 		}
 	}
 	

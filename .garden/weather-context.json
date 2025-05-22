@@ -1,5 +1,5 @@
 {
-  "updated": "2025-05-22T18:05:40.12232-04:00",
+  "updated": "2025-05-22T19:12:20.060761-04:00",
   "sessionId": "session_1747877545",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
@@ -213,6 +213,14 @@
           "summary": "Related to: [Weather Context Preservation System](/docs/vision/weather-context-preservation.md) The Weather Automatic Intelligence MVP delivers the core value proposition: **zero-maintenance context p...",
           "status": "active",
           "lastUpdated": "2025-05-21T21:09:49.77066139-04:00"
+        },
+        {
+          "path": "docs/specs/weather-resilience-specification.md",
+          "title": "Spec: Weather System Resilience and Recovery",
+          "type": "spec",
+          "summary": "Related to: [Weather Context Preservation System](/docs/vision/weather-context-preservation.md) Addresses: [Weather Resilience Discovery](/docs/discoveries/weather-resilience-and-backup-architecture.m...",
+          "status": "active",
+          "lastUpdated": "2025-05-22T18:40:08.235585059-04:00"
         }
       ],
       "activeTasks": [
@@ -285,6 +293,6 @@
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-22T18:05:40.120103-04:00"
+    "lastScanned": "2025-05-22T19:12:20.057386-04:00"
   }
 }
