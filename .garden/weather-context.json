@@ -1,17 +1,48 @@
 {
-  "updated": "2025-05-22T03:07:52.478063-04:00",
+  "updated": "2025-05-22T16:56:36.336187-04:00",
   "sessionId": "session_1747877545",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
   "currentFocus": {
     "area": "documentation",
     "confidence": 0.85,
-    "lastActive": "2025-05-22T03:07:52.478048-04:00",
+    "lastActive": "2025-05-22T05:05:04.447188-04:00",
     "inferredFrom": "recent commit to documentation"
   },
   "recentProgress": {
     "summary": "Working on documentation system",
     "commits": [
+      {
+        "hash": "e80f4d1ecbe37270855380d44eaf64993eba0c1c",
+        "message": "feat: add enhanced AI onboarding system specification and planning",
+        "smartSummary": "",
+        "timestamp": "2025-05-22T05:05:03-04:00",
+        "filesChanged": [
+          "docs/specs/enhanced-ai-onboarding.md",
+          "docs/specs/farm-architecture-planning.md",
+          "docs/tasks/active/enhanced-ai-onboarding-implementation.md",
+          "docs/tasks/active/weather-mvp-implementation-plan.md"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
+      {
+        "hash": "561da2a30fac6f3a430ce7e85c3aedd855566d9c",
+        "message": "feat: add comprehensive community health files for open source governance",
+        "smartSummary": "",
+        "timestamp": "2025-05-22T03:19:30-04:00",
+        "filesChanged": [
+          ".garden/weather-context.json",
+          ".github/ISSUE_TEMPLATE/bug_report.md",
+          ".github/ISSUE_TEMPLATE/feature_request.md",
+          ".github/PULL_REQUEST_TEMPLATE.md",
+          "CODE_OF_CONDUCT.md",
+          "CONTRIBUTING.md",
+          "SECURITY.md"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
       {
         "hash": "e2c6a7ab3422a5e490ce42ae83cf66c77ee0e54b",
         "message": "docs: capture critical insights and decisions from open source launch",
@@ -65,36 +96,6 @@
         ],
         "inferredScope": "",
         "author": "Test User"
-      },
-      {
-        "hash": "1e66728e530ed5c69a3835e8041c6378dbb3a0fe",
-        "message": "feat: implement AI Assistant Onboarding Enhancement for Weather System",
-        "smartSummary": "",
-        "timestamp": "2025-05-21T23:07:55-04:00",
-        "filesChanged": [
-          "apps/sprout-cli/main.go",
-          "docs/tasks/active/weather-mvp-implementation-plan.md",
-          "libs/weather/config.go",
-          "libs/weather/context.go",
-          "libs/weather/docs_intelligence.go",
-          "libs/weather/inference.go",
-          "libs/weather/interfaces.go"
-        ],
-        "inferredScope": "",
-        "author": "Test User"
-      },
-      {
-        "hash": "bece69cd39e168b5cff9c159f321e9138fce1fe9",
-        "message": "docs: add comprehensive Weather System usage documentation",
-        "smartSummary": "",
-        "timestamp": "2025-05-21T22:00:15-04:00",
-        "filesChanged": [
-          ".garden/weather-context.json",
-          "README.md",
-          "docs/WEATHER_USAGE.md"
-        ],
-        "inferredScope": "",
-        "author": "Test User"
       }
     ],
     "timespan": "last 5 commits",
@@ -113,17 +114,20 @@
     "temperature": 95,
     "condition": "sunny",
     "pressure": 30,
-    "lastUpdate": "2025-05-22T03:07:52.478051-04:00"
+    "lastUpdate": "2025-05-22T05:05:04.447191-04:00"
   },
   "git": {
     "currentBranch": "main",
     "lastCommit": {
-      "hash": "e2c6a7ab3422a5e490ce42ae83cf66c77ee0e54b",
-      "message": "docs: capture critical insights and decisions from open source launch",
-      "smartSummary": "Updated documentation for capture critical insights and decisions from open source launch",
-      "timestamp": "2025-05-22T03:07:52-04:00",
+      "hash": "e80f4d1ecbe37270855380d44eaf64993eba0c1c",
+      "message": "feat: add enhanced AI onboarding system specification and planning",
+      "smartSummary": "Added add enhanced AI onboarding system specification and planning",
+      "timestamp": "2025-05-22T05:05:03-04:00",
       "filesChanged": [
-        "docs/specs/open-source-launch-lessons.md"
+        "docs/specs/enhanced-ai-onboarding.md",
+        "docs/specs/farm-architecture-planning.md",
+        "docs/tasks/active/enhanced-ai-onboarding-implementation.md",
+        "docs/tasks/active/weather-mvp-implementation-plan.md"
       ],
       "inferredScope": "documentation",
       "author": "Test User"
@@ -170,12 +174,28 @@
       "timeline": "Active development",
       "activeSpecs": [
         {
+          "path": "docs/specs/enhanced-ai-onboarding.md",
+          "title": "Spec: Enhanced AI Onboarding System",
+          "type": "spec",
+          "summary": "Related to: [Weather Context Preservation Vision](../vision/weather-context-preservation.md) - [ ] Auto-discover all documentation files in project hierarchy - [ ] Parse and categorize documentation b...",
+          "status": "active",
+          "lastUpdated": "2025-05-22T05:28:13.812321882-04:00"
+        },
+        {
           "path": "docs/specs/farm-architecture-planning.md",
           "title": "Spec: Farm Architecture Planning",
           "type": "spec",
           "summary": "**Related to**: [Weather Automatic Intelligence MVP](/docs/specs/weather-automatic-intelligence-mvp.md) **Implementation of**: [Sprouted Ecosystem Consolidation Plan](/Users/nutmeg/sprouted/docs/busin...",
-          "status": "unknown",
-          "lastUpdated": "2025-05-22T02:44:54.235541879-04:00"
+          "status": "active",
+          "lastUpdated": "2025-05-22T04:41:45.806335745-04:00"
+        },
+        {
+          "path": "docs/specs/open-source-launch-lessons.md",
+          "title": "Spec: Open Source Launch Lessons \u0026 Decisions",
+          "type": "spec",
+          "summary": "**Related to**: [Farm Architecture Planning](/docs/specs/farm-architecture-planning.md) **Context**: Critical insights from live open source launch preparation This document captures the essential les...",
+          "status": "active",
+          "lastUpdated": "2025-05-22T03:07:30.204259821-04:00"
         },
         {
           "path": "docs/specs/weather-automatic-intelligence-mvp.md",
@@ -187,6 +207,14 @@
         }
       ],
       "activeTasks": [
+        {
+          "path": "docs/tasks/active/enhanced-ai-onboarding-implementation.md",
+          "title": "Task: Enhanced AI Onboarding Implementation",
+          "type": "task",
+          "summary": "Implementation of: [Enhanced AI Onboarding System](../../specs/enhanced-ai-onboarding.md) Implement the enhanced AI onboarding system that automatically discovers, parses, and synthesizes all project ...",
+          "status": "active",
+          "lastUpdated": "2025-05-22T04:15:01.764494037-04:00"
+        },
         {
           "path": "docs/tasks/active/weather-core-data-model.md",
           "title": "Task: Weather Core Data Model Implementation",
@@ -208,8 +236,8 @@
           "title": "Task: Weather MVP Implementation Plan",
           "type": "task",
           "summary": "Implementation of: [Weather Automatic Intelligence MVP](/docs/specs/weather-automatic-intelligence-mvp.md) This document breaks down the Weather Automatic Intelligence MVP into specific, actionable im...",
-          "status": "active",
-          "lastUpdated": "2025-05-21T22:52:47.526511874-04:00"
+          "status": "completed",
+          "lastUpdated": "2025-05-22T04:15:21.490277532-04:00"
         }
       ],
       "priority": "Weather System foundation",
@@ -248,6 +276,6 @@
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-22T02:57:50.870313-04:00"
+    "lastScanned": "2025-05-22T16:56:36.33336-04:00"
   }
 }

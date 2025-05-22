@@ -21,6 +21,8 @@ func main() {
 	switch command {
 	case "weather":
 		handleWeatherCommand(os.Args[2:])
+	case "farm":
+		handleFarmCommand(os.Args[2:])
 	default:
 		fmt.Printf("Unknown command: %s\n", command)
 		showUsage()
@@ -36,6 +38,10 @@ func showUsage() {
 	fmt.Println("  sprout weather --onboard-ai   Show comprehensive AI assistant onboarding context")
 	fmt.Println("  sprout weather --raw          Show raw weather context JSON")
 	fmt.Println("  sprout weather recent         Show recent progress summary")
+	fmt.Println("  sprout weather --suggest-docs  Show documentation suggestions")
+	fmt.Println("  sprout weather emit-event     Emit event to farm orchestrator")
+	fmt.Println("  sprout farm process           Process farm-level events")
+	fmt.Println("  sprout farm weather           Show farm-level weather")
 	fmt.Println()
 }
 
@@ -93,6 +99,14 @@ func handleWeatherCommand(args []string) {
 		showRawContext(context)
 	case "recent":
 		showRecentProgress(context)
+	case "--suggest-docs":
+		showDocumentationSuggestions(gardenPath, context)
+	case "emit-event":
+		if len(args) < 2 {
+			fmt.Println("Error: emit-event requires event type")
+			return
+		}
+		handleEmitEvent(gardenPath, args[1:])
 	default:
 		fmt.Printf("Unknown weather option: %s\n", args[0])
 		showUsage()
@@ -295,4 +309,166 @@ func handleInstallHooks(gardenPath string) {
 	}
 	fmt.Println("✅ Git hooks installed successfully")
 	fmt.Println("Weather will now update automatically on commits and branch changes!")
+}
+
+// New handlers for documentation suggestions and event emission
+
+func showDocumentationSuggestions(gardenPath string, context *weather.WeatherContext) {
+	w := &weather.Weather{
+		RepoPath: gardenPath,
+		Context:  context,
+	}
+	
+	suggestions := w.DetectDocumentationGaps()
+	
+	fmt.Println("🌦️  Documentation Intelligence")
+	fmt.Println()
+	
+	if len(suggestions.MissingDecisions) == 0 && 
+	   len(suggestions.UncapturedLessons) == 0 && 
+	   len(suggestions.ProcessGaps) == 0 {
+		fmt.Println("✅ No documentation gaps detected")
+		return
+	}
+	
+	fmt.Println("📋 Missing Documentation Detected:")
+	fmt.Println()
+	
+	// Show missing decisions
+	for _, need := range suggestions.MissingDecisions {
+		showDocumentationNeed(need, "🔍 MISSING DECISION")
+	}
+	
+	// Show uncaptured lessons
+	for _, need := range suggestions.UncapturedLessons {
+		showDocumentationNeed(need, "🚨 CRITICAL LESSON")
+	}
+	
+	// Show process gaps
+	for _, need := range suggestions.ProcessGaps {
+		showDocumentationNeed(need, "📚 PROCESS GAP")
+	}
+	
+	if len(suggestions.RecentActivities) > 0 {
+		fmt.Println()
+		fmt.Println("⏰ RECENT ACTIVITY SUGGESTIONS:")
+		for _, activity := range suggestions.RecentActivities {
+			fmt.Printf("   • %s (%s) → Should document as %s\n", 
+				activity.Activity, activity.Timeframe, activity.SuggestedDocType)
+		}
+	}
+}
+
+func showDocumentationNeed(need weather.DocumentationNeed, prefix string) {
+	fmt.Printf("%s (Confidence: %.0f%%)\n", prefix, need.Confidence*100)
+	fmt.Printf("   Title: \"%s\"\n", need.Title)
+	fmt.Printf("   Type: %s\n", need.Type)
+	fmt.Printf("   Location: %s\n", need.SuggestedLocation)
+	fmt.Printf("   Detected: %s\n", strings.Join(need.DetectedFrom, ", "))
+	fmt.Println()
+}
+
+func handleEmitEvent(gardenPath string, args []string) {
+	w := &weather.Weather{RepoPath: gardenPath}
+	emitter, err := weather.NewEventEmitter(w)
+	if err != nil {
+		fmt.Printf("Error creating event emitter: %v\n", err)
+		return
+	}
+	
+	eventType := weather.EventType(args[0])
+	payload := make(map[string]interface{})
+	
+	// Parse additional arguments as key=value pairs
+	for i := 1; i < len(args); i++ {
+		parts := strings.SplitN(args[i], "=", 2)
+		if len(parts) == 2 {
+			payload[parts[0]] = parts[1]
+		}
+	}
+	
+	if err := emitter.Emit(eventType, payload); err != nil {
+		fmt.Printf("Error emitting event: %v\n", err)
+		return
+	}
+	
+	fmt.Printf("✅ Event emitted: %s\n", eventType)
+}
+
+func handleFarmCommand(args []string) {
+	if len(args) == 0 {
+		fmt.Println("Farm commands:")
+		fmt.Println("  sprout farm process    Process pending events")
+		fmt.Println("  sprout farm weather    Show farm-level weather")
+		return
+	}
+	
+	// Find farm path (parent of garden)
+	gardenPath, err := findGardenPath()
+	if err != nil {
+		// Not in a garden, try current directory as farm
+		gardenPath = "."
+	}
+	farmPath := filepath.Dir(gardenPath)
+	
+	switch args[0] {
+	case "process":
+		handleFarmProcess(farmPath)
+	case "weather":
+		handleFarmWeather(farmPath)
+	default:
+		fmt.Printf("Unknown farm command: %s\n", args[0])
+	}
+}
+
+func handleFarmProcess(farmPath string) {
+	orchestrator := weather.NewFarmOrchestrator(farmPath)
+	if err := orchestrator.ProcessEvents(); err != nil {
+		fmt.Printf("Error processing events: %v\n", err)
+		return
+	}
+	
+	fmt.Println("✅ Farm events processed")
+}
+
+func handleFarmWeather(farmPath string) {
+	weatherPath := filepath.Join(farmPath, ".farm", "weather", "current.json")
+	data, err := os.ReadFile(weatherPath)
+	if err != nil {
+		fmt.Printf("No farm weather data found. Run 'sprout farm process' first.\n")
+		return
+	}
+	
+	var farmWeather weather.FarmWeather
+	if err := json.Unmarshal(data, &farmWeather); err != nil {
+		fmt.Printf("Error reading farm weather: %v\n", err)
+		return
+	}
+	
+	fmt.Println("🌦️  Farm-Level Weather")
+	fmt.Println()
+	fmt.Printf("🌡️  Overall: %.0f°F\n", farmWeather.OverallTemp)
+	fmt.Printf("🌿 Active Gardens: %s\n", strings.Join(farmWeather.ActiveGardens, ", "))
+	fmt.Println()
+	
+	if len(farmWeather.Correlations) > 0 {
+		fmt.Println("🔗 Cross-Garden Patterns:")
+		for _, corr := range farmWeather.Correlations {
+			fmt.Printf("   • %s: %s (%.0f%% confidence)\n", 
+				strings.Join(corr.Gardens, " + "), 
+				corr.Pattern, 
+				corr.Confidence*100)
+			if corr.Suggestion != "" {
+				fmt.Printf("     💡 %s\n", corr.Suggestion)
+			}
+		}
+		fmt.Println()
+	}
+	
+	if len(farmWeather.Suggestions) > 0 {
+		fmt.Println("📋 Documentation Suggestions:")
+		for _, sugg := range farmWeather.Suggestions {
+			fmt.Printf("   • %s: %s\n", sugg.Type, sugg.Title)
+		}
+	}
 }

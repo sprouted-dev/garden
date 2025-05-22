@@ -1,0 +1,62 @@
+#!/bin/bash
+# Weather System Event Emission Hook
+# Lightweight, non-blocking event emission for farm orchestration
+
+# Get the garden root (repository root)
+GARDEN_ROOT=$(git rev-parse --show-toplevel)
+GARDEN_NAME=$(basename "$GARDEN_ROOT")
+
+# Get commit information
+COMMIT_HASH=$(git rev-parse HEAD)
+COMMIT_MSG=$(git log -1 --pretty=%B)
+FILES_CHANGED=$(git diff-tree --no-commit-id --name-only -r HEAD | wc -l)
+BRANCH=$(git branch --show-current)
+
+# Create event JSON
+EVENT_JSON=$(cat <<EOF
+{
+  "event_id": "$(uuidgen || echo $RANDOM$RANDOM)",
+  "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "garden": "$GARDEN_NAME",
+  "event_type": "commit",
+  "payload": {
+    "commit_hash": "$COMMIT_HASH",
+    "message": "$COMMIT_MSG",
+    "files_changed": $FILES_CHANGED,
+    "author": "$USER"
+  },
+  "context": {
+    "branch": "$BRANCH"
+  }
+}
+EOF
+)
+
+# Try to emit to farm queue (non-blocking)
+FARM_ROOT=$(dirname "$GARDEN_ROOT")
+FARM_EVENTS_DIR="$FARM_ROOT/.farm/events/pending"
+
+if [ -d "$FARM_ROOT/.farm" ]; then
+    mkdir -p "$FARM_EVENTS_DIR"
+    EVENT_FILE="$FARM_EVENTS_DIR/$(date +%s)-commit-$(echo $RANDOM).json"
+    echo "$EVENT_JSON" > "$EVENT_FILE" 2>/dev/null || {
+        # Fallback to local queue if farm write fails
+        LOCAL_QUEUE="$GARDEN_ROOT/.garden/event-queue"
+        mkdir -p "$LOCAL_QUEUE"
+        echo "$EVENT_JSON" > "$LOCAL_QUEUE/$(date +%s)-commit.json"
+    }
+else
+    # No farm structure, queue locally
+    LOCAL_QUEUE="$GARDEN_ROOT/.garden/event-queue"
+    mkdir -p "$LOCAL_QUEUE"
+    echo "$EVENT_JSON" > "$LOCAL_QUEUE/$(date +%s)-commit.json"
+fi
+
+# Update local weather (existing functionality)
+if [ -x "$GARDEN_ROOT/sprout" ] || [ -x "$GARDEN_ROOT/sprout-darwin-amd64" ]; then
+    ("$GARDEN_ROOT/sprout" weather update 2>/dev/null || \
+     "$GARDEN_ROOT/sprout-darwin-amd64" weather update 2>/dev/null) &
+fi
+
+# Success - don't block git operations
+exit 0
