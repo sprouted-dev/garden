@@ -1,0 +1,48 @@
+{
+  "updated": "2025-05-21T21:32:25.124506-04:00",
+  "sessionId": "session_1747877545",
+  "gardenPath": "/Users/nutmeg/sprouted/garden",
+  "version": "1.0.0",
+  "currentFocus": {
+    "area": "initializing garden",
+    "confidence": 1,
+    "lastActive": "2025-05-21T21:32:25.124491-04:00",
+    "inferredFrom": "new garden created"
+  },
+  "recentProgress": {
+    "summary": "Garden initialized",
+    "commits": [],
+    "timespan": "just now",
+    "momentum": 0
+  },
+  "nextSteps": {
+    "suggestions": [
+      "Make your first commit to start tracking progress",
+      "Begin working on your first feature"
+    ],
+    "priority": 50,
+    "basedOn": "new garden initialization"
+  },
+  "weather": {
+    "temperature": 20,
+    "condition": "sunny",
+    "pressure": 30,
+    "lastUpdate": "2025-05-21T21:32:25.124491-04:00"
+  },
+  "git": {
+    "currentBranch": "main",
+    "lastCommit": {
+      "hash": "",
+      "message": "",
+      "smartSummary": "",
+      "timestamp": "0001-01-01T00:00:00Z",
+      "filesChanged": null,
+      "inferredScope": "",
+      "author": ""
+    },
+    "uncommittedChanges": false,
+    "recentBranches": [
+      "main"
+    ]
+  }
+}
