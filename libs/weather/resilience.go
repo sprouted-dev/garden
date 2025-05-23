@@ -9,29 +9,28 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strings"
 	"time"
 )
 
 // ResilienceConfig defines backup and recovery settings
 type ResilienceConfig struct {
-	EnableShadowCopies  bool          `json:"enable_shadow_copies"`
-	ShadowCopyCount     int           `json:"shadow_copy_count"`
-	BackupInterval      time.Duration `json:"backup_interval"`
-	BackupRetention     time.Duration `json:"backup_retention"`
-	EnableJournal       bool          `json:"enable_journal"`
-	RecoveryStrategies  []string      `json:"recovery_strategies"`
+	EnableShadowCopies bool          `json:"enable_shadow_copies"`
+	ShadowCopyCount    int           `json:"shadow_copy_count"`
+	BackupInterval     time.Duration `json:"backup_interval"`
+	BackupRetention    time.Duration `json:"backup_retention"`
+	EnableJournal      bool          `json:"enable_journal"`
+	RecoveryStrategies []string      `json:"recovery_strategies"`
 }
 
 // DefaultResilienceConfig returns sensible defaults
 func DefaultResilienceConfig() ResilienceConfig {
 	return ResilienceConfig{
-		EnableShadowCopies:  true,
-		ShadowCopyCount:     3,
-		BackupInterval:      1 * time.Hour,
-		BackupRetention:     7 * 24 * time.Hour, // 7 days
-		EnableJournal:       true,
-		RecoveryStrategies:  []string{"shadow", "journal", "git-reconstruct"},
+		EnableShadowCopies: true,
+		ShadowCopyCount:    3,
+		BackupInterval:     1 * time.Hour,
+		BackupRetention:    7 * 24 * time.Hour, // 7 days
+		EnableJournal:      true,
+		RecoveryStrategies: []string{"shadow", "journal", "git-reconstruct"},
 	}
 }
 
@@ -53,18 +52,18 @@ func NewResilienceManager(gardenPath string, config ResilienceConfig) *Resilienc
 func (rm *ResilienceManager) CreateBackup() error {
 	timestamp := time.Now().Format("20060102-150405")
 	backupDir := filepath.Join(rm.gardenPath, ".garden", "backups", timestamp)
-	
+
 	// Create backup directory
 	if err := os.MkdirAll(backupDir, 0755); err != nil {
 		return fmt.Errorf("failed to create backup directory: %w", err)
 	}
-	
+
 	// Files to backup
 	filesToBackup := []string{
 		filepath.Join(rm.gardenPath, ".garden", "weather-context.json"),
 		filepath.Join(rm.gardenPath, "weather.md"),
 	}
-	
+
 	// Backup each file
 	for _, src := range filesToBackup {
 		if _, err := os.Stat(src); err == nil {
@@ -74,28 +73,28 @@ func (rm *ResilienceManager) CreateBackup() error {
 			}
 		}
 	}
-	
+
 	// Create backup metadata
 	metadata := BackupMetadata{
-		Timestamp:   time.Now(),
-		Version:     "1.0.0",
-		GardenPath:  rm.gardenPath,
-		Files:       filesToBackup,
-		BackupType:  "full",
-		Checksum:    rm.calculateChecksum(),
+		Timestamp:  time.Now(),
+		Version:    "1.0.0",
+		GardenPath: rm.gardenPath,
+		Files:      filesToBackup,
+		BackupType: "full",
+		Checksum:   rm.calculateChecksum(),
 	}
-	
+
 	metadataPath := filepath.Join(backupDir, "backup-metadata.json")
 	if err := rm.saveJSON(metadataPath, metadata); err != nil {
 		return fmt.Errorf("failed to save backup metadata: %w", err)
 	}
-	
+
 	// Clean old backups
 	if err := rm.cleanOldBackups(); err != nil {
 		// Log but don't fail
 		fmt.Printf("Warning: failed to clean old backups: %v\n", err)
 	}
-	
+
 	return nil
 }
 
@@ -104,15 +103,15 @@ func (rm *ResilienceManager) CreateShadowCopy() error {
 	if !rm.config.EnableShadowCopies {
 		return nil
 	}
-	
+
 	shadowDir := filepath.Join(rm.gardenPath, ".garden", "shadows")
 	if err := os.MkdirAll(shadowDir, 0755); err != nil {
 		return fmt.Errorf("failed to create shadow directory: %w", err)
 	}
-	
+
 	// Rotate existing shadows
 	rm.rotateShadows(shadowDir)
-	
+
 	// Create new shadow copies
 	weatherContext := filepath.Join(rm.gardenPath, ".garden", "weather-context.json")
 	if _, err := os.Stat(weatherContext); err == nil {
@@ -121,7 +120,7 @@ func (rm *ResilienceManager) CreateShadowCopy() error {
 			return fmt.Errorf("failed to create shadow copy: %w", err)
 		}
 	}
-	
+
 	// Shadow copy of weather.md
 	weatherMd := filepath.Join(rm.gardenPath, "weather.md")
 	if _, err := os.Stat(weatherMd); err == nil {
@@ -130,7 +129,7 @@ func (rm *ResilienceManager) CreateShadowCopy() error {
 			return fmt.Errorf("failed to create weather.md shadow: %w", err)
 		}
 	}
-	
+
 	return nil
 }
 
@@ -140,14 +139,14 @@ func (rm *ResilienceManager) RecoverFromDisaster() (*RecoveryResult, error) {
 		Timestamp: time.Now(),
 		Attempts:  []RecoveryAttempt{},
 	}
-	
+
 	// Try each recovery strategy in order
 	for _, strategy := range rm.config.RecoveryStrategies {
 		attempt := RecoveryAttempt{
 			Strategy:  strategy,
 			Timestamp: time.Now(),
 		}
-		
+
 		var err error
 		switch strategy {
 		case "shadow":
@@ -161,7 +160,7 @@ func (rm *ResilienceManager) RecoverFromDisaster() (*RecoveryResult, error) {
 		default:
 			err = fmt.Errorf("unknown recovery strategy: %s", strategy)
 		}
-		
+
 		if err == nil {
 			attempt.Success = true
 			attempt.Message = fmt.Sprintf("Successfully recovered using %s strategy", strategy)
@@ -174,14 +173,14 @@ func (rm *ResilienceManager) RecoverFromDisaster() (*RecoveryResult, error) {
 			result.Attempts = append(result.Attempts, attempt)
 		}
 	}
-	
+
 	return result, nil
 }
 
 // recoverFromShadow attempts recovery from shadow copies
 func (rm *ResilienceManager) recoverFromShadow() error {
 	shadowDir := filepath.Join(rm.gardenPath, ".garden", "shadows")
-	
+
 	// Recover weather-context.json
 	shadowContext := filepath.Join(shadowDir, "weather-context.shadow.json")
 	if _, err := os.Stat(shadowContext); err == nil {
@@ -192,7 +191,7 @@ func (rm *ResilienceManager) recoverFromShadow() error {
 	} else {
 		return fmt.Errorf("no shadow copy found")
 	}
-	
+
 	// Recover weather.md if needed
 	shadowMd := filepath.Join(shadowDir, "weather.shadow.md")
 	if _, err := os.Stat(shadowMd); err == nil {
@@ -203,7 +202,7 @@ func (rm *ResilienceManager) recoverFromShadow() error {
 			}
 		}
 	}
-	
+
 	return nil
 }
 
@@ -213,7 +212,7 @@ func (rm *ResilienceManager) recoverFromJournal() error {
 	if _, err := os.Stat(journalPath); os.IsNotExist(err) {
 		return fmt.Errorf("no journal found")
 	}
-	
+
 	// Read journal and reconstruct state
 	// This would replay events to rebuild context
 	return fmt.Errorf("journal recovery not yet implemented")
@@ -221,87 +220,75 @@ func (rm *ResilienceManager) recoverFromJournal() error {
 
 // recoverFromGit attempts to reconstruct from git history
 func (rm *ResilienceManager) recoverFromGit() error {
-	// Create a new Weather instance
-	w := &Weather{
-		RepoPath: rm.gardenPath,
-	}
-	
-	// Get git context
-	gc, err := w.GetGitContext()
+	// Try to load existing Weather instance
+	_, err := NewWeather(rm.gardenPath)
 	if err != nil {
-		return fmt.Errorf("failed to get git context: %w", err)
-	}
-	
-	// Create basic weather context from git
-	context := WeatherContext{
-		Updated:    time.Now(),
-		Version:    "1.0.0",
-		GardenPath: rm.gardenPath,
-		CurrentFocus: FocusContext{
-			Area:       "unknown",
-			Confidence: 0.5,
-			LastActive: time.Now(),
-		},
-	}
-	
-	// Infer from recent commits
-	if len(gc.RecentCommits) > 0 {
-		recentCommit := gc.RecentCommits[0]
-		context.CurrentFocus.InferredFrom = "git history recovery"
-		
-		// Simple inference from commit message
-		if strings.Contains(strings.ToLower(recentCommit.Message), "doc") {
-			context.CurrentFocus.Area = "documentation"
-		} else if strings.Contains(strings.ToLower(recentCommit.Message), "test") {
-			context.CurrentFocus.Area = "testing"
-		} else {
-			context.CurrentFocus.Area = "development"
+		// If that fails, create minimal recovery context
+		context := &WeatherContext{
+			Updated:    time.Now(),
+			Version:    "1.0.0",
+			GardenPath: rm.gardenPath,
+			Git: GitContext{
+				CurrentBranch: "main",
+			},
+			CurrentFocus: FocusArea{
+				Area:         "recovery",
+				Confidence:   0.5,
+				LastActive:   time.Now(),
+				InferredFrom: "disaster recovery",
+			},
 		}
+
+		// Save minimal context
+		contextPath := filepath.Join(rm.gardenPath, ".garden", "weather-context.json")
+		if err := rm.saveJSON(contextPath, context); err != nil {
+			return fmt.Errorf("failed to save minimal context: %w", err)
+		}
+
+		// Create minimal weather.md
+		weatherPath := filepath.Join(rm.gardenPath, "weather.md")
+		content := `# Weather Report
+
+*Reconstructed after data loss*
+
+## Status
+🔧 Recovery Mode - Minimal context available
+
+Run 'sprout weather' to rebuild full context.`
+
+		if err := os.WriteFile(weatherPath, []byte(content), 0644); err != nil {
+			return fmt.Errorf("failed to write weather.md: %w", err)
+		}
+
+		return nil
 	}
-	
-	// Save reconstructed context
-	contextPath := filepath.Join(rm.gardenPath, ".garden", "weather-context.json")
-	if err := rm.saveJSON(contextPath, context); err != nil {
-		return fmt.Errorf("failed to save reconstructed context: %w", err)
-	}
-	
-	// Generate new weather.md
-	w.context = &context
-	summary, err := w.GenerateWeatherSummary("# Weather Report\n\nReconstructed from git history due to data loss.")
-	if err != nil {
-		return fmt.Errorf("failed to generate weather summary: %w", err)
-	}
-	
-	weatherPath := filepath.Join(rm.gardenPath, "weather.md")
-	if err := os.WriteFile(weatherPath, []byte(summary), 0644); err != nil {
-		return fmt.Errorf("failed to write weather.md: %w", err)
-	}
-	
+
+	// If Weather loaded successfully, context is already restored
 	return nil
 }
 
 // recoverFromBackup attempts recovery from full backup
 func (rm *ResilienceManager) recoverFromBackup() error {
 	backupsDir := filepath.Join(rm.gardenPath, ".garden", "backups")
-	
+
 	// Find most recent backup
 	entries, err := os.ReadDir(backupsDir)
 	if err != nil {
 		return fmt.Errorf("failed to read backups directory: %w", err)
 	}
-	
+
 	if len(entries) == 0 {
 		return fmt.Errorf("no backups found")
 	}
-	
+
 	// Sort to get most recent
 	sort.Slice(entries, func(i, j int) bool {
 		return entries[i].Name() > entries[j].Name()
 	})
-	
+
 	// Restore from most recent backup
 	backupDir := filepath.Join(backupsDir, entries[0].Name())
-	
+
 	// Restore weather-context.json
 	backupContext := filepath.Join(backupDir, "weather-context.json")
 	if _, err := os.Stat(backupContext); err == nil {
@@ -310,7 +297,7 @@ func (rm *ResilienceManager) recoverFromBackup() error {
 			return fmt.Errorf("failed to restore context from backup: %w", err)
 		}
 	}
-	
+
 	// Restore weather.md
 	backupMd := filepath.Join(backupDir, "weather.md")
 	if _, err := os.Stat(backupMd); err == nil {
@@ -319,7 +306,7 @@ func (rm *ResilienceManager) recoverFromBackup() error {
 			return fmt.Errorf("failed to restore weather.md from backup: %w", err)
 		}
 	}
-	
+
 	return nil
 }
 
@@ -329,12 +316,12 @@ func (rm *ResilienceManager) rotateShadows(shadowDir string) {
 	for i := rm.config.ShadowCopyCount - 1; i > 0; i-- {
 		oldPath := filepath.Join(shadowDir, fmt.Sprintf("weather-context.shadow.%d.json", i-1))
 		newPath := filepath.Join(shadowDir, fmt.Sprintf("weather-context.shadow.%d.json", i))
-		
+
 		if _, err := os.Stat(oldPath); err == nil {
 			os.Rename(oldPath, newPath)
 		}
 	}
-	
+
 	// Move current shadow to .0
 	currentShadow := filepath.Join(shadowDir, "weather-context.shadow.json")
 	if _, err := os.Stat(currentShadow); err == nil {
@@ -347,12 +334,12 @@ func (rm *ResilienceManager) rotateShadows(shadowDir string) {
 func (rm *ResilienceManager) cleanOldBackups() error {
 	backupsDir := filepath.Join(rm.gardenPath, ".garden", "backups")
 	cutoffTime := time.Now().Add(-rm.config.BackupRetention)
-	
+
 	entries, err := os.ReadDir(backupsDir)
 	if err != nil {
 		return err
 	}
-	
+
 	for _, entry := range entries {
 		if entry.IsDir() {
 			// Parse timestamp from directory name
@@ -363,7 +350,7 @@ func (rm *ResilienceManager) cleanOldBackups() error {
 			}
 		}
 	}
-	
+
 	return nil
 }
 
@@ -380,7 +367,7 @@ func (rm *ResilienceManager) saveJSON(path string, data interface{}) error {
 		return err
 	}
 	defer file.Close()
-	
+
 	encoder := json.NewEncoder(file)
 	encoder.SetIndent("", "  ")
 	return encoder.Encode(data)
@@ -393,13 +380,13 @@ func copyFile(src, dst string) error {
 		return err
 	}
 	defer source.Close()
-	
+
 	destination, err := os.Create(dst)
 	if err != nil {
 		return err
 	}
 	defer destination.Close()
-	
+
 	_, err = io.Copy(destination, source)
 	return err
 }
@@ -416,9 +403,9 @@ type BackupMetadata struct {
 
 // RecoveryResult stores recovery attempt results
 type RecoveryResult struct {
-	Success   bool               `json:"success"`
-	Timestamp time.Time          `json:"timestamp"`
-	Attempts  []RecoveryAttempt  `json:"attempts"`
+	Success   bool              `json:"success"`
+	Timestamp time.Time         `json:"timestamp"`
+	Attempts  []RecoveryAttempt `json:"attempts"`
 }
 
 // RecoveryAttempt stores individual recovery attempt
