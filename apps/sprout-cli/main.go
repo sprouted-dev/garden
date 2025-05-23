@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"sprouted.dev/weather"
@@ -23,6 +24,10 @@ func main() {
 		handleWeatherCommand(os.Args[2:])
 	case "farm":
 		handleFarmCommand(os.Args[2:])
+	case "validate-seed":
+		handleValidateSeedCommand(os.Args[2:])
+	case "init":
+		handleInitCommand(os.Args[2:])
 	default:
 		fmt.Printf("Unknown command: %s\n", command)
 		showUsage()
@@ -40,8 +45,11 @@ func showUsage() {
 	fmt.Println("  sprout weather recent         Show recent progress summary")
 	fmt.Println("  sprout weather --suggest-docs  Show documentation suggestions")
 	fmt.Println("  sprout weather emit-event     Emit event to farm orchestrator")
+	fmt.Println("  sprout weather context-status Show context usage and handoff advice")
 	fmt.Println("  sprout farm process           Process farm-level events")
 	fmt.Println("  sprout farm weather           Show farm-level weather")
+	fmt.Println("  sprout validate-seed [path]   Validate a documentation seed")
+	fmt.Println("  sprout init --with-claude     Initialize workspace with Claude integration")
 	fmt.Println()
 }
 
@@ -107,6 +115,8 @@ func handleWeatherCommand(args []string) {
 			return
 		}
 		handleEmitEvent(gardenPath, args[1:])
+	case "context-status":
+		showContextStatus(gardenPath, context)
 	default:
 		fmt.Printf("Unknown weather option: %s\n", args[0])
 		showUsage()
@@ -272,7 +282,12 @@ func getWeatherEmoji(condition weather.WeatherCondition) string {
 	case weather.WeatherFoggy:
 		return "🌫️ Foggy"
 	default:
-		return "🌤️ " + strings.Title(string(condition))
+		// Capitalize first letter manually to avoid deprecated strings.Title
+		s := string(condition)
+		if len(s) > 0 {
+			return "🌤️ " + strings.ToUpper(s[:1]) + s[1:]
+		}
+		return "🌤️ " + s
 	}
 }
 
@@ -377,7 +392,7 @@ func handleEmitEvent(gardenPath string, args []string) {
 	}
 	
 	eventType := weather.EventType(args[0])
-	payload := make(map[string]interface{})
+	payload := make(map[string]any)
 	
 	// Parse additional arguments as key=value pairs
 	for i := 1; i < len(args); i++ {
@@ -472,4 +487,63 @@ func handleFarmWeather(farmPath string) {
 			fmt.Printf("   • %s: %s\n", sugg.Type, sugg.Title)
 		}
 	}
+}
+
+func handleValidateSeedCommand(args []string) {
+	// Get path to validate (default to current directory)
+	path := "."
+	if len(args) > 0 {
+		path = args[0]
+	}
+
+	// Convert to absolute path
+	absPath, err := filepath.Abs(path)
+	if err != nil {
+		fmt.Printf("Error resolving path: %v\n", err)
+		return
+	}
+
+	fmt.Printf("🌱 Validating Seed at: %s\n\n", absPath)
+	
+	fmt.Println("🚧 Seed validation coming soon!")
+	fmt.Println()
+	fmt.Println("This feature will:")
+	fmt.Println("  • Check documentation structure")
+	fmt.Println("  • Validate seed health")
+	fmt.Println("  • Provide improvement suggestions")
+	fmt.Println("  • Score your seed quality")
+	fmt.Println()
+	fmt.Println("For now, check out the Seeds quickstart guide:")
+	fmt.Println("  https://github.com/sprouted-dev/garden/blob/main/docs/seeds/quickstart.md")
+}
+
+func showContextStatus(_ string, _ *weather.WeatherContext) {
+	// TODO: Implement context status monitoring
+	fmt.Println("🚧 Context status monitoring coming soon!")
+	fmt.Println()
+	fmt.Println("This feature will allow you to:")
+	fmt.Println("  • Monitor Claude's context usage")
+	fmt.Println("  • Get alerts before hitting limits")
+	fmt.Println("  • Prepare seamless handoffs")
+}
+
+
+func handleInitCommand(args []string) {
+	// Check for --with-claude flag
+	withClaude := slices.Contains(args, "--with-claude")
+	
+	if !withClaude {
+		fmt.Println("Usage: sprout init --with-claude")
+		fmt.Println("This initializes Claude AI integration in your workspace")
+		return
+	}
+	
+	fmt.Println("🚧 Claude integration coming soon!")
+	fmt.Println()
+	fmt.Println("This feature will provide:")
+	fmt.Println("  • Automatic context monitoring")
+	fmt.Println("  • Smart handoff detection")
+	fmt.Println("  • Seamless session continuity")
+	fmt.Println()
+	fmt.Println("Stay tuned for updates!")
 }

@@ -346,7 +346,7 @@ func (cm *ContextManager) createDefaultContext() WeatherContext {
 	}
 	
 	// Populate onboarding context
-	cm.updateOnboardingContext(&context)
+	_ = cm.updateOnboardingContext(&context)
 	
 	return context
 }

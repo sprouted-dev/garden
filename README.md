@@ -17,9 +17,6 @@ Install and try Weather System in any Git repository:
 # Install Weather System (macOS, Linux, Windows)
 curl -fsSL https://sprouted.dev/install.sh | sh
 
-# Enable automatic context tracking
-sprout weather --install-hooks
-
 # See your current development context
 sprout weather
 
@@ -49,6 +46,29 @@ Weather System understands your development context by analyzing:
 - Architectural decisions and progress indicators
 
 This creates a rich, shareable context that AI assistants can understand immediately - no lengthy explanations needed.
+
+### Claude Context Management (New!)
+
+Weather System now includes intelligent context management for Claude sessions:
+
+```bash
+# Check Claude's context usage
+sprout weather context-status
+
+# Monitor context usage in background
+.claude/commands/context-monitor monitor
+
+# Prepare handoff before hitting context limits
+.claude/commands/onboard-next-assistant
+```
+
+Features:
+- **Automatic Detection** - Knows when Claude is approaching context limits
+- **Intelligent Handoffs** - Preserves critical context between sessions
+- **Background Monitoring** - Alerts you before hitting limits
+- **Universal Compatibility** - Works in any workspace type
+
+[Learn more about Claude Context Management →](docs/features/claude-context-management.md)
 
 ## For Contributors
 

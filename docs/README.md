@@ -11,7 +11,11 @@ This documentation system supports spec-driven development across all projects i
 - **Phases** (`/docs/phases/`) - Implementation phases
 
 ### Supporting Documentation
+- **Quickstart** (`/docs/quickstart/`) - Quick guides for getting started
+- **Features** (`/docs/features/`) - Feature documentation and guides
 - **Workflows** (`/docs/workflows/`) - Agentic AI development workflows
+- **Seeds** (`/docs/seeds/`) - Documentation patterns and Seed examples
+- **Discoveries** (`/docs/discoveries/`) - Technical insights and architectural discoveries
 
 ## Development Flow
 

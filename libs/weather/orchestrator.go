@@ -61,7 +61,9 @@ func (o *FarmOrchestrator) ProcessEvents() error {
 	processedDir := filepath.Join(o.EventsPath, "processed")
 	
 	// Ensure directories exist
-	os.MkdirAll(processedDir, 0755)
+	if err := os.MkdirAll(processedDir, 0755); err != nil {
+		return fmt.Errorf("failed to create processed directory: %w", err)
+	}
 	
 	// Read pending events
 	files, err := os.ReadDir(pendingDir)
@@ -104,7 +106,9 @@ func (o *FarmOrchestrator) ProcessEvents() error {
 		
 		// Move to processed
 		processedPath := filepath.Join(processedDir, file.Name())
-		os.Rename(eventPath, processedPath)
+		if err := os.Rename(eventPath, processedPath); err != nil {
+			return fmt.Errorf("failed to move event to processed: %w", err)
+		}
 	}
 	
 	// Correlate events
@@ -237,7 +241,9 @@ func (o *FarmOrchestrator) generateSuggestions(events []Event, correlations []Ev
 // saveFarmWeather persists the farm weather state
 func (o *FarmOrchestrator) saveFarmWeather(weather FarmWeather) error {
 	weatherDir := filepath.Join(o.FarmPath, ".farm", "weather")
-	os.MkdirAll(weatherDir, 0755)
+	if err := os.MkdirAll(weatherDir, 0755); err != nil {
+		return fmt.Errorf("failed to create weather directory: %w", err)
+	}
 	
 	// Save current weather
 	currentPath := filepath.Join(weatherDir, "current.json")
@@ -252,7 +258,9 @@ func (o *FarmOrchestrator) saveFarmWeather(weather FarmWeather) error {
 	
 	// Archive snapshot
 	historyDir := filepath.Join(weatherDir, "history")
-	os.MkdirAll(historyDir, 0755)
+	if err := os.MkdirAll(historyDir, 0755); err != nil {
+		return fmt.Errorf("failed to create history directory: %w", err)
+	}
 	
 	snapshotPath := filepath.Join(historyDir, fmt.Sprintf("%d.json", time.Now().Unix()))
 	return os.WriteFile(snapshotPath, data, 0644)
