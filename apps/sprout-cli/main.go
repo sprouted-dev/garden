@@ -498,79 +498,17 @@ func handleValidateSeedCommand(args []string) {
 	}
 
 	fmt.Printf("🌱 Validating Seed at: %s\n\n", absPath)
-
-	// Create validator
-	validator := weather.NewSeedValidator(absPath)
 	
-	// Run validation
-	result, err := validator.Validate()
-	if err != nil {
-		fmt.Printf("Error during validation: %v\n", err)
-		return
-	}
-
-	// Display results
-	fmt.Printf("📊 Validation Results\n")
-	fmt.Printf("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
-	fmt.Printf("Level: %s\n", strings.Title(result.Level))
-	fmt.Printf("Valid: %s\n", formatBool(result.Valid))
-	fmt.Printf("Score: %d/100\n", result.Score)
+	fmt.Println("🚧 Seed validation coming soon!")
 	fmt.Println()
-
-	// Display structure found
-	fmt.Println("📁 Structure Found:")
-	fmt.Printf("   • Has docs/: %s\n", formatBool(result.Structure.HasDocs))
-	fmt.Printf("   • Has README: %s\n", formatBool(result.Structure.HasReadme))
-	fmt.Printf("   • Has .git: %s\n", formatBool(result.Structure.HasGitRepo))
-	fmt.Printf("   • Weather initialized: %s\n", formatBool(result.Structure.HasWeatherContext))
-	
-	if len(result.Structure.Directories) > 0 {
-		fmt.Printf("   • Subdirectories: %s\n", strings.Join(result.Structure.Directories, ", "))
-	}
-	if len(result.Structure.SpecialFiles) > 0 {
-		fmt.Printf("   • Special files: %s\n", strings.Join(result.Structure.SpecialFiles, ", "))
-	}
+	fmt.Println("This feature will:")
+	fmt.Println("  • Check documentation structure")
+	fmt.Println("  • Validate seed health")
+	fmt.Println("  • Provide improvement suggestions")
+	fmt.Println("  • Score your seed quality")
 	fmt.Println()
-
-	// Display issues
-	if len(result.Issues) > 0 {
-		fmt.Println("⚠️  Issues Found:")
-		for _, issue := range result.Issues {
-			icon := "ℹ️"
-			if issue.Severity == "error" {
-				icon = "❌"
-			} else if issue.Severity == "warning" {
-				icon = "⚠️"
-			}
-			fmt.Printf("   %s %s: %s\n", icon, issue.Path, issue.Message)
-			if issue.Suggestion != "" {
-				fmt.Printf("      💡 %s\n", issue.Suggestion)
-			}
-		}
-		fmt.Println()
-	}
-
-	// Display suggestions
-	if len(result.Suggestions) > 0 {
-		fmt.Println("💡 Suggestions:")
-		for _, suggestion := range result.Suggestions {
-			fmt.Printf("   • %s\n", suggestion)
-		}
-		fmt.Println()
-	}
-
-	// Summary
-	if result.Valid {
-		if result.Score >= 80 {
-			fmt.Println("✅ Excellent! Your seed is well-structured and ready to grow.")
-		} else if result.Score >= 60 {
-			fmt.Println("✅ Good seed structure. Consider the suggestions to improve further.")
-		} else {
-			fmt.Println("✅ Valid seed, but could be improved. Check suggestions above.")
-		}
-	} else {
-		fmt.Println("❌ Seed has critical issues that should be addressed.")
-	}
+	fmt.Println("For now, check out the Seeds quickstart guide:")
+	fmt.Println("  https://github.com/sprouted-dev/garden/blob/main/docs/seeds/quickstart.md")
 }
 
 func formatBool(b bool) string {
@@ -581,69 +519,13 @@ func formatBool(b bool) string {
 }
 
 func showContextStatus(gardenPath string, context *weather.WeatherContext) {
-	// Create a monitor (in real usage, this would be persistent)
-	monitor := weather.NewContextMonitor()
-	
-	// Create weather instance for analysis
-	w := &weather.Weather{
-		RepoPath: gardenPath,
-		Context:  context,
-	}
-	
-	// Get status
-	status, err := monitor.GetStatus(w)
-	if err != nil {
-		fmt.Printf("Error checking context status: %v\n", err)
-		return
-	}
-	
-	fmt.Println("🤖 Claude Context Status")
-	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-	
-	// Show usage with visual bar
-	fmt.Printf("Usage: %d%% ", status.UsagePercent)
-	showUsageBar(status.UsagePercent)
+	// TODO: Implement context status monitoring
+	fmt.Println("🚧 Context status monitoring coming soon!")
 	fmt.Println()
-	
-	// Show urgency
-	urgencyIcon := "✅"
-	urgencyColor := ""
-	switch status.Urgency {
-	case "critical":
-		urgencyIcon = "🚨"
-		urgencyColor = "\033[0;31m" // Red
-	case "high":
-		urgencyIcon = "⚠️"
-		urgencyColor = "\033[1;33m" // Yellow
-	case "medium":
-		urgencyIcon = "📊"
-		urgencyColor = "\033[1;33m" // Yellow
-	default:
-		urgencyIcon = "✅"
-		urgencyColor = "\033[0;32m" // Green
-	}
-	
-	fmt.Printf("%sUrgency: %s %s\033[0m\n", urgencyColor, urgencyIcon, status.Urgency)
-	
-	// Show handoff analysis
-	if status.IsLogicalHandoff {
-		fmt.Println("\n✅ This is a good handoff point!")
-		fmt.Println("Reasons:")
-		for _, reason := range status.HandoffReasons {
-			fmt.Printf("   • %s\n", reason)
-		}
-	} else {
-		fmt.Println("\n⏳ Not an ideal handoff point yet")
-	}
-	
-	// Show recommendation
-	fmt.Printf("\n💡 Recommendation: %s\n", status.Recommendation)
-	
-	// Show handoff command if appropriate
-	if status.UsagePercent >= 70 || status.IsLogicalHandoff {
-		fmt.Println("\n📋 To prepare handoff:")
-		fmt.Println("   .claude/commands/onboard-next-assistant")
-	}
+	fmt.Println("This feature will allow you to:")
+	fmt.Println("  • Monitor Claude's context usage")
+	fmt.Println("  • Get alerts before hitting limits")
+	fmt.Println("  • Prepare seamless handoffs")
 }
 
 func showUsageBar(percent int) {
@@ -683,35 +565,12 @@ func handleInitCommand(args []string) {
 		return
 	}
 	
-	// Get current directory
-	workspacePath, err := os.Getwd()
-	if err != nil {
-		fmt.Printf("Error getting current directory: %v\n", err)
-		return
-	}
-	
-	fmt.Println("🤖 Initializing Claude integration...")
-	
-	// Create integration
-	integration := weather.NewClaudeIntegration(workspacePath)
-	
-	// Run setup
-	if err := integration.Setup(); err != nil {
-		fmt.Printf("Error setting up Claude integration: %v\n", err)
-		return
-	}
-	
-	// Detect workspace type and show appropriate message
+	fmt.Println("🚧 Claude integration coming soon!")
 	fmt.Println()
-	fmt.Printf("✅ Claude integration installed for %s workspace!\n", integration.WorkspaceType)
+	fmt.Println("This feature will provide:")
+	fmt.Println("  • Automatic context monitoring")
+	fmt.Println("  • Smart handoff detection")
+	fmt.Println("  • Seamless session continuity")
 	fmt.Println()
-	fmt.Println("🚀 Quick Start:")
-	fmt.Println("   1. Check context: .claude/commands/context-monitor check")
-	fmt.Println("   2. Start work as normal")
-	fmt.Println("   3. Monitor will alert when handoff is recommended")
-	fmt.Println()
-	fmt.Println("📋 Commands available:")
-	fmt.Println("   • sprout weather context-status - Check context usage")
-	fmt.Println("   • .claude/commands/onboard-next-assistant - Prepare handoff")
-	fmt.Println("   • .claude/commands/context-monitor monitor - Run background monitor")
+	fmt.Println("Stay tuned for updates!")
 }
