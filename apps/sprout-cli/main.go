@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"sprouted.dev/weather"
@@ -281,7 +282,12 @@ func getWeatherEmoji(condition weather.WeatherCondition) string {
 	case weather.WeatherFoggy:
 		return "🌫️ Foggy"
 	default:
-		return "🌤️ " + strings.Title(string(condition))
+		// Capitalize first letter manually to avoid deprecated strings.Title
+		s := string(condition)
+		if len(s) > 0 {
+			return "🌤️ " + strings.ToUpper(s[:1]) + s[1:]
+		}
+		return "🌤️ " + s
 	}
 }
 
@@ -386,7 +392,7 @@ func handleEmitEvent(gardenPath string, args []string) {
 	}
 	
 	eventType := weather.EventType(args[0])
-	payload := make(map[string]interface{})
+	payload := make(map[string]any)
 	
 	// Parse additional arguments as key=value pairs
 	for i := 1; i < len(args); i++ {
@@ -511,14 +517,7 @@ func handleValidateSeedCommand(args []string) {
 	fmt.Println("  https://github.com/sprouted-dev/garden/blob/main/docs/seeds/quickstart.md")
 }
 
-func formatBool(b bool) string {
-	if b {
-		return "✅ Yes"
-	}
-	return "❌ No"
-}
-
-func showContextStatus(gardenPath string, context *weather.WeatherContext) {
+func showContextStatus(_ string, _ *weather.WeatherContext) {
 	// TODO: Implement context status monitoring
 	fmt.Println("🚧 Context status monitoring coming soon!")
 	fmt.Println()
@@ -528,36 +527,10 @@ func showContextStatus(gardenPath string, context *weather.WeatherContext) {
 	fmt.Println("  • Prepare seamless handoffs")
 }
 
-func showUsageBar(percent int) {
-	barWidth := 40
-	filled := (percent * barWidth) / 100
-	
-	fmt.Print("[")
-	for i := 0; i < barWidth; i++ {
-		if i < filled {
-			if percent >= 90 {
-				fmt.Print("\033[0;31m█\033[0m") // Red
-			} else if percent >= 80 {
-				fmt.Print("\033[1;33m█\033[0m") // Yellow
-			} else {
-				fmt.Print("\033[0;32m█\033[0m") // Green
-			}
-		} else {
-			fmt.Print("░")
-		}
-	}
-	fmt.Print("]")
-}
 
 func handleInitCommand(args []string) {
 	// Check for --with-claude flag
-	withClaude := false
-	for _, arg := range args {
-		if arg == "--with-claude" {
-			withClaude = true
-			break
-		}
-	}
+	withClaude := slices.Contains(args, "--with-claude")
 	
 	if !withClaude {
 		fmt.Println("Usage: sprout init --with-claude")
