@@ -604,7 +604,7 @@ func (di *DocumentIntelligence) scanExistingDocumentation() map[string]bool {
 	}
 	
 	for _, path := range docPaths {
-		filepath.Walk(path, func(file string, info os.FileInfo, err error) error {
+		_ = filepath.Walk(path, func(file string, info os.FileInfo, err error) error {
 			if err != nil || info.IsDir() {
 				return nil
 			}

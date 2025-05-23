@@ -373,11 +373,15 @@ func TestGitMonitor_Integration(t *testing.T) {
 	// Configure git user
 	cmd = exec.Command("git", "config", "user.email", "test@example.com")
 	cmd.Dir = tempDir
-	cmd.Run()
+	if err := cmd.Run(); err != nil {
+		t.Fatalf("Failed to set git user.email: %v", err)
+	}
 	
 	cmd = exec.Command("git", "config", "user.name", "Test User")
 	cmd.Dir = tempDir
-	cmd.Run()
+	if err := cmd.Run(); err != nil {
+		t.Fatalf("Failed to set git user.name: %v", err)
+	}
 	
 	// Create a test file and commit
 	testFile := filepath.Join(tempDir, "auth", "login.go")
