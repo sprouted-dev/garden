@@ -1,5 +1,5 @@
 {
-  "updated": "2025-05-23T14:28:56.49384-04:00",
+  "updated": "2025-05-23T00:38:21.810672-04:00",
   "sessionId": "session_1747877545",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
@@ -255,14 +255,6 @@
           "summary": "Implementation of: [Weather Automatic Intelligence MVP](/docs/specs/weather-automatic-intelligence-mvp.md) This document breaks down the Weather Automatic Intelligence MVP into specific, actionable im...",
           "status": "completed",
           "lastUpdated": "2025-05-23T00:36:00.023704826-04:00"
-        },
-        {
-          "path": "docs/tasks/active/website-tailwind-upgrade.md",
-          "title": "Task: Website Tailwind CSS 4 Upgrade",
-          "type": "task",
-          "summary": "Related to: [Open Source Launch Lessons](/docs/specs/open-source-launch-lessons.md) Upgrade the Sprouted website from Tailwind CSS 3 to Tailwind CSS 4 beta while fixing CSS issues, dark mode functiona...",
-          "status": "completed",
-          "lastUpdated": "2025-05-23T12:24:12.928948569-04:00"
         }
       ],
       "priority": "Weather System foundation",
@@ -301,6 +293,6 @@
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-23T14:28:56.490317-04:00"
+    "lastScanned": "2025-05-23T00:38:21.80729-04:00"
   }
 }
