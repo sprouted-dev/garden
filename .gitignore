@@ -33,4 +33,4 @@ coverage/
 
 # Temporary directories
 tmp/
-temp/
+temp/.garden/shadows/
