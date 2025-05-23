@@ -318,7 +318,7 @@ func (rm *ResilienceManager) rotateShadows(shadowDir string) {
 		newPath := filepath.Join(shadowDir, fmt.Sprintf("weather-context.shadow.%d.json", i))
 
 		if _, err := os.Stat(oldPath); err == nil {
-			os.Rename(oldPath, newPath)
+			_ = os.Rename(oldPath, newPath)
 		}
 	}
 
@@ -326,7 +326,7 @@ func (rm *ResilienceManager) rotateShadows(shadowDir string) {
 	currentShadow := filepath.Join(shadowDir, "weather-context.shadow.json")
 	if _, err := os.Stat(currentShadow); err == nil {
 		rotatedPath := filepath.Join(shadowDir, "weather-context.shadow.0.json")
-		os.Rename(currentShadow, rotatedPath)
+		_ = os.Rename(currentShadow, rotatedPath)
 	}
 }
 
@@ -346,7 +346,7 @@ func (rm *ResilienceManager) cleanOldBackups() error {
 			timestamp, err := time.Parse("20060102-150405", entry.Name())
 			if err == nil && timestamp.Before(cutoffTime) {
 				backupPath := filepath.Join(backupsDir, entry.Name())
-				os.RemoveAll(backupPath)
+				_ = os.RemoveAll(backupPath)
 			}
 		}
 	}
