@@ -138,7 +138,7 @@ func TestGitMonitor_InferScope(t *testing.T) {
 		},
 		{
 			name:     "directory-based inference", 
-			files:    []string{"backend/server.go", "backend/database.go"},
+			files:    []string{"backend/server.go", "backend/utils.go"},
 			expected: "backend", // directory name wins when no strong file pattern matches
 		},
 		{
