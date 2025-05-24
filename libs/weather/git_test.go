@@ -128,8 +128,8 @@ func TestGitMonitor_InferScope(t *testing.T) {
 		},
 		{
 			name:     "documentation files",
-			files:    []string{"README.md", "docs/guide.md"},
-			expected: "documentation", // Both README.md and docs/guide.md match .md pattern
+			files:    []string{"README.md", "docs/manual.md"},
+			expected: "documentation", // Both README.md and docs/manual.md match .md pattern
 		},
 		{
 			name:     "mixed files with auth majority",
