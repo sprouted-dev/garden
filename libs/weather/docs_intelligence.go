@@ -504,6 +504,7 @@ func (di *DocumentIntelligence) identifyEssentialDocs(onboarding *OnboardingCont
 func (di *DocumentIntelligence) identifyKeyCommands() []string {
 	commands := []string{}
 	
+	
 	// Check for sprout CLI
 	if _, err := os.Stat(filepath.Join(di.gardenPath, "apps", "sprout-cli")); err == nil {
 		commands = append(commands, "sprout weather", "sprout weather --for-ai")
@@ -512,6 +513,28 @@ func (di *DocumentIntelligence) identifyKeyCommands() []string {
 	// Check for Go
 	if di.inferPrimaryLanguage() == "Go" {
 		commands = append(commands, "go build", "go test")
+	}
+	
+	// Check for Claude integration tools (dogfooding fix!)
+	// Look in parent directories for .claude/commands
+	parentDir := filepath.Dir(di.gardenPath)
+	claudeCommandsDir := filepath.Join(parentDir, ".claude", "commands")
+	if _, err := os.Stat(claudeCommandsDir); err == nil {
+		// Add notes about these tools
+		commands = append(commands, 
+			"# Claude Integration (from parent .claude/):",
+			".claude/commands/context-monitor status",
+			".claude/commands/onboard-next-assistant",
+			"sprout init --with-claude (coming soon)")
+	} else {
+		// Also check current directory .claude
+		localClaudeDir := filepath.Join(di.gardenPath, ".claude", "commands")
+		if _, err := os.Stat(localClaudeDir); err == nil {
+			commands = append(commands,
+				"# Claude Integration (local .claude/):",
+				".claude/commands/context-monitor status", 
+				".claude/commands/onboard-next-assistant")
+		}
 	}
 	
 	return commands
@@ -528,6 +551,12 @@ func (di *DocumentIntelligence) generateFirstSteps(onboarding *OnboardingContext
 	// Based on current work
 	if strings.Contains(onboarding.ActiveWork.CurrentPhase, "Weather") {
 		steps = append(steps, "Check weather context with `sprout weather --for-ai`", "Review Weather MVP implementation plan")
+	}
+	
+	// Check for Claude integration (dogfooding!)
+	parentDir := filepath.Dir(di.gardenPath)
+	if _, err := os.Stat(filepath.Join(parentDir, ".claude", "commands")); err == nil {
+		steps = append(steps, "Check context usage: .claude/commands/context-monitor status")
 	}
 	
 	return steps

@@ -1,5 +1,5 @@
 {
-  "updated": "2025-05-24T04:14:16.475628-04:00",
+  "updated": "2025-05-23T23:04:43.582909-04:00",
   "sessionId": "session_1748051957",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
@@ -115,14 +115,6 @@
           "lastUpdated": "2025-05-23T00:36:00.022705148-04:00"
         },
         {
-          "path": "docs/specs/licensing-strategy.md",
-          "title": "Sprouted Weather Service™ Licensing Strategy",
-          "type": "spec",
-          "summary": "This document defines the licensing strategy for the Sprouted ecosystem, establishing clear boundaries between open source components and commercial offerings while maintaining trust and transparency ...",
-          "status": "unknown",
-          "lastUpdated": "2025-05-24T02:48:11.309170068-04:00"
-        },
-        {
           "path": "docs/specs/open-source-launch-lessons.md",
           "title": "Spec: Open Source Launch Lessons \u0026 Decisions",
           "type": "spec",
@@ -145,33 +137,9 @@
           "summary": "Related to: [Weather Context Preservation System](/docs/vision/weather-context-preservation.md) Addresses: [Weather Resilience Discovery](/docs/discoveries/weather-resilience-and-backup-architecture.m...",
           "status": "active",
           "lastUpdated": "2025-05-23T00:36:00.022985318-04:00"
-        },
-        {
-          "path": "docs/specs/weather-station-migration.md",
-          "title": "Weather Station Migration Specification",
-          "type": "spec",
-          "summary": "Weather Station already exists as a fully functional Mission Control Panel (MCP) server in the vibes/mono codebase. This spec outlines migrating and adapting it to become the official Sprouted Weather...",
-          "status": "unknown",
-          "lastUpdated": "2025-05-24T02:39:44.511362973-04:00"
         }
       ],
       "activeTasks": [
-        {
-          "path": "docs/tasks/active/confidence-language-migration.md",
-          "title": "Confidence Language Migration Plan",
-          "type": "task",
-          "summary": "**Created**: 2025-01-24 **Status**: Active **Priority**: High",
-          "status": "active",
-          "lastUpdated": "2025-05-24T02:52:47.181191603-04:00"
-        },
-        {
-          "path": "docs/tasks/active/doc-migration-checklist.md",
-          "title": "Documentation Migration Checklist",
-          "type": "task",
-          "summary": "- [ ] **garden/README.md** - Replace with confident version - [ ] **Website landing page** (sprouted-website/src/app/(landing)/page.tsx) - [ ] **Install script messages** (garden/website/install.sh)",
-          "status": "planned",
-          "lastUpdated": "2025-05-24T02:54:02.992103272-04:00"
-        },
         {
           "path": "docs/tasks/active/enhanced-ai-onboarding-implementation.md",
           "title": "Task: Enhanced AI Onboarding Implementation",
@@ -262,6 +230,6 @@
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-24T04:14:16.470437-04:00"
+    "lastScanned": "2025-05-23T23:04:43.578904-04:00"
   }
 }

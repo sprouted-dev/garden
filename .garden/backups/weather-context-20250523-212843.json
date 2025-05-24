@@ -1,46 +1,138 @@
 {
-  "updated": "2025-05-24T04:14:16.475628-04:00",
-  "sessionId": "session_1748051957",
+  "updated": "2025-05-23T21:28:43.207306-04:00",
+  "sessionId": "session_1747877545",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
   "currentFocus": {
-    "area": "initializing garden",
-    "confidence": 1,
-    "lastActive": "2025-05-23T21:59:17.065836-04:00",
-    "inferredFrom": "new garden created"
+    "area": "documentation",
+    "confidence": 0.85,
+    "lastActive": "2025-05-22T05:05:04.447188-04:00",
+    "inferredFrom": "recent commit to documentation"
   },
   "recentProgress": {
-    "summary": "Garden initialized",
-    "commits": [],
-    "timespan": "just now",
-    "momentum": 0
+    "summary": "Working on documentation system",
+    "commits": [
+      {
+        "hash": "e80f4d1ecbe37270855380d44eaf64993eba0c1c",
+        "message": "feat: add enhanced AI onboarding system specification and planning",
+        "smartSummary": "",
+        "timestamp": "2025-05-22T05:05:03-04:00",
+        "filesChanged": [
+          "docs/specs/enhanced-ai-onboarding.md",
+          "docs/specs/farm-architecture-planning.md",
+          "docs/tasks/active/enhanced-ai-onboarding-implementation.md",
+          "docs/tasks/active/weather-mvp-implementation-plan.md"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
+      {
+        "hash": "561da2a30fac6f3a430ce7e85c3aedd855566d9c",
+        "message": "feat: add comprehensive community health files for open source governance",
+        "smartSummary": "",
+        "timestamp": "2025-05-22T03:19:30-04:00",
+        "filesChanged": [
+          ".garden/weather-context.json",
+          ".github/ISSUE_TEMPLATE/bug_report.md",
+          ".github/ISSUE_TEMPLATE/feature_request.md",
+          ".github/PULL_REQUEST_TEMPLATE.md",
+          "CODE_OF_CONDUCT.md",
+          "CONTRIBUTING.md",
+          "SECURITY.md"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
+      {
+        "hash": "e2c6a7ab3422a5e490ce42ae83cf66c77ee0e54b",
+        "message": "docs: capture critical insights and decisions from open source launch",
+        "smartSummary": "",
+        "timestamp": "2025-05-22T03:07:52-04:00",
+        "filesChanged": [
+          "docs/specs/open-source-launch-lessons.md"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
+      {
+        "hash": "9cda0fefd4c4878ff179d942799bffb89aa2f2c2",
+        "message": "feat: add MIT license for open source release",
+        "smartSummary": "",
+        "timestamp": "2025-05-22T02:57:50-04:00",
+        "filesChanged": [
+          "LICENSE"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      },
+      {
+        "hash": "7d30cba79c6b9d4f5f44a2cc015b1825e07090fa",
+        "message": "feat: prepare for open source launch with release automation",
+        "smartSummary": "",
+        "timestamp": "2025-05-22T02:55:51-04:00",
+        "filesChanged": [
+          ".garden/weather-context.json",
+          ".github/workflows/ci.yml",
+          ".github/workflows/release.yml",
+          "CLAUDE.md",
+          "Makefile",
+          "apps/sprout-cli/Makefile",
+          "apps/sprout-cli/go.mod",
+          "apps/sprout-cli/main.go",
+          "apps/sprout-cli/sprout",
+          "docs/Context Summary for Next Assistant.md",
+          "docs/go-import-template.html",
+          "docs/specs/farm-architecture-planning.md",
+          "docs/sprouted.dev-config.md",
+          "docs/vision/sprouted-ecosystem-consolidation.md",
+          "install.sh",
+          "libs/weather/go.mod",
+          "verify-modules.sh",
+          "website/deploy-guide.md",
+          "website/index.html",
+          "website/install.sh",
+          "website/package.json",
+          "website/vercel.json"
+        ],
+        "inferredScope": "",
+        "author": "Test User"
+      }
+    ],
+    "timespan": "last 5 commits",
+    "momentum": 75
   },
   "nextSteps": {
     "suggestions": [
-      "Make your first commit to start tracking progress",
-      "Begin working on your first feature"
+      "Add unit tests for recent changes",
+      "Update documentation",
+      "Consider refactoring for better maintainability"
     ],
-    "priority": 50,
-    "basedOn": "new garden initialization"
+    "priority": 87,
+    "basedOn": "current focus on documentation"
   },
   "weather": {
-    "temperature": 20,
+    "temperature": 95,
     "condition": "sunny",
     "pressure": 30,
-    "lastUpdate": "2025-05-23T21:59:17.065836-04:00"
+    "lastUpdate": "2025-05-22T05:05:04.447191-04:00"
   },
   "git": {
     "currentBranch": "main",
     "lastCommit": {
-      "hash": "",
-      "message": "",
-      "smartSummary": "",
-      "timestamp": "0001-01-01T00:00:00Z",
-      "filesChanged": null,
-      "inferredScope": "",
-      "author": ""
+      "hash": "e80f4d1ecbe37270855380d44eaf64993eba0c1c",
+      "message": "feat: add enhanced AI onboarding system specification and planning",
+      "smartSummary": "Added add enhanced AI onboarding system specification and planning",
+      "timestamp": "2025-05-22T05:05:03-04:00",
+      "filesChanged": [
+        "docs/specs/enhanced-ai-onboarding.md",
+        "docs/specs/farm-architecture-planning.md",
+        "docs/tasks/active/enhanced-ai-onboarding-implementation.md",
+        "docs/tasks/active/weather-mvp-implementation-plan.md"
+      ],
+      "inferredScope": "documentation",
+      "author": "Test User"
     },
-    "uncommittedChanges": false,
+    "uncommittedChanges": true,
     "recentBranches": [
       "main"
     ]
@@ -115,14 +207,6 @@
           "lastUpdated": "2025-05-23T00:36:00.022705148-04:00"
         },
         {
-          "path": "docs/specs/licensing-strategy.md",
-          "title": "Sprouted Weather Service™ Licensing Strategy",
-          "type": "spec",
-          "summary": "This document defines the licensing strategy for the Sprouted ecosystem, establishing clear boundaries between open source components and commercial offerings while maintaining trust and transparency ...",
-          "status": "unknown",
-          "lastUpdated": "2025-05-24T02:48:11.309170068-04:00"
-        },
-        {
           "path": "docs/specs/open-source-launch-lessons.md",
           "title": "Spec: Open Source Launch Lessons \u0026 Decisions",
           "type": "spec",
@@ -145,33 +229,9 @@
           "summary": "Related to: [Weather Context Preservation System](/docs/vision/weather-context-preservation.md) Addresses: [Weather Resilience Discovery](/docs/discoveries/weather-resilience-and-backup-architecture.m...",
           "status": "active",
           "lastUpdated": "2025-05-23T00:36:00.022985318-04:00"
-        },
-        {
-          "path": "docs/specs/weather-station-migration.md",
-          "title": "Weather Station Migration Specification",
-          "type": "spec",
-          "summary": "Weather Station already exists as a fully functional Mission Control Panel (MCP) server in the vibes/mono codebase. This spec outlines migrating and adapting it to become the official Sprouted Weather...",
-          "status": "unknown",
-          "lastUpdated": "2025-05-24T02:39:44.511362973-04:00"
         }
       ],
       "activeTasks": [
-        {
-          "path": "docs/tasks/active/confidence-language-migration.md",
-          "title": "Confidence Language Migration Plan",
-          "type": "task",
-          "summary": "**Created**: 2025-01-24 **Status**: Active **Priority**: High",
-          "status": "active",
-          "lastUpdated": "2025-05-24T02:52:47.181191603-04:00"
-        },
-        {
-          "path": "docs/tasks/active/doc-migration-checklist.md",
-          "title": "Documentation Migration Checklist",
-          "type": "task",
-          "summary": "- [ ] **garden/README.md** - Replace with confident version - [ ] **Website landing page** (sprouted-website/src/app/(landing)/page.tsx) - [ ] **Install script messages** (garden/website/install.sh)",
-          "status": "planned",
-          "lastUpdated": "2025-05-24T02:54:02.992103272-04:00"
-        },
         {
           "path": "docs/tasks/active/enhanced-ai-onboarding-implementation.md",
           "title": "Task: Enhanced AI Onboarding Implementation",
@@ -179,14 +239,6 @@
           "summary": "Implementation of: [Enhanced AI Onboarding System](../../specs/enhanced-ai-onboarding.md) Implement the enhanced AI onboarding system that automatically discovers, parses, and synthesizes all project ...",
           "status": "active",
           "lastUpdated": "2025-05-23T00:36:00.023281446-04:00"
-        },
-        {
-          "path": "docs/tasks/active/implement-claude-integration.md",
-          "title": "Task: Implement `sprout init --with-claude`",
-          "type": "task",
-          "summary": "Active - Implementation needed The `sprout init --with-claude` command exists as a placeholder but needs implementation. Existing monitoring scripts at Farm level need integration and updates for new ...",
-          "status": "active",
-          "lastUpdated": "2025-05-23T21:48:35.692172372-04:00"
         },
         {
           "path": "docs/tasks/active/weather-core-data-model.md",
@@ -246,22 +298,17 @@
       ],
       "keyCommands": [
         "sprout weather",
-        "sprout weather --for-ai",
-        "# Claude Integration (from parent .claude/):",
-        ".claude/commands/context-monitor status",
-        ".claude/commands/onboard-next-assistant",
-        "sprout init --with-claude (coming soon)"
+        "sprout weather --for-ai"
       ],
       "firstSteps": [
         "Review active specs and tasks",
         "Follow spec-driven development process",
         "Check weather context with `sprout weather --for-ai`",
-        "Review Weather MVP implementation plan",
-        "Check context usage: .claude/commands/context-monitor status"
+        "Review Weather MVP implementation plan"
       ],
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-24T04:14:16.470437-04:00"
+    "lastScanned": "2025-05-23T21:28:43.203836-04:00"
   }
 }
