@@ -1,5 +1,5 @@
 {
-  "updated": "2025-05-24T04:14:16.475628-04:00",
+  "updated": "2025-05-24T12:17:43.16827-04:00",
   "sessionId": "session_1748051957",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
@@ -83,6 +83,22 @@
       "timeline": "Active development",
       "activeSpecs": [
         {
+          "path": "docs/specs/adaptive-seed-development-spec.md",
+          "title": "Spec: Adaptive Seed Development Implementation",
+          "type": "spec",
+          "summary": "**Related to**: [Adaptive Seed Development Vision](../vision/adaptive-seed-development.md) Implement a natural development methodology that embraces growth patterns rather than fighting them. Based on...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T11:35:14.736346903-04:00"
+        },
+        {
+          "path": "docs/specs/creative-velocity-tracking.md",
+          "title": "Creative Velocity Tracking Specification",
+          "type": "spec",
+          "summary": "Track development velocity in a way that celebrates speed, creativity, and what's actually possible when bureaucracy gets out of the way. - Measured in \"story points\" (meaningless abstraction) - Estim...",
+          "status": "completed",
+          "lastUpdated": "2025-05-24T10:24:35.853613075-04:00"
+        },
+        {
           "path": "docs/specs/enhanced-ai-onboarding.md",
           "title": "Spec: Enhanced AI Onboarding System",
           "type": "spec",
@@ -115,6 +131,14 @@
           "lastUpdated": "2025-05-23T00:36:00.022705148-04:00"
         },
         {
+          "path": "docs/specs/intentional-partner-onboarding.md",
+          "title": "Spec: Intentional Partner Onboarding",
+          "type": "spec",
+          "summary": "**Problem**: Current onboarding dumps technical specs without conveying WHY we work this way. Set up the next partner for success, don't vomit documents on them. Before any technical details, partners...",
+          "status": "active",
+          "lastUpdated": "2025-05-24T11:42:29.645535197-04:00"
+        },
+        {
           "path": "docs/specs/licensing-strategy.md",
           "title": "Sprouted Weather Service™ Licensing Strategy",
           "type": "spec",
@@ -131,6 +155,22 @@
           "lastUpdated": "2025-05-22T03:07:30.204259821-04:00"
         },
         {
+          "path": "docs/specs/temporal-validation-system.md",
+          "title": "Temporal Validation System Specification",
+          "type": "spec",
+          "summary": "AI assistants create fictional timelines despite Weather System having accurate timestamps. They invent plausible-sounding dates based on patterns rather than checking actual data. Multi-layered tempo...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T10:12:35.122885248-04:00"
+        },
+        {
+          "path": "docs/specs/universal-partner-onboarding-structure.md",
+          "title": "Spec: Universal Partner Onboarding Structure",
+          "type": "spec",
+          "summary": "Future users will provide their own Seeds. Onboarding must work universally while teaching our methodology. **The HOW** - Same for everyone: ```json",
+          "status": "active",
+          "lastUpdated": "2025-05-24T11:49:00.859081936-04:00"
+        },
+        {
           "path": "docs/specs/weather-automatic-intelligence-mvp.md",
           "title": "Spec: Weather Automatic Intelligence MVP",
           "type": "spec",
@@ -139,12 +179,28 @@
           "lastUpdated": "2025-05-21T21:09:49.77066139-04:00"
         },
         {
+          "path": "docs/specs/weather-emergency-management-agency.md",
+          "title": "Weather Emergency Management Agency (WEMA) Specification",
+          "type": "spec",
+          "summary": "A holistic system that celebrates rapid development velocity while managing its impact through assessment, recovery, and learning. Monitor development speed and detect when entering \"tornado mode\": - ...",
+          "status": "active",
+          "lastUpdated": "2025-05-24T10:39:48.614778665-04:00"
+        },
+        {
           "path": "docs/specs/weather-resilience-specification.md",
           "title": "Spec: Weather System Resilience and Recovery",
           "type": "spec",
           "summary": "Related to: [Weather Context Preservation System](/docs/vision/weather-context-preservation.md) Addresses: [Weather Resilience Discovery](/docs/discoveries/weather-resilience-and-backup-architecture.m...",
           "status": "active",
           "lastUpdated": "2025-05-23T00:36:00.022985318-04:00"
+        },
+        {
+          "path": "docs/specs/weather-station-freemium-implementation.md",
+          "title": "Spec: Weather Station Freemium Implementation",
+          "type": "spec",
+          "summary": "**Related to**: [Weather Station Freemium Model](../vision/weather-station-freemium-model.md) Implement dual-mode Weather Station: free local SQLite for individuals, paid cloud sync for teams. Minimal...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T12:02:59.461656144-04:00"
         },
         {
           "path": "docs/specs/weather-station-migration.md",
@@ -179,6 +235,14 @@
           "summary": "Implementation of: [Enhanced AI Onboarding System](../../specs/enhanced-ai-onboarding.md) Implement the enhanced AI onboarding system that automatically discovers, parses, and synthesizes all project ...",
           "status": "active",
           "lastUpdated": "2025-05-23T00:36:00.023281446-04:00"
+        },
+        {
+          "path": "docs/tasks/active/implement-adaptive-seed-methodology.md",
+          "title": "Task: Implement Adaptive Seed Development Methodology",
+          "type": "task",
+          "summary": "**Status**: Planned **Priority**: High (after date fixes) **Spec**: [Adaptive Seed Development Spec](../../specs/adaptive-seed-development-spec.md)",
+          "status": "planned",
+          "lastUpdated": "2025-05-24T11:35:36.527154486-04:00"
         },
         {
           "path": "docs/tasks/active/implement-claude-integration.md",
@@ -262,6 +326,6 @@
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-24T04:14:16.470437-04:00"
+    "lastScanned": "2025-05-24T12:14:28.018062-04:00"
   }
 }

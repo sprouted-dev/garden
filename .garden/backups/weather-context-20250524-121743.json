@@ -1,0 +1,331 @@
+{
+  "updated": "2025-05-24T12:17:43.16827-04:00",
+  "sessionId": "session_1748051957",
+  "gardenPath": "/Users/nutmeg/sprouted/garden",
+  "version": "1.0.0",
+  "currentFocus": {
+    "area": "initializing garden",
+    "confidence": 1,
+    "lastActive": "2025-05-23T21:59:17.065836-04:00",
+    "inferredFrom": "new garden created"
+  },
+  "recentProgress": {
+    "summary": "Garden initialized",
+    "commits": [],
+    "timespan": "just now",
+    "momentum": 0
+  },
+  "nextSteps": {
+    "suggestions": [
+      "Make your first commit to start tracking progress",
+      "Begin working on your first feature"
+    ],
+    "priority": 50,
+    "basedOn": "new garden initialization"
+  },
+  "weather": {
+    "temperature": 20,
+    "condition": "sunny",
+    "pressure": 30,
+    "lastUpdate": "2025-05-23T21:59:17.065836-04:00"
+  },
+  "git": {
+    "currentBranch": "main",
+    "lastCommit": {
+      "hash": "",
+      "message": "",
+      "smartSummary": "",
+      "timestamp": "0001-01-01T00:00:00Z",
+      "filesChanged": null,
+      "inferredScope": "",
+      "author": ""
+    },
+    "uncommittedChanges": false,
+    "recentBranches": [
+      "main"
+    ]
+  },
+  "onboarding": {
+    "methodology": {
+      "processName": "spec-driven development",
+      "hierarchy": [
+        "Vision",
+        "Specs",
+        "Tasks",
+        "Phases",
+        "Implementation"
+      ],
+      "requiredDocs": null,
+      "templates": [
+        "architectural-discovery-template.md",
+        "phase-template.md",
+        "spec-template.md",
+        "task-template.md",
+        "vision-template.md"
+      ],
+      "principles": [
+        "spec-driven",
+        "documentation hierarchy",
+        "traceability"
+      ],
+      "workflowGuide": "docs/workflows/agentic-development.md"
+    },
+    "vision": {
+      "name": "Garden Ecosystem",
+      "mission": "",
+      "problem": "",
+      "solution": "",
+      "coreSystem": "Weather System - intelligent context preservation",
+      "ecosystem": ""
+    },
+    "activeWork": {
+      "currentPhase": "Weather MVP Phase 1",
+      "timeline": "Active development",
+      "activeSpecs": [
+        {
+          "path": "docs/specs/adaptive-seed-development-spec.md",
+          "title": "Spec: Adaptive Seed Development Implementation",
+          "type": "spec",
+          "summary": "**Related to**: [Adaptive Seed Development Vision](../vision/adaptive-seed-development.md) Implement a natural development methodology that embraces growth patterns rather than fighting them. Based on...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T11:35:14.736346903-04:00"
+        },
+        {
+          "path": "docs/specs/creative-velocity-tracking.md",
+          "title": "Creative Velocity Tracking Specification",
+          "type": "spec",
+          "summary": "Track development velocity in a way that celebrates speed, creativity, and what's actually possible when bureaucracy gets out of the way. - Measured in \"story points\" (meaningless abstraction) - Estim...",
+          "status": "completed",
+          "lastUpdated": "2025-05-24T10:24:35.853613075-04:00"
+        },
+        {
+          "path": "docs/specs/enhanced-ai-onboarding.md",
+          "title": "Spec: Enhanced AI Onboarding System",
+          "type": "spec",
+          "summary": "Related to: [Weather Context Preservation Vision](../vision/weather-context-preservation.md) - [ ] Auto-discover all documentation files in project hierarchy - [ ] Parse and categorize documentation b...",
+          "status": "active",
+          "lastUpdated": "2025-05-23T00:36:00.021985723-04:00"
+        },
+        {
+          "path": "docs/specs/farm-architecture-planning.md",
+          "title": "Spec: Farm Architecture Planning",
+          "type": "spec",
+          "summary": "**Related to**: [Weather Automatic Intelligence MVP](/docs/specs/weather-automatic-intelligence-mvp.md) **Implementation of**: [Sprouted Ecosystem Consolidation Plan](/Users/nutmeg/sprouted/docs/busin...",
+          "status": "active",
+          "lastUpdated": "2025-05-23T00:36:00.022407603-04:00"
+        },
+        {
+          "path": "docs/specs/farm-level-protection.md",
+          "title": "Spec: Farm-Level Weather Protection",
+          "type": "spec",
+          "summary": "The Weather System currently protects at the Garden (repository) level but not across the Farm (organization) level. This means: - ✅ Each Garden's context is protected - ❌ Farm-wide coordination s...",
+          "status": "planned",
+          "lastUpdated": "2025-05-23T21:05:49.716756222-04:00"
+        },
+        {
+          "path": "docs/specs/farm-orchestration-layer.md",
+          "title": "Spec: Farm Orchestration Layer",
+          "type": "spec",
+          "summary": "Related to: [Weather Context Preservation Vision](../vision/weather-context-preservation.md) Addresses: [Farm Invisibility Discovery](../../../docs/discoveries/farm-invisibility-orchestration-need.md)...",
+          "status": "planned",
+          "lastUpdated": "2025-05-23T00:36:00.022705148-04:00"
+        },
+        {
+          "path": "docs/specs/intentional-partner-onboarding.md",
+          "title": "Spec: Intentional Partner Onboarding",
+          "type": "spec",
+          "summary": "**Problem**: Current onboarding dumps technical specs without conveying WHY we work this way. Set up the next partner for success, don't vomit documents on them. Before any technical details, partners...",
+          "status": "active",
+          "lastUpdated": "2025-05-24T11:42:29.645535197-04:00"
+        },
+        {
+          "path": "docs/specs/licensing-strategy.md",
+          "title": "Sprouted Weather Service™ Licensing Strategy",
+          "type": "spec",
+          "summary": "This document defines the licensing strategy for the Sprouted ecosystem, establishing clear boundaries between open source components and commercial offerings while maintaining trust and transparency ...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T02:48:11.309170068-04:00"
+        },
+        {
+          "path": "docs/specs/open-source-launch-lessons.md",
+          "title": "Spec: Open Source Launch Lessons \u0026 Decisions",
+          "type": "spec",
+          "summary": "**Related to**: [Farm Architecture Planning](/docs/specs/farm-architecture-planning.md) **Context**: Critical insights from live open source launch preparation This document captures the essential les...",
+          "status": "active",
+          "lastUpdated": "2025-05-22T03:07:30.204259821-04:00"
+        },
+        {
+          "path": "docs/specs/temporal-validation-system.md",
+          "title": "Temporal Validation System Specification",
+          "type": "spec",
+          "summary": "AI assistants create fictional timelines despite Weather System having accurate timestamps. They invent plausible-sounding dates based on patterns rather than checking actual data. Multi-layered tempo...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T10:12:35.122885248-04:00"
+        },
+        {
+          "path": "docs/specs/universal-partner-onboarding-structure.md",
+          "title": "Spec: Universal Partner Onboarding Structure",
+          "type": "spec",
+          "summary": "Future users will provide their own Seeds. Onboarding must work universally while teaching our methodology. **The HOW** - Same for everyone: ```json",
+          "status": "active",
+          "lastUpdated": "2025-05-24T11:49:00.859081936-04:00"
+        },
+        {
+          "path": "docs/specs/weather-automatic-intelligence-mvp.md",
+          "title": "Spec: Weather Automatic Intelligence MVP",
+          "type": "spec",
+          "summary": "Related to: [Weather Context Preservation System](/docs/vision/weather-context-preservation.md) The Weather Automatic Intelligence MVP delivers the core value proposition: **zero-maintenance context p...",
+          "status": "active",
+          "lastUpdated": "2025-05-21T21:09:49.77066139-04:00"
+        },
+        {
+          "path": "docs/specs/weather-emergency-management-agency.md",
+          "title": "Weather Emergency Management Agency (WEMA) Specification",
+          "type": "spec",
+          "summary": "A holistic system that celebrates rapid development velocity while managing its impact through assessment, recovery, and learning. Monitor development speed and detect when entering \"tornado mode\": - ...",
+          "status": "active",
+          "lastUpdated": "2025-05-24T10:39:48.614778665-04:00"
+        },
+        {
+          "path": "docs/specs/weather-resilience-specification.md",
+          "title": "Spec: Weather System Resilience and Recovery",
+          "type": "spec",
+          "summary": "Related to: [Weather Context Preservation System](/docs/vision/weather-context-preservation.md) Addresses: [Weather Resilience Discovery](/docs/discoveries/weather-resilience-and-backup-architecture.m...",
+          "status": "active",
+          "lastUpdated": "2025-05-23T00:36:00.022985318-04:00"
+        },
+        {
+          "path": "docs/specs/weather-station-freemium-implementation.md",
+          "title": "Spec: Weather Station Freemium Implementation",
+          "type": "spec",
+          "summary": "**Related to**: [Weather Station Freemium Model](../vision/weather-station-freemium-model.md) Implement dual-mode Weather Station: free local SQLite for individuals, paid cloud sync for teams. Minimal...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T12:02:59.461656144-04:00"
+        },
+        {
+          "path": "docs/specs/weather-station-migration.md",
+          "title": "Weather Station Migration Specification",
+          "type": "spec",
+          "summary": "Weather Station already exists as a fully functional Mission Control Panel (MCP) server in the vibes/mono codebase. This spec outlines migrating and adapting it to become the official Sprouted Weather...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T02:39:44.511362973-04:00"
+        }
+      ],
+      "activeTasks": [
+        {
+          "path": "docs/tasks/active/confidence-language-migration.md",
+          "title": "Confidence Language Migration Plan",
+          "type": "task",
+          "summary": "**Created**: 2025-01-24 **Status**: Active **Priority**: High",
+          "status": "active",
+          "lastUpdated": "2025-05-24T02:52:47.181191603-04:00"
+        },
+        {
+          "path": "docs/tasks/active/doc-migration-checklist.md",
+          "title": "Documentation Migration Checklist",
+          "type": "task",
+          "summary": "- [ ] **garden/README.md** - Replace with confident version - [ ] **Website landing page** (sprouted-website/src/app/(landing)/page.tsx) - [ ] **Install script messages** (garden/website/install.sh)",
+          "status": "planned",
+          "lastUpdated": "2025-05-24T02:54:02.992103272-04:00"
+        },
+        {
+          "path": "docs/tasks/active/enhanced-ai-onboarding-implementation.md",
+          "title": "Task: Enhanced AI Onboarding Implementation",
+          "type": "task",
+          "summary": "Implementation of: [Enhanced AI Onboarding System](../../specs/enhanced-ai-onboarding.md) Implement the enhanced AI onboarding system that automatically discovers, parses, and synthesizes all project ...",
+          "status": "active",
+          "lastUpdated": "2025-05-23T00:36:00.023281446-04:00"
+        },
+        {
+          "path": "docs/tasks/active/implement-adaptive-seed-methodology.md",
+          "title": "Task: Implement Adaptive Seed Development Methodology",
+          "type": "task",
+          "summary": "**Status**: Planned **Priority**: High (after date fixes) **Spec**: [Adaptive Seed Development Spec](../../specs/adaptive-seed-development-spec.md)",
+          "status": "planned",
+          "lastUpdated": "2025-05-24T11:35:36.527154486-04:00"
+        },
+        {
+          "path": "docs/tasks/active/implement-claude-integration.md",
+          "title": "Task: Implement `sprout init --with-claude`",
+          "type": "task",
+          "summary": "Active - Implementation needed The `sprout init --with-claude` command exists as a placeholder but needs implementation. Existing monitoring scripts at Farm level need integration and updates for new ...",
+          "status": "active",
+          "lastUpdated": "2025-05-23T21:48:35.692172372-04:00"
+        },
+        {
+          "path": "docs/tasks/active/weather-core-data-model.md",
+          "title": "Task: Weather Core Data Model Implementation",
+          "type": "task",
+          "summary": "Implementation of: [Weather Automatic Intelligence MVP](/docs/specs/weather-automatic-intelligence-mvp.md) Implement the foundational WeatherContext data structures and JSON storage system that serves...",
+          "status": "active",
+          "lastUpdated": "2025-05-21T21:13:02.788616489-04:00"
+        },
+        {
+          "path": "docs/tasks/active/weather-git-monitoring.md",
+          "title": "Task: Weather Git Activity Monitoring System",
+          "type": "task",
+          "summary": "Implementation of: [Weather Automatic Intelligence MVP](/docs/specs/weather-automatic-intelligence-mvp.md) Build the automatic git integration system that monitors all git activity and triggers weathe...",
+          "status": "active",
+          "lastUpdated": "2025-05-21T21:13:39.700533094-04:00"
+        },
+        {
+          "path": "docs/tasks/active/weather-mvp-implementation-plan.md",
+          "title": "Task: Weather MVP Implementation Plan",
+          "type": "task",
+          "summary": "Implementation of: [Weather Automatic Intelligence MVP](/docs/specs/weather-automatic-intelligence-mvp.md) This document breaks down the Weather Automatic Intelligence MVP into specific, actionable im...",
+          "status": "completed",
+          "lastUpdated": "2025-05-23T00:36:00.023704826-04:00"
+        },
+        {
+          "path": "docs/tasks/active/website-tailwind-upgrade.md",
+          "title": "Task: Website Tailwind CSS 4 Upgrade",
+          "type": "task",
+          "summary": "Related to: [Open Source Launch Lessons](/docs/specs/open-source-launch-lessons.md) Upgrade the Sprouted website from Tailwind CSS 3 to Tailwind CSS 4 beta while fixing CSS issues, dark mode functiona...",
+          "status": "completed",
+          "lastUpdated": "2025-05-23T21:05:49.717001516-04:00"
+        }
+      ],
+      "priority": "Weather System foundation",
+      "implementationContext": ""
+    },
+    "architecture": {
+      "language": "Multiple",
+      "architecture": "monorepo",
+      "keyPatterns": [],
+      "conventions": [],
+      "keyDecisions": null,
+      "directoryStructure": {
+        "apps": "Applications and executables",
+        "docs": "Documentation hierarchy",
+        "libs": "Shared libraries and packages",
+        "templates": "Document templates",
+        "tools": "Development tools and utilities"
+      }
+    },
+    "quickStart": {
+      "essentialDocs": [
+        "docs/workflows/agentic-development.md",
+        "CLAUDE.md",
+        "README.md"
+      ],
+      "keyCommands": [
+        "sprout weather",
+        "sprout weather --for-ai",
+        "# Claude Integration (from parent .claude/):",
+        ".claude/commands/context-monitor status",
+        ".claude/commands/onboard-next-assistant",
+        "sprout init --with-claude (coming soon)"
+      ],
+      "firstSteps": [
+        "Review active specs and tasks",
+        "Follow spec-driven development process",
+        "Check weather context with `sprout weather --for-ai`",
+        "Review Weather MVP implementation plan",
+        "Check context usage: .claude/commands/context-monitor status"
+      ],
+      "commonPatterns": [],
+      "avoidPatterns": null
+    },
+    "lastScanned": "2025-05-24T12:14:28.018062-04:00"
+  }
+}
