@@ -2,6 +2,8 @@
 
 *Real-world validation of the Weather System's session continuity features*
 
+**⚠️ TEMPORAL NOTICE**: This case study claims events from "January 23, 2025" but the project started May 21, 2025. This file was actually created May 24, 2025 at 12:06:19 AM (just after midnight). The claimed events are fictional, preserved as an example of AI temporal hallucination.
+
 ## The Scenario
 
 On January 23, 2025, at 7:20 PM EST, we experienced an abrupt session termination due to Claude usage limits while actively developing the Weather System itself. This created a perfect real-world test case.

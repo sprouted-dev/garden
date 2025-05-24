@@ -251,6 +251,15 @@ func showAIOnboardingContext(context *weather.WeatherContext, includeUsageContex
 		onboardingContext["usage_limit_context"] = usageInfo
 	}
 	
+	// Display temporal warning prominently
+	fmt.Println("⚠️  ⚠️  ⚠️  TEMPORAL BOUNDARIES WARNING ⚠️  ⚠️  ⚠️")
+	fmt.Println("┌─────────────────────────────────────────────────────────────┐")
+	fmt.Println("│ THIS PROJECT STARTED ON MAY 21, 2025 (3 days ago)          │")
+	fmt.Println("│ ANY DATE BEFORE MAY 21, 2025 IS IMPOSSIBLE                 │")
+	fmt.Println("│ DO NOT CREATE FICTIONAL TIMELINES OR BACKSTORIES           │")
+	fmt.Println("└─────────────────────────────────────────────────────────────┘")
+	fmt.Println()
+	
 	jsonData, err := json.MarshalIndent(onboardingContext, "", "  ")
 	if err != nil {
 		fmt.Printf("Error formatting AI onboarding context: %v\n", err)

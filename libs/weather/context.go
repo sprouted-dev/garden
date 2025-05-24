@@ -429,6 +429,28 @@ func (wc *WeatherContext) ToAIOnboardingContext() map[string]interface{} {
 	// Start with basic AI context
 	context := wc.ToAIContext()
 	
+	// Add temporal validation boundaries
+	firstCommitTime := time.Date(2025, 5, 21, 19, 11, 39, 0, time.FixedZone("EDT", -4*60*60))
+	projectAge := time.Since(firstCommitTime)
+	
+	context["TEMPORAL_BOUNDARIES"] = map[string]interface{}{
+		"CRITICAL_WARNING": "THIS PROJECT STARTED ON MAY 21, 2025",
+		"project_started": firstCommitTime.Format(time.RFC3339),
+		"project_age_days": int(projectAge.Hours() / 24),
+		"current_date": time.Now().Format("2006-01-02"),
+		"impossible_dates_before": "2025-05-21",
+		"valid_date_range": map[string]string{
+			"start": "2025-05-21",
+			"end": time.Now().Format("2006-01-02"),
+		},
+		"ENFORCEMENT": []string{
+			"ANY date before May 21, 2025 is IMPOSSIBLE and WRONG",
+			"Do NOT reference December 2024 or January 2025",
+			"Do NOT create fictional timelines or backstories",
+			"ALWAYS check these boundaries before writing dates",
+		},
+	}
+	
 	// Add comprehensive onboarding information
 	context["development_methodology"] = map[string]interface{}{
 		"process_name":     wc.Onboarding.Methodology.ProcessName,
