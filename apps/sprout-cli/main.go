@@ -50,6 +50,9 @@ func showUsage() {
 	fmt.Println("  sprout weather emit-event     Emit event to farm orchestrator")
 	fmt.Println("  sprout weather context-status Show context usage and handoff advice")
 	fmt.Println("  sprout weather --prepare-cold-handoff  Prepare for usage limit interruption")
+	fmt.Println("  sprout weather verify         Verify weather context integrity")
+	fmt.Println("  sprout weather recover        Recover from corrupted weather context")
+	fmt.Println("  sprout weather backups        List available weather backups")
 	fmt.Println("  sprout farm process           Process farm-level events")
 	fmt.Println("  sprout farm weather           Show farm-level weather")
 	fmt.Println("  sprout seed <name>            Create a new project seed with documentation structure")
@@ -128,6 +131,12 @@ func handleWeatherCommand(args []string) {
 		showContextStatus(gardenPath, context)
 	case "--prepare-cold-handoff":
 		prepareColdHandoff(gardenPath, context)
+	case "verify":
+		handleWeatherVerify(gardenPath)
+	case "recover":
+		handleWeatherRecover(gardenPath, args[1:])
+	case "backups":
+		handleWeatherBackups(gardenPath)
 	default:
 		fmt.Printf("Unknown weather option: %s\n", args[0])
 		showUsage()
@@ -642,4 +651,136 @@ func handleSeedCommand(args []string) {
 		fmt.Printf("Error creating seed: %v\n", err)
 		return
 	}
+}
+
+func handleWeatherVerify(gardenPath string) {
+	shadowManager := weather.NewShadowCopyManager(gardenPath)
+	
+	fmt.Println("🔍 Verifying Weather Context Integrity...")
+	fmt.Println()
+	
+	if err := shadowManager.VerifyContextIntegrity(); err != nil {
+		fmt.Printf("❌ Context verification failed: %v\n", err)
+		fmt.Println()
+		fmt.Println("💡 Run 'sprout weather recover' to restore from backup")
+		return
+	}
+	
+	fmt.Println("✅ Weather context is valid and intact")
+	
+	// Also check shadow copy
+	fmt.Print("🔍 Checking shadow copy... ")
+	shadowPath := filepath.Join(gardenPath, ".garden", "weather-context.shadow.json")
+	if _, err := os.Stat(shadowPath); os.IsNotExist(err) {
+		fmt.Println("⚠️  No shadow copy found (will be created on next update)")
+	} else {
+		fmt.Println("✅ Shadow copy exists")
+	}
+	
+	// Check backups
+	backups, err := shadowManager.GetBackupList()
+	if err != nil {
+		fmt.Printf("⚠️  Could not check backups: %v\n", err)
+	} else {
+		fmt.Printf("📦 Available backups: %d\n", len(backups))
+	}
+}
+
+func handleWeatherRecover(gardenPath string, args []string) {
+	shadowManager := weather.NewShadowCopyManager(gardenPath)
+	
+	// If specific backup requested
+	if len(args) > 0 && args[0] != "" {
+		backupName := args[0]
+		fmt.Printf("🔄 Recovering from backup: %s\n", backupName)
+		
+		if err := shadowManager.RestoreFromBackup(backupName); err != nil {
+			fmt.Printf("❌ Recovery failed: %v\n", err)
+			return
+		}
+		
+		fmt.Println("✅ Successfully recovered from backup")
+		return
+	}
+	
+	// Try shadow copy first
+	fmt.Println("🔄 Attempting Weather Context Recovery...")
+	fmt.Println()
+	
+	fmt.Println("1️⃣ Trying shadow copy...")
+	if err := shadowManager.RestoreFromShadow(); err != nil {
+		fmt.Printf("⚠️  Shadow recovery failed: %v\n", err)
+		fmt.Println()
+		
+		// List available backups
+		fmt.Println("2️⃣ Checking available backups...")
+		backups, err := shadowManager.GetBackupList()
+		if err != nil || len(backups) == 0 {
+			fmt.Println("❌ No backups available")
+			fmt.Println()
+			fmt.Println("💡 You may need to:")
+			fmt.Println("   1. Check git history for weather-context.json")
+			fmt.Println("   2. Run 'sprout weather' to regenerate from git state")
+			return
+		}
+		
+		fmt.Println("📦 Available backups:")
+		for i, backup := range backups {
+			fmt.Printf("   %d. %s\n", i+1, backup)
+		}
+		fmt.Println()
+		fmt.Printf("Run: sprout weather recover %s\n", backups[len(backups)-1])
+		return
+	}
+	
+	fmt.Println("✅ Successfully recovered from shadow copy")
+	
+	// Verify recovered context
+	if err := shadowManager.VerifyContextIntegrity(); err != nil {
+		fmt.Printf("⚠️  Recovered context may have issues: %v\n", err)
+	} else {
+		fmt.Println("✅ Recovered context verified successfully")
+	}
+}
+
+func handleWeatherBackups(gardenPath string) {
+	shadowManager := weather.NewShadowCopyManager(gardenPath)
+	
+	fmt.Println("📦 Weather Context Backups")
+	fmt.Println()
+	
+	backups, err := shadowManager.GetBackupList()
+	if err != nil {
+		fmt.Printf("❌ Error listing backups: %v\n", err)
+		return
+	}
+	
+	if len(backups) == 0 {
+		fmt.Println("No backups found.")
+		fmt.Println()
+		fmt.Println("💡 Backups are created automatically when:")
+		fmt.Println("   • Weather context is updated")
+		fmt.Println("   • Shadow copies are created")
+		fmt.Println("   • Recovery operations are performed")
+		return
+	}
+	
+	fmt.Printf("Found %d backup(s):\n", len(backups))
+	fmt.Println()
+	
+	for _, backup := range backups {
+		// Parse timestamp from filename
+		fmt.Printf("  📄 %s", backup)
+		
+		// Check file size
+		backupPath := filepath.Join(gardenPath, ".garden", "backups", backup)
+		if info, err := os.Stat(backupPath); err == nil {
+			fmt.Printf(" (%.1f KB)", float64(info.Size())/1024)
+		}
+		fmt.Println()
+	}
+	
+	fmt.Println()
+	fmt.Println("💡 To recover from a specific backup:")
+	fmt.Printf("   sprout weather recover %s\n", backups[len(backups)-1])
 }
