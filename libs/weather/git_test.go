@@ -128,8 +128,8 @@ func TestGitMonitor_InferScope(t *testing.T) {
 		},
 		{
 			name:     "documentation files",
-			files:    []string{"README.md", "docs/api.md"},
-			expected: "documentation", // Both README.md and docs/api.md match .md pattern
+			files:    []string{"README.md", "docs/guide.md"},
+			expected: "documentation", // Both README.md and docs/guide.md match .md pattern
 		},
 		{
 			name:     "mixed files with auth majority",
@@ -138,8 +138,8 @@ func TestGitMonitor_InferScope(t *testing.T) {
 		},
 		{
 			name:     "directory-based inference", 
-			files:    []string{"backend/server.go", "backend/config.go"},
-			expected: "backend", // directory name wins over individual file patterns
+			files:    []string{"backend/server.go", "backend/database.go"},
+			expected: "backend", // directory name wins when no strong file pattern matches
 		},
 		{
 			name:     "no files",

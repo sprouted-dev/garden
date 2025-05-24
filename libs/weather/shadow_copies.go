@@ -53,7 +53,9 @@ func (s *ShadowCopyManager) CreateShadowCopy() error {
 	}
 	
 	backupPath := filepath.Join(backupDir, fmt.Sprintf("weather-context-%s.json", timestamp))
-	src.Seek(0, 0) // Reset file pointer
+	if _, err := src.Seek(0, 0); err != nil {
+		return fmt.Errorf("failed to reset file pointer: %w", err)
+	}
 	
 	backup, err := os.Create(backupPath)
 	if err != nil {
