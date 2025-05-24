@@ -26,6 +26,8 @@ func main() {
 		handleFarmCommand(os.Args[2:])
 	case "validate-seed":
 		handleValidateSeedCommand(os.Args[2:])
+	case "seed":
+		handleSeedCommand(os.Args[2:])
 	case "init":
 		handleInitCommand(os.Args[2:])
 	default:
@@ -41,13 +43,16 @@ func showUsage() {
 	fmt.Println("  sprout weather                Show current weather context")
 	fmt.Println("  sprout weather --for-ai       Show AI-friendly JSON context")
 	fmt.Println("  sprout weather --onboard-ai   Show comprehensive AI assistant onboarding context")
+	fmt.Println("  sprout weather --onboard-ai --include-usage-context  Enhanced onboarding for cold starts")
 	fmt.Println("  sprout weather --raw          Show raw weather context JSON")
 	fmt.Println("  sprout weather recent         Show recent progress summary")
 	fmt.Println("  sprout weather --suggest-docs  Show documentation suggestions")
 	fmt.Println("  sprout weather emit-event     Emit event to farm orchestrator")
 	fmt.Println("  sprout weather context-status Show context usage and handoff advice")
+	fmt.Println("  sprout weather --prepare-cold-handoff  Prepare for usage limit interruption")
 	fmt.Println("  sprout farm process           Process farm-level events")
 	fmt.Println("  sprout farm weather           Show farm-level weather")
+	fmt.Println("  sprout seed <name>            Create a new project seed with documentation structure")
 	fmt.Println("  sprout validate-seed [path]   Validate a documentation seed")
 	fmt.Println("  sprout init --with-claude     Initialize workspace with Claude integration")
 	fmt.Println()
@@ -102,7 +107,11 @@ func handleWeatherCommand(args []string) {
 	case "--for-ai":
 		showAIContext(context)
 	case "--onboard-ai":
-		showAIOnboardingContext(context)
+		includeUsageContext := false
+		if len(args) > 1 && args[1] == "--include-usage-context" {
+			includeUsageContext = true
+		}
+		showAIOnboardingContext(context, includeUsageContext)
 	case "--raw":
 		showRawContext(context)
 	case "recent":
@@ -117,6 +126,8 @@ func handleWeatherCommand(args []string) {
 		handleEmitEvent(gardenPath, args[1:])
 	case "context-status":
 		showContextStatus(gardenPath, context)
+	case "--prepare-cold-handoff":
+		prepareColdHandoff(gardenPath, context)
 	default:
 		fmt.Printf("Unknown weather option: %s\n", args[0])
 		showUsage()
@@ -215,15 +226,32 @@ func showAIContext(context *weather.WeatherContext) {
 	fmt.Println(string(jsonData))
 }
 
-func showAIOnboardingContext(context *weather.WeatherContext) {
+func showAIOnboardingContext(context *weather.WeatherContext, includeUsageContext bool) {
 	onboardingContext := context.ToAIOnboardingContext()
+	
+	if includeUsageContext {
+		// Add usage limit context information
+		usageInfo := map[string]any{
+			"session_type": "cold_start_after_usage_limit",
+			"interruption_reason": "User hit Claude usage limits (daily/monthly)",
+			"continuity_notes": "This is a completely new assistant. Previous assistant lost all memory.",
+			"onboarding_importance": "CRITICAL - This assistant has zero context from previous sessions",
+		}
+		onboardingContext["usage_limit_context"] = usageInfo
+	}
+	
 	jsonData, err := json.MarshalIndent(onboardingContext, "", "  ")
 	if err != nil {
 		fmt.Printf("Error formatting AI onboarding context: %v\n", err)
 		return
 	}
 	
-	fmt.Println("Comprehensive AI Assistant Onboarding Context:")
+	if includeUsageContext {
+		fmt.Println("🆕 NEW ASSISTANT COLD START - Full Onboarding Context:")
+		fmt.Println("(Previous session ended due to usage limits)")
+	} else {
+		fmt.Println("Comprehensive AI Assistant Onboarding Context:")
+	}
 	fmt.Println(string(jsonData))
 }
 
@@ -527,6 +555,60 @@ func showContextStatus(_ string, _ *weather.WeatherContext) {
 	fmt.Println("  • Prepare seamless handoffs")
 }
 
+func prepareColdHandoff(gardenPath string, context *weather.WeatherContext) {
+	fmt.Println("🔄 Preparing for Cold Handoff (Usage Limit Interruption)")
+	fmt.Println()
+	
+	// Save enhanced context for cold start
+	cm := weather.NewContextManager(gardenPath)
+	if err := cm.SaveContext(context); err != nil {
+		fmt.Printf("⚠️  Warning: Could not save context: %v\n", err)
+	} else {
+		fmt.Println("✅ Current state preserved")
+	}
+	
+	// Display comprehensive handoff information
+	fmt.Println("📋 Session Summary for Next Assistant:")
+	fmt.Println()
+	
+	// Current focus
+	fmt.Printf("🎯 Current Focus: %s", context.CurrentFocus.Area)
+	if context.CurrentFocus.Confidence < 1.0 {
+		fmt.Printf(" (%.0f%% confidence)", context.CurrentFocus.Confidence*100)
+	}
+	fmt.Println()
+	
+	// Recent progress
+	if context.RecentProgress.Summary != "" {
+		fmt.Printf("📈 Recent Progress: %s", context.RecentProgress.Summary)
+		if context.RecentProgress.Timespan != "" {
+			fmt.Printf(" (%s)", context.RecentProgress.Timespan)
+		}
+		fmt.Println()
+	}
+	
+	// Next steps
+	if len(context.NextSteps.Suggestions) > 0 {
+		fmt.Println("⚡ Next Steps:")
+		for i, step := range context.NextSteps.Suggestions {
+			if i >= 5 { // Limit to top 5 suggestions
+				break
+			}
+			fmt.Printf("   %d. %s\n", i+1, step)
+		}
+	}
+	
+	fmt.Println()
+	fmt.Println("🚨 USAGE LIMIT INTERRUPTION DETECTED")
+	fmt.Println()
+	fmt.Println("When you return with a new assistant:")
+	fmt.Printf("1. Run: cd %s\n", gardenPath)
+	fmt.Println("2. Run: sprout weather --onboard-ai")
+	fmt.Println("3. New assistant will have full context")
+	fmt.Println()
+	fmt.Println("💡 Tip: Usage limits reset daily/monthly depending on your plan")
+}
+
 
 func handleInitCommand(args []string) {
 	// Check for --with-claude flag
@@ -546,4 +628,18 @@ func handleInitCommand(args []string) {
 	fmt.Println("  • Seamless session continuity")
 	fmt.Println()
 	fmt.Println("Stay tuned for updates!")
+}
+
+func handleSeedCommand(args []string) {
+	if len(args) == 0 {
+		fmt.Println("Usage: sprout seed <name>")
+		fmt.Println("Create a new project seed with documentation structure")
+		return
+	}
+
+	name := args[0]
+	if err := createSeed(name); err != nil {
+		fmt.Printf("Error creating seed: %v\n", err)
+		return
+	}
 }

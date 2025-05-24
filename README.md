@@ -5,6 +5,8 @@ Automatically track your development progress and eliminate context loss. Never 
 🌐 **[Try Weather System at sprouted.dev](https://sprouted.dev)** - Install in 30 seconds  
 📖 **[Complete Documentation](https://sprouted.dev)** - Getting started guides and examples
 
+[![Usage Limit Recovery Certified™](https://img.shields.io/badge/Usage%20Limit%20Recovery-Certified%20%E2%9C%93-brightgreen?style=for-the-badge)](docs/case-studies/usage-limit-recovery-live.md) [![Battle Tested](https://img.shields.io/badge/Battle%20Tested-In%20Production-blue?style=for-the-badge)](docs/case-studies/usage-limit-recovery-live.md)
+
 ## What is the Weather System?
 
 The Weather System automatically preserves your development context - what you're working on, recent progress, and where you're headed next. Like meteorology tracks atmospheric conditions, Weather tracks your development "atmosphere" and makes it instantly shareable with AI assistants.
@@ -79,6 +81,12 @@ This repository contains the Weather System source code and follows a spec-drive
 - `apps/sprout-cli/` - Command-line interface 
 - `docs/` - Specifications and development documentation
 - `templates/` - Document templates for spec-driven development
+
+### The Ultimate Validation Story 🏆
+
+On January 23, 2025, we hit Claude's usage limits while implementing usage limit recovery. The Weather System we were building saved its own development session. [Read the full story →](docs/case-studies/usage-limit-recovery-live.md)
+
+**"The only time in history someone was excited about hitting usage limits!"**
 
 ### Contributing
 1. Check out our [Contributing Guide](CONTRIBUTING.md)

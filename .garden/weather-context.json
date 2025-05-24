@@ -1,5 +1,5 @@
 {
-  "updated": "2025-05-23T14:28:56.49384-04:00",
+  "updated": "2025-05-23T19:07:37.441831-04:00",
   "sessionId": "session_1747877545",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
@@ -301,6 +301,6 @@
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-23T14:28:56.490317-04:00"
+    "lastScanned": "2025-05-23T19:07:37.438807-04:00"
   }
 }
