@@ -55,6 +55,8 @@ func showUsage() {
 	fmt.Println("  sprout weather backups        List available weather backups")
 	fmt.Println("  sprout farm process           Process farm-level events")
 	fmt.Println("  sprout farm weather           Show farm-level weather")
+	fmt.Println("  sprout farm backup            Create Farm-level backup")
+	fmt.Println("  sprout farm protection-status Check Farm protection status")
 	fmt.Println("  sprout seed <name>            Create a new project seed with documentation structure")
 	fmt.Println("  sprout validate-seed [path]   Validate a documentation seed")
 	fmt.Println("  sprout init --with-claude     Initialize workspace with Claude integration")
@@ -468,6 +470,10 @@ func handleFarmCommand(args []string) {
 		handleFarmProcess(farmPath)
 	case "weather":
 		handleFarmWeather(farmPath)
+	case "backup":
+		handleFarmBackup()
+	case "protection-status":
+		handleFarmProtectionStatus()
 	default:
 		fmt.Printf("Unknown farm command: %s\n", args[0])
 	}
@@ -783,4 +789,28 @@ func handleWeatherBackups(gardenPath string) {
 	fmt.Println()
 	fmt.Println("💡 To recover from a specific backup:")
 	fmt.Printf("   sprout weather recover %s\n", backups[len(backups)-1])
+}
+
+func handleFarmBackup() {
+	fpm, err := NewFarmProtectionManager()
+	if err != nil {
+		fmt.Printf("❌ Error: %v\n", err)
+		return
+	}
+	
+	fmt.Println("🚜 Creating Farm-level backup...")
+	if err := fpm.BackupFarm(); err != nil {
+		fmt.Printf("❌ Backup failed: %v\n", err)
+		return
+	}
+}
+
+func handleFarmProtectionStatus() {
+	fpm, err := NewFarmProtectionManager()
+	if err != nil {
+		fmt.Printf("❌ Error: %v\n", err)
+		return
+	}
+	
+	fpm.CheckFarmProtection()
 }

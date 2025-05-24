@@ -121,6 +121,20 @@ But the Weather System STILL saved everything because:
 
 This validates our improved architecture where the Weather System protects your work from the moment you start typing, not just from your last commit!
 
+## The Farm-Level Discovery
+
+During recovery, we discovered another critical vulnerability:
+
+**The parent Farm directory wasn't protected!**
+
+```
+/Users/nutmeg/sprouted/      <- NOT IN GIT! 🚨
+├── garden/                  <- Protected ✅
+├── docs/                    <- BUSINESS DOCS AT RISK! 🚨
+```
+
+This led to immediate implementation of Farm-level protection, showing how real-world usage reveals critical gaps.
+
 ## Lessons Learned
 
 1. **Automatic > Manual**: Git hooks ensure context is always current
@@ -128,6 +142,7 @@ This validates our improved architecture where the Weather System protects your 
 3. **Comprehensive > Minimal**: Full context prevents any confusion
 4. **Dogfooding Works**: Building the solution while using it validates design
 5. **Work-in-Progress Protection**: Even uncommitted work is preserved
+6. **Think Beyond Repos**: Critical files often live outside git
 
 ## Quote from the Recovery
 
