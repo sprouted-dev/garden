@@ -26,6 +26,8 @@ func main() {
 		handleFarmCommand(os.Args[2:])
 	case "validate-seed":
 		handleValidateSeedCommand(os.Args[2:])
+	case "seed":
+		handleSeedCommand(os.Args[2:])
 	case "init":
 		handleInitCommand(os.Args[2:])
 	default:
@@ -41,13 +43,21 @@ func showUsage() {
 	fmt.Println("  sprout weather                Show current weather context")
 	fmt.Println("  sprout weather --for-ai       Show AI-friendly JSON context")
 	fmt.Println("  sprout weather --onboard-ai   Show comprehensive AI assistant onboarding context")
+	fmt.Println("  sprout weather --onboard-ai --include-usage-context  Enhanced onboarding for cold starts")
 	fmt.Println("  sprout weather --raw          Show raw weather context JSON")
 	fmt.Println("  sprout weather recent         Show recent progress summary")
 	fmt.Println("  sprout weather --suggest-docs  Show documentation suggestions")
 	fmt.Println("  sprout weather emit-event     Emit event to farm orchestrator")
 	fmt.Println("  sprout weather context-status Show context usage and handoff advice")
+	fmt.Println("  sprout weather --prepare-cold-handoff  Prepare for usage limit interruption")
+	fmt.Println("  sprout weather verify         Verify weather context integrity")
+	fmt.Println("  sprout weather recover        Recover from corrupted weather context")
+	fmt.Println("  sprout weather backups        List available weather backups")
 	fmt.Println("  sprout farm process           Process farm-level events")
 	fmt.Println("  sprout farm weather           Show farm-level weather")
+	fmt.Println("  sprout farm backup            Create Farm-level backup")
+	fmt.Println("  sprout farm protection-status Check Farm protection status")
+	fmt.Println("  sprout seed <name>            Create a new project seed with documentation structure")
 	fmt.Println("  sprout validate-seed [path]   Validate a documentation seed")
 	fmt.Println("  sprout init --with-claude     Initialize workspace with Claude integration")
 	fmt.Println()
@@ -102,7 +112,11 @@ func handleWeatherCommand(args []string) {
 	case "--for-ai":
 		showAIContext(context)
 	case "--onboard-ai":
-		showAIOnboardingContext(context)
+		includeUsageContext := false
+		if len(args) > 1 && args[1] == "--include-usage-context" {
+			includeUsageContext = true
+		}
+		showAIOnboardingContext(context, includeUsageContext)
 	case "--raw":
 		showRawContext(context)
 	case "recent":
@@ -117,6 +131,14 @@ func handleWeatherCommand(args []string) {
 		handleEmitEvent(gardenPath, args[1:])
 	case "context-status":
 		showContextStatus(gardenPath, context)
+	case "--prepare-cold-handoff":
+		prepareColdHandoff(gardenPath, context)
+	case "verify":
+		handleWeatherVerify(gardenPath)
+	case "recover":
+		handleWeatherRecover(gardenPath, args[1:])
+	case "backups":
+		handleWeatherBackups(gardenPath)
 	default:
 		fmt.Printf("Unknown weather option: %s\n", args[0])
 		showUsage()
@@ -215,15 +237,32 @@ func showAIContext(context *weather.WeatherContext) {
 	fmt.Println(string(jsonData))
 }
 
-func showAIOnboardingContext(context *weather.WeatherContext) {
+func showAIOnboardingContext(context *weather.WeatherContext, includeUsageContext bool) {
 	onboardingContext := context.ToAIOnboardingContext()
+	
+	if includeUsageContext {
+		// Add usage limit context information
+		usageInfo := map[string]any{
+			"session_type": "cold_start_after_usage_limit",
+			"interruption_reason": "User hit Claude usage limits (daily/monthly)",
+			"continuity_notes": "This is a completely new assistant. Previous assistant lost all memory.",
+			"onboarding_importance": "CRITICAL - This assistant has zero context from previous sessions",
+		}
+		onboardingContext["usage_limit_context"] = usageInfo
+	}
+	
 	jsonData, err := json.MarshalIndent(onboardingContext, "", "  ")
 	if err != nil {
 		fmt.Printf("Error formatting AI onboarding context: %v\n", err)
 		return
 	}
 	
-	fmt.Println("Comprehensive AI Assistant Onboarding Context:")
+	if includeUsageContext {
+		fmt.Println("🆕 NEW ASSISTANT COLD START - Full Onboarding Context:")
+		fmt.Println("(Previous session ended due to usage limits)")
+	} else {
+		fmt.Println("Comprehensive AI Assistant Onboarding Context:")
+	}
 	fmt.Println(string(jsonData))
 }
 
@@ -431,6 +470,10 @@ func handleFarmCommand(args []string) {
 		handleFarmProcess(farmPath)
 	case "weather":
 		handleFarmWeather(farmPath)
+	case "backup":
+		handleFarmBackup()
+	case "protection-status":
+		handleFarmProtectionStatus()
 	default:
 		fmt.Printf("Unknown farm command: %s\n", args[0])
 	}
@@ -527,6 +570,60 @@ func showContextStatus(_ string, _ *weather.WeatherContext) {
 	fmt.Println("  • Prepare seamless handoffs")
 }
 
+func prepareColdHandoff(gardenPath string, context *weather.WeatherContext) {
+	fmt.Println("🔄 Preparing for Cold Handoff (Usage Limit Interruption)")
+	fmt.Println()
+	
+	// Save enhanced context for cold start
+	cm := weather.NewContextManager(gardenPath)
+	if err := cm.SaveContext(context); err != nil {
+		fmt.Printf("⚠️  Warning: Could not save context: %v\n", err)
+	} else {
+		fmt.Println("✅ Current state preserved")
+	}
+	
+	// Display comprehensive handoff information
+	fmt.Println("📋 Session Summary for Next Assistant:")
+	fmt.Println()
+	
+	// Current focus
+	fmt.Printf("🎯 Current Focus: %s", context.CurrentFocus.Area)
+	if context.CurrentFocus.Confidence < 1.0 {
+		fmt.Printf(" (%.0f%% confidence)", context.CurrentFocus.Confidence*100)
+	}
+	fmt.Println()
+	
+	// Recent progress
+	if context.RecentProgress.Summary != "" {
+		fmt.Printf("📈 Recent Progress: %s", context.RecentProgress.Summary)
+		if context.RecentProgress.Timespan != "" {
+			fmt.Printf(" (%s)", context.RecentProgress.Timespan)
+		}
+		fmt.Println()
+	}
+	
+	// Next steps
+	if len(context.NextSteps.Suggestions) > 0 {
+		fmt.Println("⚡ Next Steps:")
+		for i, step := range context.NextSteps.Suggestions {
+			if i >= 5 { // Limit to top 5 suggestions
+				break
+			}
+			fmt.Printf("   %d. %s\n", i+1, step)
+		}
+	}
+	
+	fmt.Println()
+	fmt.Println("🚨 USAGE LIMIT INTERRUPTION DETECTED")
+	fmt.Println()
+	fmt.Println("When you return with a new assistant:")
+	fmt.Printf("1. Run: cd %s\n", gardenPath)
+	fmt.Println("2. Run: sprout weather --onboard-ai")
+	fmt.Println("3. New assistant will have full context")
+	fmt.Println()
+	fmt.Println("💡 Tip: Usage limits reset daily/monthly depending on your plan")
+}
+
 
 func handleInitCommand(args []string) {
 	// Check for --with-claude flag
@@ -546,4 +643,174 @@ func handleInitCommand(args []string) {
 	fmt.Println("  • Seamless session continuity")
 	fmt.Println()
 	fmt.Println("Stay tuned for updates!")
+}
+
+func handleSeedCommand(args []string) {
+	if len(args) == 0 {
+		fmt.Println("Usage: sprout seed <name>")
+		fmt.Println("Create a new project seed with documentation structure")
+		return
+	}
+
+	name := args[0]
+	if err := createSeed(name); err != nil {
+		fmt.Printf("Error creating seed: %v\n", err)
+		return
+	}
+}
+
+func handleWeatherVerify(gardenPath string) {
+	shadowManager := weather.NewShadowCopyManager(gardenPath)
+	
+	fmt.Println("🔍 Verifying Weather Context Integrity...")
+	fmt.Println()
+	
+	if err := shadowManager.VerifyContextIntegrity(); err != nil {
+		fmt.Printf("❌ Context verification failed: %v\n", err)
+		fmt.Println()
+		fmt.Println("💡 Run 'sprout weather recover' to restore from backup")
+		return
+	}
+	
+	fmt.Println("✅ Weather context is valid and intact")
+	
+	// Also check shadow copy
+	fmt.Print("🔍 Checking shadow copy... ")
+	shadowPath := filepath.Join(gardenPath, ".garden", "weather-context.shadow.json")
+	if _, err := os.Stat(shadowPath); os.IsNotExist(err) {
+		fmt.Println("⚠️  No shadow copy found (will be created on next update)")
+	} else {
+		fmt.Println("✅ Shadow copy exists")
+	}
+	
+	// Check backups
+	backups, err := shadowManager.GetBackupList()
+	if err != nil {
+		fmt.Printf("⚠️  Could not check backups: %v\n", err)
+	} else {
+		fmt.Printf("📦 Available backups: %d\n", len(backups))
+	}
+}
+
+func handleWeatherRecover(gardenPath string, args []string) {
+	shadowManager := weather.NewShadowCopyManager(gardenPath)
+	
+	// If specific backup requested
+	if len(args) > 0 && args[0] != "" {
+		backupName := args[0]
+		fmt.Printf("🔄 Recovering from backup: %s\n", backupName)
+		
+		if err := shadowManager.RestoreFromBackup(backupName); err != nil {
+			fmt.Printf("❌ Recovery failed: %v\n", err)
+			return
+		}
+		
+		fmt.Println("✅ Successfully recovered from backup")
+		return
+	}
+	
+	// Try shadow copy first
+	fmt.Println("🔄 Attempting Weather Context Recovery...")
+	fmt.Println()
+	
+	fmt.Println("1️⃣ Trying shadow copy...")
+	if err := shadowManager.RestoreFromShadow(); err != nil {
+		fmt.Printf("⚠️  Shadow recovery failed: %v\n", err)
+		fmt.Println()
+		
+		// List available backups
+		fmt.Println("2️⃣ Checking available backups...")
+		backups, err := shadowManager.GetBackupList()
+		if err != nil || len(backups) == 0 {
+			fmt.Println("❌ No backups available")
+			fmt.Println()
+			fmt.Println("💡 You may need to:")
+			fmt.Println("   1. Check git history for weather-context.json")
+			fmt.Println("   2. Run 'sprout weather' to regenerate from git state")
+			return
+		}
+		
+		fmt.Println("📦 Available backups:")
+		for i, backup := range backups {
+			fmt.Printf("   %d. %s\n", i+1, backup)
+		}
+		fmt.Println()
+		fmt.Printf("Run: sprout weather recover %s\n", backups[len(backups)-1])
+		return
+	}
+	
+	fmt.Println("✅ Successfully recovered from shadow copy")
+	
+	// Verify recovered context
+	if err := shadowManager.VerifyContextIntegrity(); err != nil {
+		fmt.Printf("⚠️  Recovered context may have issues: %v\n", err)
+	} else {
+		fmt.Println("✅ Recovered context verified successfully")
+	}
+}
+
+func handleWeatherBackups(gardenPath string) {
+	shadowManager := weather.NewShadowCopyManager(gardenPath)
+	
+	fmt.Println("📦 Weather Context Backups")
+	fmt.Println()
+	
+	backups, err := shadowManager.GetBackupList()
+	if err != nil {
+		fmt.Printf("❌ Error listing backups: %v\n", err)
+		return
+	}
+	
+	if len(backups) == 0 {
+		fmt.Println("No backups found.")
+		fmt.Println()
+		fmt.Println("💡 Backups are created automatically when:")
+		fmt.Println("   • Weather context is updated")
+		fmt.Println("   • Shadow copies are created")
+		fmt.Println("   • Recovery operations are performed")
+		return
+	}
+	
+	fmt.Printf("Found %d backup(s):\n", len(backups))
+	fmt.Println()
+	
+	for _, backup := range backups {
+		// Parse timestamp from filename
+		fmt.Printf("  📄 %s", backup)
+		
+		// Check file size
+		backupPath := filepath.Join(gardenPath, ".garden", "backups", backup)
+		if info, err := os.Stat(backupPath); err == nil {
+			fmt.Printf(" (%.1f KB)", float64(info.Size())/1024)
+		}
+		fmt.Println()
+	}
+	
+	fmt.Println()
+	fmt.Println("💡 To recover from a specific backup:")
+	fmt.Printf("   sprout weather recover %s\n", backups[len(backups)-1])
+}
+
+func handleFarmBackup() {
+	fpm, err := NewFarmProtectionManager()
+	if err != nil {
+		fmt.Printf("❌ Error: %v\n", err)
+		return
+	}
+	
+	fmt.Println("🚜 Creating Farm-level backup...")
+	if err := fpm.BackupFarm(); err != nil {
+		fmt.Printf("❌ Backup failed: %v\n", err)
+		return
+	}
+}
+
+func handleFarmProtectionStatus() {
+	fpm, err := NewFarmProtectionManager()
+	if err != nil {
+		fmt.Printf("❌ Error: %v\n", err)
+		return
+	}
+	
+	fpm.CheckFarmProtection()
 }

@@ -278,6 +278,13 @@ func (cm *ContextManager) SaveContext(context *WeatherContext) error {
 		return fmt.Errorf("failed to rename temporary context file: %w", err)
 	}
 	
+	// Create shadow copy for disaster recovery
+	shadowManager := NewShadowCopyManager(cm.gardenPath)
+	if err := shadowManager.CreateShadowCopy(); err != nil {
+		// Shadow copy is non-critical, log but don't fail
+		fmt.Printf("Warning: failed to create shadow copy: %v\n", err)
+	}
+	
 	return nil
 }
 

@@ -2,6 +2,15 @@
 
 The Weather Context Preservation System is the heartbeat of your Garden workspace, automatically tracking your development progress and providing instant context restoration.
 
+## Session Continuity
+
+The Weather System handles **two types** of session interruptions:
+
+- **Context Limits**: Claude runs out of space in the same conversation → Use handoff commands  
+- **Usage Limits**: You hit daily/monthly limits → Use cold start onboarding
+
+See [Session Continuity Guide](features/session-continuity-comprehensive.md) for full details.
+
 ## Quick Start
 
 ### 1. Install Git Hooks (One-time setup)
@@ -82,6 +91,15 @@ Recent Commits:
 
 ### `sprout weather --raw`
 Shows the complete weather context JSON (useful for debugging).
+
+### `sprout weather --onboard-ai`
+Comprehensive AI assistant onboarding context for starting new sessions.
+
+### `sprout weather --onboard-ai --include-usage-context`
+Enhanced onboarding specifically for new assistants after usage limit interruptions.
+
+### `sprout weather --prepare-cold-handoff`
+Prepares comprehensive state for usage limit interruptions. Run this before hitting usage limits to ensure the next assistant has full context.
 
 ## Weather Intelligence
 
