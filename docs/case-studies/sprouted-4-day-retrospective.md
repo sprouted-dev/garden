@@ -31,7 +31,7 @@ Someone who spent years feeling like "bamboo in an oak tree interview":
 - Finally found their moment with AI partnership
 
 ### The Trigger
-A laptop crash. Lost context. Hours reconstructing state.
+Hit usage limits. Lost context. Hours reconstructing state.
 "What if development had weather?"
 
 ### The Launch

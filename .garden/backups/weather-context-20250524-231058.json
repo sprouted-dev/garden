@@ -1,5 +1,5 @@
 {
-  "updated": "2025-05-23T23:04:43.582909-04:00",
+  "updated": "2025-05-24T23:10:58.355019-04:00",
   "sessionId": "session_1748051957",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
@@ -83,6 +83,22 @@
       "timeline": "Active development",
       "activeSpecs": [
         {
+          "path": "docs/specs/adaptive-seed-development-spec.md",
+          "title": "Spec: Adaptive Seed Development Implementation",
+          "type": "spec",
+          "summary": "**Related to**: [Adaptive Seed Development Vision](../vision/adaptive-seed-development.md) Implement a natural development methodology that embraces growth patterns rather than fighting them. Based on...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T20:21:48.014998709-04:00"
+        },
+        {
+          "path": "docs/specs/creative-velocity-tracking.md",
+          "title": "Creative Velocity Tracking Specification",
+          "type": "spec",
+          "summary": "Track development velocity in a way that celebrates speed, creativity, and what's actually possible when bureaucracy gets out of the way. - Measured in \"story points\" (meaningless abstraction) - Estim...",
+          "status": "completed",
+          "lastUpdated": "2025-05-24T20:21:48.015376877-04:00"
+        },
+        {
           "path": "docs/specs/enhanced-ai-onboarding.md",
           "title": "Spec: Enhanced AI Onboarding System",
           "type": "spec",
@@ -115,12 +131,84 @@
           "lastUpdated": "2025-05-23T00:36:00.022705148-04:00"
         },
         {
+          "path": "docs/specs/intentional-partner-onboarding.md",
+          "title": "Spec: Intentional Partner Onboarding",
+          "type": "spec",
+          "summary": "**Problem**: Current onboarding dumps technical specs without conveying WHY we work this way. Set up the next partner for success, don't vomit documents on them. Before any technical details, partners...",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.015667169-04:00"
+        },
+        {
+          "path": "docs/specs/licensing-strategy.md",
+          "title": "Sprouted Weather Service™ Licensing Strategy",
+          "type": "spec",
+          "summary": "This document defines the licensing strategy for the Sprouted ecosystem, establishing clear boundaries between open source components and commercial offerings while maintaining trust and transparency ...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T02:48:11.309170068-04:00"
+        },
+        {
           "path": "docs/specs/open-source-launch-lessons.md",
           "title": "Spec: Open Source Launch Lessons \u0026 Decisions",
           "type": "spec",
           "summary": "**Related to**: [Farm Architecture Planning](/docs/specs/farm-architecture-planning.md) **Context**: Critical insights from live open source launch preparation This document captures the essential les...",
           "status": "active",
           "lastUpdated": "2025-05-22T03:07:30.204259821-04:00"
+        },
+        {
+          "path": "docs/specs/partner-note-system.md",
+          "title": "Spec: Partner Note System - Messages Between Sessions",
+          "type": "spec",
+          "summary": "Partners leave contextual messages for the next assistant, creating continuous wisdom transfer beyond what weather data can capture. Messages about breakthrough realizations: - \"Just discovered the ba...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T20:21:48.015997879-04:00"
+        },
+        {
+          "path": "docs/specs/seed-configuration-system.md",
+          "title": "Seed Configuration System Specification",
+          "type": "spec",
+          "summary": "*Created: May 24, 2025* Seeds define how teams work. Weather System reads Seeds to understand team patterns and adapt its behavior accordingly. ```",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T20:21:48.016479755-04:00"
+        },
+        {
+          "path": "docs/specs/storm-chaser-observer.md",
+          "title": "Storm Chaser: The Learning Observer",
+          "type": "spec",
+          "summary": "*Revised Vision - May 24, 2025* From: \"Monitor and warn about storms\" To: **\"Observe, learn, celebrate, and prepare amazing retrospectives\"**",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.016728798-04:00"
+        },
+        {
+          "path": "docs/specs/storm-chaser-system.md",
+          "title": "Storm Chaser System Specification",
+          "type": "spec",
+          "summary": "*Created: May 24, 2025* *Status: Concept Design* *Part of: Storm-Driven Development*",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.016990007-04:00"
+        },
+        {
+          "path": "docs/specs/temporal-validation-system.md",
+          "title": "Temporal Validation System Specification",
+          "type": "spec",
+          "summary": "AI assistants create fictional timelines despite Weather System having accurate timestamps. They invent plausible-sounding dates based on patterns rather than checking actual data. Multi-layered tempo...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T20:21:48.017304925-04:00"
+        },
+        {
+          "path": "docs/specs/tornado-coordination-protocol.md",
+          "title": "Tornado Coordination Protocol",
+          "type": "spec",
+          "summary": "*Created: May 24, 2025* When a creative tornado spans multiple repositories, we need coordinated branch management to ensure consistency and proper integration. Before creating tornado branches:",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.01771501-04:00"
+        },
+        {
+          "path": "docs/specs/universal-partner-onboarding-structure.md",
+          "title": "Spec: Universal Partner Onboarding Structure",
+          "type": "spec",
+          "summary": "Future users will provide their own Seeds. Onboarding must work universally while teaching our methodology. **The HOW** - Same for everyone: ```json",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.018029261-04:00"
         },
         {
           "path": "docs/specs/weather-automatic-intelligence-mvp.md",
@@ -131,15 +219,63 @@
           "lastUpdated": "2025-05-21T21:09:49.77066139-04:00"
         },
         {
+          "path": "docs/specs/weather-emergency-management-agency.md",
+          "title": "Weather Emergency Management Agency (WEMA) Specification",
+          "type": "spec",
+          "summary": "A holistic system that celebrates rapid development velocity while managing its impact through assessment, recovery, and learning. Monitor development speed and detect when entering \"tornado mode\": - ...",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.018388887-04:00"
+        },
+        {
           "path": "docs/specs/weather-resilience-specification.md",
           "title": "Spec: Weather System Resilience and Recovery",
           "type": "spec",
           "summary": "Related to: [Weather Context Preservation System](/docs/vision/weather-context-preservation.md) Addresses: [Weather Resilience Discovery](/docs/discoveries/weather-resilience-and-backup-architecture.m...",
           "status": "active",
           "lastUpdated": "2025-05-23T00:36:00.022985318-04:00"
+        },
+        {
+          "path": "docs/specs/weather-seed-separation-plan.md",
+          "title": "Weather/Seed Separation Implementation Plan",
+          "type": "spec",
+          "summary": "*Created: May 24, 2025* *Tornado: seed-separation-20250524* Transform Weather System from Sprouted-specific to universal infrastructure, with Sprouted Seed as the reference implementation.",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T20:21:48.018749513-04:00"
+        },
+        {
+          "path": "docs/specs/weather-station-migration.md",
+          "title": "Weather Station Migration Specification",
+          "type": "spec",
+          "summary": "Weather Station already exists as a fully functional Mission Control Panel (MCP) server in the vibes/mono codebase. This spec outlines migrating and adapting it to become the official Sprouted Weather...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T02:39:44.511362973-04:00"
+        },
+        {
+          "path": "docs/specs/wema-protocol-v2.md",
+          "title": "WEMA Protocol v2.0",
+          "type": "spec",
+          "summary": "*Weather Emergency Management Agency* **Created**: May 24, 2025 **Status**: Active Protocol",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.019094014-04:00"
         }
       ],
       "activeTasks": [
+        {
+          "path": "docs/tasks/active/confidence-language-migration.md",
+          "title": "Confidence Language Migration Plan",
+          "type": "task",
+          "summary": "**Created**: 2025-01-24 **Status**: Active **Priority**: High",
+          "status": "active",
+          "lastUpdated": "2025-05-24T02:52:47.181191603-04:00"
+        },
+        {
+          "path": "docs/tasks/active/doc-migration-checklist.md",
+          "title": "Documentation Migration Checklist",
+          "type": "task",
+          "summary": "- [ ] **garden/README.md** - Replace with confident version - [ ] **Website landing page** (sprouted-website/src/app/(landing)/page.tsx) - [ ] **Install script messages** (garden/website/install.sh)",
+          "status": "planned",
+          "lastUpdated": "2025-05-24T02:54:02.992103272-04:00"
+        },
         {
           "path": "docs/tasks/active/enhanced-ai-onboarding-implementation.md",
           "title": "Task: Enhanced AI Onboarding Implementation",
@@ -149,12 +285,28 @@
           "lastUpdated": "2025-05-23T00:36:00.023281446-04:00"
         },
         {
+          "path": "docs/tasks/active/implement-adaptive-seed-methodology.md",
+          "title": "Task: Implement Adaptive Seed Development Methodology",
+          "type": "task",
+          "summary": "**Status**: Planned **Priority**: High (after date fixes) **Spec**: [Adaptive Seed Development Spec](../../specs/adaptive-seed-development-spec.md)",
+          "status": "planned",
+          "lastUpdated": "2025-05-24T20:21:48.01947089-04:00"
+        },
+        {
           "path": "docs/tasks/active/implement-claude-integration.md",
           "title": "Task: Implement `sprout init --with-claude`",
           "type": "task",
           "summary": "Active - Implementation needed The `sprout init --with-claude` command exists as a placeholder but needs implementation. Existing monitoring scripts at Farm level need integration and updates for new ...",
           "status": "active",
           "lastUpdated": "2025-05-23T21:48:35.692172372-04:00"
+        },
+        {
+          "path": "docs/tasks/active/tornado-seed-separation-actions.md",
+          "title": "Tornado Seed Separation - Immediate Actions",
+          "type": "task",
+          "summary": "*Created: May 24, 2025* *Tornado: seed-separation-20250524* ```bash",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.019719308-04:00"
         },
         {
           "path": "docs/tasks/active/weather-core-data-model.md",
@@ -230,6 +382,6 @@
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-23T23:04:43.578904-04:00"
+    "lastScanned": "2025-05-24T23:10:58.347859-04:00"
   }
 }

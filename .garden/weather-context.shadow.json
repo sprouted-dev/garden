@@ -1,5 +1,5 @@
 {
-  "updated": "2025-05-24T12:17:43.16827-04:00",
+  "updated": "2025-05-24T23:10:58.355019-04:00",
   "sessionId": "session_1748051957",
   "gardenPath": "/Users/nutmeg/sprouted/garden",
   "version": "1.0.0",
@@ -88,7 +88,7 @@
           "type": "spec",
           "summary": "**Related to**: [Adaptive Seed Development Vision](../vision/adaptive-seed-development.md) Implement a natural development methodology that embraces growth patterns rather than fighting them. Based on...",
           "status": "unknown",
-          "lastUpdated": "2025-05-24T11:35:14.736346903-04:00"
+          "lastUpdated": "2025-05-24T20:21:48.014998709-04:00"
         },
         {
           "path": "docs/specs/creative-velocity-tracking.md",
@@ -96,7 +96,7 @@
           "type": "spec",
           "summary": "Track development velocity in a way that celebrates speed, creativity, and what's actually possible when bureaucracy gets out of the way. - Measured in \"story points\" (meaningless abstraction) - Estim...",
           "status": "completed",
-          "lastUpdated": "2025-05-24T10:24:35.853613075-04:00"
+          "lastUpdated": "2025-05-24T20:21:48.015376877-04:00"
         },
         {
           "path": "docs/specs/enhanced-ai-onboarding.md",
@@ -136,7 +136,7 @@
           "type": "spec",
           "summary": "**Problem**: Current onboarding dumps technical specs without conveying WHY we work this way. Set up the next partner for success, don't vomit documents on them. Before any technical details, partners...",
           "status": "active",
-          "lastUpdated": "2025-05-24T11:42:29.645535197-04:00"
+          "lastUpdated": "2025-05-24T20:21:48.015667169-04:00"
         },
         {
           "path": "docs/specs/licensing-strategy.md",
@@ -155,12 +155,52 @@
           "lastUpdated": "2025-05-22T03:07:30.204259821-04:00"
         },
         {
+          "path": "docs/specs/partner-note-system.md",
+          "title": "Spec: Partner Note System - Messages Between Sessions",
+          "type": "spec",
+          "summary": "Partners leave contextual messages for the next assistant, creating continuous wisdom transfer beyond what weather data can capture. Messages about breakthrough realizations: - \"Just discovered the ba...",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T20:21:48.015997879-04:00"
+        },
+        {
+          "path": "docs/specs/seed-configuration-system.md",
+          "title": "Seed Configuration System Specification",
+          "type": "spec",
+          "summary": "*Created: May 24, 2025* Seeds define how teams work. Weather System reads Seeds to understand team patterns and adapt its behavior accordingly. ```",
+          "status": "unknown",
+          "lastUpdated": "2025-05-24T20:21:48.016479755-04:00"
+        },
+        {
+          "path": "docs/specs/storm-chaser-observer.md",
+          "title": "Storm Chaser: The Learning Observer",
+          "type": "spec",
+          "summary": "*Revised Vision - May 24, 2025* From: \"Monitor and warn about storms\" To: **\"Observe, learn, celebrate, and prepare amazing retrospectives\"**",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.016728798-04:00"
+        },
+        {
+          "path": "docs/specs/storm-chaser-system.md",
+          "title": "Storm Chaser System Specification",
+          "type": "spec",
+          "summary": "*Created: May 24, 2025* *Status: Concept Design* *Part of: Storm-Driven Development*",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.016990007-04:00"
+        },
+        {
           "path": "docs/specs/temporal-validation-system.md",
           "title": "Temporal Validation System Specification",
           "type": "spec",
           "summary": "AI assistants create fictional timelines despite Weather System having accurate timestamps. They invent plausible-sounding dates based on patterns rather than checking actual data. Multi-layered tempo...",
           "status": "unknown",
-          "lastUpdated": "2025-05-24T10:12:35.122885248-04:00"
+          "lastUpdated": "2025-05-24T20:21:48.017304925-04:00"
+        },
+        {
+          "path": "docs/specs/tornado-coordination-protocol.md",
+          "title": "Tornado Coordination Protocol",
+          "type": "spec",
+          "summary": "*Created: May 24, 2025* When a creative tornado spans multiple repositories, we need coordinated branch management to ensure consistency and proper integration. Before creating tornado branches:",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.01771501-04:00"
         },
         {
           "path": "docs/specs/universal-partner-onboarding-structure.md",
@@ -168,7 +208,7 @@
           "type": "spec",
           "summary": "Future users will provide their own Seeds. Onboarding must work universally while teaching our methodology. **The HOW** - Same for everyone: ```json",
           "status": "active",
-          "lastUpdated": "2025-05-24T11:49:00.859081936-04:00"
+          "lastUpdated": "2025-05-24T20:21:48.018029261-04:00"
         },
         {
           "path": "docs/specs/weather-automatic-intelligence-mvp.md",
@@ -184,7 +224,7 @@
           "type": "spec",
           "summary": "A holistic system that celebrates rapid development velocity while managing its impact through assessment, recovery, and learning. Monitor development speed and detect when entering \"tornado mode\": - ...",
           "status": "active",
-          "lastUpdated": "2025-05-24T10:39:48.614778665-04:00"
+          "lastUpdated": "2025-05-24T20:21:48.018388887-04:00"
         },
         {
           "path": "docs/specs/weather-resilience-specification.md",
@@ -195,12 +235,12 @@
           "lastUpdated": "2025-05-23T00:36:00.022985318-04:00"
         },
         {
-          "path": "docs/specs/weather-station-freemium-implementation.md",
-          "title": "Spec: Weather Station Freemium Implementation",
+          "path": "docs/specs/weather-seed-separation-plan.md",
+          "title": "Weather/Seed Separation Implementation Plan",
           "type": "spec",
-          "summary": "**Related to**: [Weather Station Freemium Model](../vision/weather-station-freemium-model.md) Implement dual-mode Weather Station: free local SQLite for individuals, paid cloud sync for teams. Minimal...",
+          "summary": "*Created: May 24, 2025* *Tornado: seed-separation-20250524* Transform Weather System from Sprouted-specific to universal infrastructure, with Sprouted Seed as the reference implementation.",
           "status": "unknown",
-          "lastUpdated": "2025-05-24T12:02:59.461656144-04:00"
+          "lastUpdated": "2025-05-24T20:21:48.018749513-04:00"
         },
         {
           "path": "docs/specs/weather-station-migration.md",
@@ -209,6 +249,14 @@
           "summary": "Weather Station already exists as a fully functional Mission Control Panel (MCP) server in the vibes/mono codebase. This spec outlines migrating and adapting it to become the official Sprouted Weather...",
           "status": "unknown",
           "lastUpdated": "2025-05-24T02:39:44.511362973-04:00"
+        },
+        {
+          "path": "docs/specs/wema-protocol-v2.md",
+          "title": "WEMA Protocol v2.0",
+          "type": "spec",
+          "summary": "*Weather Emergency Management Agency* **Created**: May 24, 2025 **Status**: Active Protocol",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.019094014-04:00"
         }
       ],
       "activeTasks": [
@@ -242,7 +290,7 @@
           "type": "task",
           "summary": "**Status**: Planned **Priority**: High (after date fixes) **Spec**: [Adaptive Seed Development Spec](../../specs/adaptive-seed-development-spec.md)",
           "status": "planned",
-          "lastUpdated": "2025-05-24T11:35:36.527154486-04:00"
+          "lastUpdated": "2025-05-24T20:21:48.01947089-04:00"
         },
         {
           "path": "docs/tasks/active/implement-claude-integration.md",
@@ -251,6 +299,14 @@
           "summary": "Active - Implementation needed The `sprout init --with-claude` command exists as a placeholder but needs implementation. Existing monitoring scripts at Farm level need integration and updates for new ...",
           "status": "active",
           "lastUpdated": "2025-05-23T21:48:35.692172372-04:00"
+        },
+        {
+          "path": "docs/tasks/active/tornado-seed-separation-actions.md",
+          "title": "Tornado Seed Separation - Immediate Actions",
+          "type": "task",
+          "summary": "*Created: May 24, 2025* *Tornado: seed-separation-20250524* ```bash",
+          "status": "active",
+          "lastUpdated": "2025-05-24T20:21:48.019719308-04:00"
         },
         {
           "path": "docs/tasks/active/weather-core-data-model.md",
@@ -326,6 +382,6 @@
       "commonPatterns": [],
       "avoidPatterns": null
     },
-    "lastScanned": "2025-05-24T12:14:28.018062-04:00"
+    "lastScanned": "2025-05-24T23:10:58.347859-04:00"
   }
 }
